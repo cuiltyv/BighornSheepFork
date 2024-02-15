@@ -1,41 +1,43 @@
-export const firstName = new Map();
-firstName.set("a", "Captain");
-firstName.set("b", "Wonder");
-firstName.set("c", "Super");
-firstName.set("d", "Phantom");
-firstName.set("e", "Dark");
-firstName.set("f", "Incredible");
-firstName.set("g", "Professor");
-firstName.set("h", "Iron");
-firstName.set("i", "Hawk");
-firstName.set("j", "Archer");
-firstName.set("k", "Steel");
-firstName.set("l", "Bolt");
-firstName.set("m", "Atomic");
-firstName.set("n", "Torch");
-firstName.set("o", "Space");
-firstName.set("p", "Mega");
-firstName.set("q", "Turbo");
-firstName.set("r", "Fantastic");
-firstName.set("s", "Invisible");
-firstName.set("t", "Night");
-firstName.set("u", "Silver");
-firstName.set("v", "Aqua");
-firstName.set("w", "Amazing");
-firstName.set("x", "Giant");
-firstName.set("y", "Rock");
-firstName.set("z", "Ghost");
+export const firstName = {
+  a: "Captain",
+  b: "Wonder",
+  c: "Super",
+  d: "Phantom",
+  e: "Dark",
+  f: "Incredible",
+  g: "Professor",
+  h: "Iron",
+  i: "Hawk",
+  j: "Archer",
+  k: "Steel",
+  l: "Bolt",
+  m: "Atomic",
+  n: "Torch",
+  o: "Space",
+  p: "Mega",
+  q: "Turbo",
+  r: "Fantastic",
+  s: "Invisible",
+  t: "Night",
+  u: "Silver",
+  v: "Aqua",
+  w: "Amazing",
+  x: "Giant",
+  y: "Rock",
+  z: "Ghost",
+};
 
-export const lastName = new Map();
-lastName.set("January", "Shield");
-lastName.set("February", "Arrow");
-lastName.set("March", "Justice");
-lastName.set("April", "Thunder");
-lastName.set("May", "Rider");
-lastName.set("June", "Falcon");
-lastName.set("July", "Ninja");
-lastName.set("August", "Spider");
-lastName.set("September", "Beast");
-lastName.set("October", "Blade");
-lastName.set("November", "Hulk");
-lastName.set("December", "Doom");
+export const lastName = {
+  January: "Shield",
+  February: "Arrow",
+  March: "Justice",
+  April: "Thunder",
+  May: "Rider",
+  June: "Falcon",
+  July: "Ninja",
+  August: "Spider",
+  September: "Beast",
+  October: "Blade",
+  November: "Hulk",
+  December: "Doom",
+};
