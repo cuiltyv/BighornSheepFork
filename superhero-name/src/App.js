@@ -1,23 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import DropdownMonth from "./DropdownMonth";
+import { useState } from "react";
+import { firstName, lastName } from "./superHeroName";
 
 function App() {
+  const [name, setName] = useState("");
+  const [month, setMonth] = useState("");
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+      <h1>React App</h1>
+      <div className="dropdowns">
+        <form>
+          <label for="letter">Write your name's first letter:</label>
+          <input
+            type="text"
+            id="letter"
+            name="letter"
+            onChange={handleNameChange}
+            value={name}
+          />
+        </form>
+        <DropdownMonth setMonth={setMonth} />
+      </div>
+
+      <div className="results">
+        <h2>Results</h2>
+        <p>Your name starts with: {name}</p>
+        <p>Your birth month is: {month}</p>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Your SuperHero name is: {firstName.get(name)} {lastName.get(month)}
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      </div>
     </div>
   );
 }
