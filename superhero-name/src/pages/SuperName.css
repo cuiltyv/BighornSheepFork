@@ -1,0 +1,50 @@
+/* Overall app styling */
+.SuperName {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Styles for the form and its elements */
+form {
+    margin: 20px 0;
+}
+
+label {
+    margin-right: 10px;
+}
+
+input[type="text"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Dropdown styling, adjust based on DropdownMonth component specifics */
+.dropdown {
+    margin: 20px 0;
+}
+
+/* Results section styling */
+.results {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.results h2 {
+    color: #333;
+}
+
+.results p {
+    color: #666;
+}
+
+/* Specific styling for displaying the superhero name */
+.superhero-name {
+    font-weight: bold;
+    color: #0044cc;
+}
