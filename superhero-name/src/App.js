@@ -1,41 +1,21 @@
-import "./App.css";
-import DropdownMonth from "./DropdownMonth";
-import { useState } from "react";
-import { firstName, lastName } from "./superheroName";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import SuperName from './pages/SuperName';
+import Store from './pages/Store';
+import './App.css';
+import Navigation from './components/Navigation';
 
-function App() {
-  const [letter, setLetter] = useState("");
-  const [month, setMonth] = useState("");
 
+
+export default function App() {
   return (
-    <div className="App">
-      <h1>My Superhero Name</h1>
-      <form>
-        <label for="letter">Write your name's first letter:</label>
-        <input
-          type="text"
-          id="letter"
-          onChange={(e) => {
-            const char = e.target.value;
-            if (char === "" || char.match(/^[a-zA-Z]$/)) setLetter(char);
-          }}
-          value={letter}
-          maxLength={1}
-        />
-      </form>
-      <DropdownMonth setMonth={setMonth} />
-
-      <div className="results">
-        <h2>Results</h2>
-        <p>Your name starts with: {letter}</p>
-        <p>Your birth month is: {month}</p>
-        <b>
-          Your Superhero name is: {firstName[letter.toLowerCase()]}{" "}
-          {lastName[month]}
-        </b>
-      </div>
-    </div>
+    <BrowserRouter>
+      <Navigation />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/superhero-name" element={<SuperName />} />
+        <Route path="/store" element={<Store />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;
