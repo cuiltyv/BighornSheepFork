@@ -20,8 +20,10 @@ Dentro del D.R.E.A.M. Lab, se tienen varias salas propuestas, por ejemplo:
    
 ## Miembros del Equipo
 
-- Roberto Andonie
-- Alberto Tamez
-- Carlos Cuilty
-- Emilio de Gyves
-- Eduardo Tello
+Integrantes | Roles
+----------- | -----
+Roberto Andonie | UX/UI
+Alberto Tamez | Scrum Master
+Carlos Cuilty | Front-End
+Emilio de Gyves | Back-End
+Eduardo Tello | Back-End
