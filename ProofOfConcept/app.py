@@ -1,12 +1,12 @@
 # Loading the env variables
-# from dotenv import load_dotenv
-# load_dotenv()  # This loads the environment variables from the .env file
+from dotenv import load_dotenv
+load_dotenv()  # This loads the environment variables from the .env file
 
-# import os
+import os
 
-# # Now you can access your Twilio credentials safely
-# TWILIO_ACCOUNT_SID = os.getenv('TWILIO_ACCOUNT_SID')
-# TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN')
+# Now you can access your Twilio credentials safely
+TWILIO_ACCOUNT_SID = os.getenv('TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN')
 # End of loading .env variables
 
 ## Tutorial code
@@ -19,6 +19,8 @@ from flask_sock import Sock, ConnectionClosed
 from twilio.twiml.voice_response import VoiceResponse, Start
 from twilio.rest import Client
 import vosk
+
+from save_transcription import save_transcript
 
 app = Flask(__name__)
 sock = Sock(app)
@@ -60,9 +62,11 @@ def stream(ws):
             if rec.AcceptWaveform(audio):
                 r = json.loads(rec.Result())
                 print(CL + r['text'] + ' ', end='', flush=True)
+                save_transcript(r['text'])
             else:
                 r = json.loads(rec.PartialResult())
                 print(CL + r['partial'] + BS * len(r['partial']))
+
 
 
 if __name__ == '__main__':
