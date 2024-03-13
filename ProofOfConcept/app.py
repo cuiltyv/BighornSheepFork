@@ -9,7 +9,8 @@ TWILIO_ACCOUNT_SID = os.getenv('TWILIO_ACCOUNT_SID')
 TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN')
 # End of loading .env variables
 
-## Tutorial code
+
+## Code from ProofOfConcept/app.py
 import audioop
 import base64
 import json
