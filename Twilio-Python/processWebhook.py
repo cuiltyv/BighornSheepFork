@@ -106,6 +106,8 @@ async def detect_intent_text(query, session_id):
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True) """
+from dotenv import load_dotenv
+load_dotenv()  # This loads the environment variables from the .env file
 
 import os
 import json
@@ -115,11 +117,14 @@ from google.cloud import dialogflowcx_v3 as dialogflow_cx
 from twilio.twiml.messaging_response import MessagingResponse
 from google.oauth2 import service_account
 
-SERVICE_ACCOUNT_JSON_FILE_PATH = 'genuine-haiku-416823-5e70a6306a0b.json'
+SERVICE_ACCOUNT_JSON_FILE_PATH = os.environ.get('SERVICE_ACCOUNT_JSON_FILE_PATH')
 
-DIALOGFLOW_CX_AGENT_ID = '9ffc4e20-e011-494e-af55-43b043002ef6'
-DIALOGFLOW_CX_AGENT_LOCATION = 'us-central1'
-DIALOGFLOW_CX_PROJECT_ID = 'genuine-haiku-416823'
+DIALOGFLOW_CX_AGENT_ID = os.environ.get('DIALOGFLOW_CX_AGENT_ID')
+DIALOGFLOW_CX_AGENT_LOCATION = os.environ.get('DIALOGFLOW_CX_AGENT_LOCATION')
+DIALOGFLOW_CX_PROJECT_ID = os.environ.get('DIALOGFLOW_CX_PROJECT_ID')
+
+
+
 
 from helperfunction.waSendMessage import sendMessage
 
