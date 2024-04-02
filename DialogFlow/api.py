@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 
 
-
+auth = ("auth.json")
 
 cred = credentials.Certificate(auth)
 firebase_admin.initialize_app(cred)
