@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "ordinal-brace-416801",
+  "private_key_id": "82ab0a3f64c56892830d2490aa45391dcb1bd49f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDo//LJg8D7uA+H\nnRkLqVUqcIue+CeN2tc174j4VJGOz2t4FsRh99EJnhQ2GsLG7X/kHNi/dA79yDp6\n+w79NBDjHQ7Uq41yLpNaIRrAjBTkG+N9wDRpjsAkMJq+ca4q+vDkuti2Zu/1pfaI\nA3j01fIa1i3MJajklbqCDEqwu/Q9BStfTDxuYcUvuAymtS9jk8jNYvRd4gUyddEi\nZgqB6KX9rZ6H74BLHjKEl3/brFYCkY/yCmSFSk93srL8Oy8GXgbNYpGUwmwBGk2A\nWP/cCOGPd1kRFYnKYtsZ+UwOeY+5bo6A94U+R2lRv/cw14gY8WtwwFLspus/X6rn\nKe9oyrUZAgMBAAECggEAFfFk0A2UcyBWdhMZdLuxxZlrzMDaGMXvVqkEYT61pplq\nKZkbTY6lJR66EI5coZdkX/tHfmBTuRrORx61vqrUnE70QpsVaxdv0SEk/9Uxcnod\n5o3fYcGL3tyk9iKGoI2ZejEOj78KAjxrB0wsbAJqFpTtIzi4uy5OrkiyEArjaYuR\nCxT2taM1cslu3p2/zbjCgUFj6jV35An+JXmz2XH3G910go/eTwZfQNccK94K+IrT\nZ0TWCv5IhZfXquKh5fEA4B+6b1h7VrdXte13KIwHYdwzBPCCG+hRsZ6NxHOe5c27\nzMs6HohJOaB8En7qPaO0As8mId6gqGN2hkI7MOhL8QKBgQD+0BvRI6RA03sgdd2E\njUAEzhfYhqQPspWrb4TgUJz2RHqz+LkVZKib0VK5fbSFPpFm6rEjvNxO4ylUMuIc\nuI/Gk60KD0ijdDcmSJhVIAVncvCq2Ug1ZhcnvPdUgsw8q59XHztXZygW5GC2ST9Q\nMvZYEb208ueRm6XLu/qWo+7lOwKBgQDqFdNE29UdP0ABl1l5lW7MtPhFVcZAGMRZ\nfCKlAHFTPD6uKtIr5m5cKqBQx2Uy4KDuCyeXZTOfMiLzfsI57sjTLOiwiiqIYE/j\nzi9Iw4NloEbEvA1pHQT00Uz75onYuAHrH743Du83zV0Gtlx1wo+pv3BpLHwNMhKD\nWUbYjkuZuwKBgQCovRleonKX9zPXKBY8O+mEBRJncandN07Dy0K75MY8ktaKrY+r\nKhA5tyFH8oWDow5Yj9wkJWHi360zs8pmaJXVU1/IhJx+mWwX7wTpgh3yBnx3NxIJ\nQoTc7NcAYOls193ZrLX4SDiVCEE/FTxXGJhnc8AjvqM4mlDtnJrx/LcrlwKBgFXB\nYyGBy4QobMFoee3x0aKK1b1I3BUVPbFuqZ57GAkfM/NIWrCcfWekchDFy4wlAK/U\nRE/RUmUK0AUWNf9VPBspA6HRLB3D8uCI44eroJJ1cheWsO8GI4+wsZxC69MKLiG+\nAkhXX0m5IVBZNGwrt8e/C2ZsVpHa+y9FYI/rKUULAoGAfCN20dhUTbHwB3HnOqa2\napwaVdiocXOi439v6XafwzxZe6BECa0/t7Y2hX2ixtZAy8bF4xFniJ8lr83EjbQS\nNtZWv9tSYME3uYHS1SHSwCUGlJ9BqfrZNbW7rfyra7X+InRW0dALGbZlLY2ppFrw\nGmTYU76xPrLW9SqH2xIX+zQ=\n-----END PRIVATE KEY-----\n",
+  "client_email": "dreamlabwhatsapp@ordinal-brace-416801.iam.gserviceaccount.com",
+  "client_id": "103012731887802250492",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dreamlabwhatsapp%40ordinal-brace-416801.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
