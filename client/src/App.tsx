@@ -3,12 +3,14 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import Landing from "./pages/landing/Landing";
+import Navbar from "./components/Navbar";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
+      <Navbar />
       <Landing />
       <p className="text-7xl">Hola Lorem Ipsum</p>
       <div>
