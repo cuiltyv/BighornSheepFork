@@ -10,7 +10,8 @@ export default {
         gold: "#CBA135",
       },
       fontFamily: {
-        body: ["Nunito"],
+        sans: ["Lato", "sans-serif"],
+        serif: ["Roboto Slab", "serif"],
       },
     },
   },
