@@ -2,7 +2,17 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        blue: "#549CAD",
+        darkWhite: "#F0F0F0",
+        violet: "#654F6F",
+        gold: "#CBA135",
+      },
+      fontFamily: {
+        body: ["Nunito"],
+      },
+    },
   },
   plugins: [],
 };
