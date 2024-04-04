@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 
 const Navbar = () => {
@@ -8,11 +8,32 @@ const Navbar = () => {
     setNav(!nav);
   };
 
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  const handleScroll = () => {
+    const currentScrollPos = window.scrollY;
+
+    if (currentScrollPos > prevScrollPos) {
+      setVisible(false);
+    } else {
+      setVisible(true);
+    }
+
+    setPrevScrollPos(currentScrollPos);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  });
+
   const login = "Iniciar Sesión";
 
   return (
     <div>
-      <div className="mx-auto flex h-[100px] max-w-[1200px] items-center justify-end bg-darkWhite text-black">
+      <div className="mx-auto flex h-[100px] max-w-[1400px] items-center justify-end bg-darkWhite text-black md:mb-6">
         <ul className="hidden border-b border-black md:flex">
           <li className="mx-6 p-5">
             <a href="/inicio">Inicio</a>
@@ -31,7 +52,10 @@ const Navbar = () => {
           </div>
         </a>
 
-        <div onClick={handleNav} className="fixed left-0 ml-6 block md:hidden">
+        <div
+          onClick={handleNav}
+          className={`fixed left-0 ml-6 block transition duration-700 ease-in-out md:hidden ${visible ? "" : "pointer-events-none opacity-0"}`}
+        >
           <AiOutlineMenu size={35} />
         </div>
 
