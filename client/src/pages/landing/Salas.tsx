@@ -1,82 +1,25 @@
 import SalaCard from "../../components/SalaCard";
-
-// Salas objeto
-const salas = [
-  {
-    id: 1,
-    description: "Sala de reuniones",
-    name: "Sala 1",
-    lugar: "D.R.E.A.M. Lab",
-    cupo: "10 personas",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 2,
-    description: "Sala de reuniones",
-    name: "Sala 2",
-    lugar: "D.R.E.A.M. Lab",
-    cupo: "10 personas",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 3,
-    description: "Sala de reuniones",
-    name: "Sala 3",
-    lugar: "D.R.E.A.M. Lab",
-    cupo: "10 personas",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 4,
-    description: "Sala de reuniones",
-    name: "Sala 4",
-    lugar: "D.R.E.A.M. Lab",
-    cupo: "10 personas",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 5,
-    description: "Sala de reuniones",
-    name: "Sala 5",
-    lugar: "D.R.E.A.M. Lab",
-    cupo: "10 personas",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 6,
-    description: "Sala de reuniones",
-    name: "Sala 6",
-    lugar: "D.R.E.A.M. Lab",
-    cupo: "10 personas",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 7,
-    description: "Sala de reuniones",
-    name: "Sala 7",
-    lugar: "D.R.E.A.M. Lab",
-    cupo: "10 personas",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 8,
-    description: "Sala de reuniones",
-    name: "Sala 8",
-    lugar: "D.R.E.A.M. Lab",
-    cupo: "10 personas",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: 9,
-    description: "Sala de reuniones",
-    name: "Sala 9",
-    lugar: "D.R.E.A.M. Lab",
-    cupo: "10 personas",
-    image: "https://via.placeholder.com/150",
-  },
-];
+import { useState, useEffect } from "react";
 
 export default function Salas() {
+  const [salas, setSalas] = useState([]);
+
+  useEffect(() => {
+    const fetchSalas = async () => {
+      try {
+        const response = await fetch("http://localhost:4000/salas");
+        if (!response.ok) throw new Error("Response not ok");
+
+        const data = await response.json();
+        setSalas(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchSalas();
+  }, []);
+
   return (
     <div className="flex flex-col gap-6 bg-darkWhite px-32 py-10">
       <div>
@@ -86,9 +29,18 @@ export default function Salas() {
         </h2>
       </div>
       <div className="flex flex-wrap justify-between gap-4">
-        {salas.map((sala) => (
-          <SalaCard key={sala.id} sala={sala} />
-        ))}
+        {salas.map(
+          (sala: {
+            id: string;
+            image: string;
+            name: string;
+            description: string;
+            lugar: string;
+            cupo: string;
+          }) => (
+            <SalaCard key={sala.id} sala={sala} />
+          ),
+        )}
       </div>
     </div>
   );
