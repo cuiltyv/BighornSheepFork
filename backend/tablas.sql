@@ -10,3 +10,12 @@ CREATE TABLE dbo.[Reservaciones] (      [ReservacionID] int NOT NULL     , [Matr
 CREATE TABLE dbo.[ReservacionHardware] (      [ReservacionHardwareID] int NOT NULL     , [ReservacionID] int NULL     , [HardwareID] int NULL     , [Cantidad] int NOT NULL );
 CREATE TABLE dbo.[Usuarios] (      [Matricula] varchar(10) NOT NULL     , [Nombre] nvarchar(50) NOT NULL     , [Apellidos] nvarchar(50) NOT NULL     , [Contrasena] nvarchar(256) NOT NULL     , [Carrera] nvarchar(50) NOT NULL     , [Semestre] int NOT NULL );
 CREATE TABLE dbo.[ZonasInstalaciones] (      [ZonaID] int NOT NULL     , [Nombre] nvarchar(100) NOT NULL     , [Descripcion] nvarchar(255) NOT NULL );
+
+CREATE TABLE Salas(
+	ZonaId INT IDENTITY(1,1) PRIMARY KEY,
+	Descripcion VARCHAR(100),
+	Cupo INT,
+	Nombre varchar(50),
+	Lugar varchar(50),
+	Link varchar(100)
+);
