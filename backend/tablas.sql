@@ -19,3 +19,8 @@ CREATE TABLE Salas(
 	Lugar varchar(50),
 	Link varchar(100)
 );
+
+
+
+INSERT INTO Salas (Descripcion,Cupo,Nombre,Lugar,Link) VALUES ("VR, AR, XR", 13, "New Horizons", "D.R.E.A.M. Lab - 204","https://imgur.com/ZLkPmIQ");
+INSERT INTO Salas (Descripcion,Cupo,Nombre,Lugar,Link) VALUES ("Equipos viejitos",4,"Graveyard","D.R.E.A.M. Lab - 512","https://imgur.com/EwNgPyi");
