@@ -1,10 +1,18 @@
 const express = require('express');
 const sql = require('mssql');
 const config = require('./config');
+// config no esta publico en github, crear archivo de config ustedes
+
 
 const app = express();
 app.use(express.json()); 
 
+
+
+// node API.js
+app.get("/", (req, res) => {
+  res.send("Ruta funcionando");
+});
 
 // Establecer conexion
 sql.connect(config).then(pool => {
