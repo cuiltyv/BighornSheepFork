@@ -14,9 +14,7 @@ export default function SalaCard({
   return (
     <div className="flex max-w-xs flex-col gap-2 rounded bg-white p-3">
       <img
-        src={
-          "https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ="
-        }
+        src={"https://imgur.com/ZLkPmIQ"}
         alt={sala.name}
         className="h-60 w-60"
       />

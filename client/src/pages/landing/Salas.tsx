@@ -1,9 +1,41 @@
 import SalaCard from "../../components/SalaCard";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function Salas() {
   const [salas, setSalas] = useState([]);
 
+  /**
+  const salas = [
+    {
+      id: "1",
+      image: "https://imgur.com/ZLkPmIQ",
+      name: "Sala 1",
+      description: "Descripción de la sala 1",
+      lugar: "Lugar de la sala 1",
+      cupo: "Cupo de la sala 1",
+    },
+    {
+      id: "2",
+      image: "https://imgur.com/ZLkPmIQ",
+      name: "Sala 2",
+      description: "Descripción de la sala 2",
+      lugar: "Lugar de la sala 2",
+      cupo: "Cupo de la sala 2",
+    },
+    {
+      id: "3",
+      image: "https://imgur.com/ZLkPmIQ",
+      name: "Sala 3",
+      description: "Descripción de la sala 3",
+      lugar: "Lugar de la sala 3",
+      cupo: "Cupo de la sala 3",
+    },
+  ];
+   */
+
+  /**
+   * Delete once Axios is implemented
   useEffect(() => {
     const fetchSalas = async () => {
       try {
@@ -19,6 +51,18 @@ export default function Salas() {
 
     fetchSalas();
   }, []);
+   */
+
+  useEffect(() => {
+    axios
+      .get("http//:localhost:4000/salas")
+      .then(function (res) {
+        setSalas(res.data);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div className="flex flex-col gap-6 bg-darkWhite px-32 py-10">
@@ -29,18 +73,17 @@ export default function Salas() {
         </h2>
       </div>
       <div className="flex flex-wrap justify-between gap-4">
-        {salas.map(
-          (sala: {
-            id: string;
-            image: string;
-            name: string;
-            description: string;
-            lugar: string;
-            cupo: string;
-          }) => (
-            <SalaCard key={sala.id} sala={sala} />
-          ),
-        )}
+        {salas &&
+          salas.map(
+            (sala: {
+              id: string;
+              image: string;
+              name: string;
+              description: string;
+              lugar: string;
+              cupo: string;
+            }) => <SalaCard key={sala.id} sala={sala} />,
+          )}
       </div>
     </div>
   );
