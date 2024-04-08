@@ -4,6 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import Landing from "./pages/landing/Landing";
 import Navbar from "./components/Navbar";
+import Perfil from "./pages/perfil/Perfil";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -33,6 +34,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <Perfil />
     </div>
   );
 }
