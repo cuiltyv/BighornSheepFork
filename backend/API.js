@@ -27,6 +27,19 @@ sql.connect(config).then(pool => {
     console.error('Database connection failed:', err);
 });
 
+// Sacar todas las salas
+app.get('/salas', (req, res) => {
+    new sql.Request().query('SELECT * FROM dbo.Salas')
+        .then(result => {
+            res.json(result.recordset);
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).send('Error al extraer las salas');
+        });
+});
+  
+
 // Sacar todas las reservaciones
 
 app.get('/reservaciones', (req, res) => {
