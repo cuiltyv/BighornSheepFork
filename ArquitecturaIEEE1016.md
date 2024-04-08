@@ -81,7 +81,7 @@ Describir el modelo arquitectónico elegido para el sistema, incluyendo estilos,
 ~~Detallar el diseño de la estructura de datos, incluyendo modelos de datos, diagramas de entidad-relación y cualquier consideración de persistencia de datos.~~
 
 ## 4. Detalles del Diseño
-
+![DiagramaER](https://i.imgur.com/3E3Uv9w.png)
 
 
 ### 4.1 Detalles de los Componentes del Sistema
