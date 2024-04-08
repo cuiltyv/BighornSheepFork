@@ -57,7 +57,7 @@ export default function Salas() {
     axios
       .get("http//:localhost:4000/salas")
       .then(function (res) {
-        setSalas(res.data);
+        setSalas([]);
       })
       .catch(function (err) {
         console.log(err);
