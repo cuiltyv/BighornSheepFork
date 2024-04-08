@@ -21,6 +21,12 @@ CREATE TABLE Salas(
 );
 
 
+INSERT INTO Salas (Descripcion, Cupo, Nombre, Lugar, Link) VALUES 
+('Diseño e impresión de equipos electrónicos', 15, 'PCB Factory', 'A7 - 418', 'https://imgur.com/2S9zVty'),
+('Electrónica', 19, 'Electric Garage', 'D.R.E.A.M. Lab - 302', 'https://imgur.com/6ysipgZ'),
+('Ciberseguridad', 6, 'Deep Net', 'A7 - 207', 'https://imgur.com/09WxqnY'),
+('Pruebas de seguridad', 11, 'Hack Battlefield', 'D.R.E.A.M. Lab - 213', 'https://imgur.com/qFR54Ky'),
+('Pruebas de usabilidad', 7, 'Testing Land', 'D.R.E.A.M. Lab - 401', 'https://imgur.com/7JuH2yb'),
+('Impresoras 3D', 15, 'Dimension Forge', 'D.R.E.A.M. Lab - 305', 'https://imgur.com/UlAiBFf');
 
-INSERT INTO Salas (Descripcion,Cupo,Nombre,Lugar,Link) VALUES ("VR, AR, XR", 13, "New Horizons", "D.R.E.A.M. Lab - 204","https://imgur.com/ZLkPmIQ");
-INSERT INTO Salas (Descripcion,Cupo,Nombre,Lugar,Link) VALUES ("Equipos viejitos",4,"Graveyard","D.R.E.A.M. Lab - 512","https://imgur.com/EwNgPyi");
+
