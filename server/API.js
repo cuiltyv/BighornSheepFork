@@ -205,7 +205,7 @@ app.delete("/reservaciones/:id", (req, res) => {
 });
 
 // Sacar los usuarios
-app.post("/usuarios", (req, res) => {
+app.get("/usuarios", (req, res) => {
   const query = `
         SELECT * FROM dbo.Usuarios;
     `;
