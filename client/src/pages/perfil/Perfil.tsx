@@ -4,14 +4,14 @@ import * as Yup from "yup";
 export default function Perfil() {
   const formik = useFormik({
     initialValues: {
-      nombre: "",
-      apellido: "",
-      email: "",
-      matricula: "",
-      password: "",
-      passwordConfirm: "",
-      carrera: "",
-      semestre: "",
+      nombre: "Roberto",
+      apellido: "Andonie",
+      email: "a01411863@tec.mx",
+      matricula: "A01411863",
+      password: "Shakira123",
+      passwordConfirm: "Shakira123",
+      carrera: "ITC",
+      semestre: "6to Semestre",
     },
     validationSchema: Yup.object({
       nombre: Yup.string().required("Campo requerido"),
