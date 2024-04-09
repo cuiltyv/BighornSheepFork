@@ -8,7 +8,6 @@ const app = express();
 app.use(express.json()); 
 
 
-
 // node API.js
 app.get("/", (req, res) => {
   res.send("Ruta funcionando");
@@ -35,7 +34,8 @@ app.get('/salas', (req, res) => {
         })
         .catch(err => {
             console.error(err);
-            res.status(500).send('Error al extraer las salas');
+            res.status(500).send({ message: 'Error con DB', error: err });
+
         });
 });
   
@@ -49,7 +49,7 @@ app.get('/reservaciones', (req, res) => {
         })
         .catch(err => {
             console.error(err);
-            res.status(500).send('Error querying the database');
+            res.status(500).send({ message: 'Error con DB', error: err });
         });
 });
 
@@ -78,7 +78,7 @@ app.post('/reservaciones', (req, res) => {
         })
         .catch(err => {
             console.error(err);
-            res.status(500).send('Error creating reservation');
+            res.status(500).send({ message: 'Error con DB', error: err });
         });
 });
 
@@ -97,7 +97,7 @@ app.get('/reservaciones/upcoming', (req, res) => {
         })
         .catch(err => {
             console.error(err);
-            res.status(500).send('Error querying the database for upcoming reservations');
+            res.status(500).send({ message: 'Error con DB', error: err });
         });
 });
 
@@ -122,7 +122,7 @@ app.get('/reservaciones/:id', (req, res) => {
         })
         .catch(err => {
             console.error(err);
-            res.status(500).send('Error querying the database');
+            res.status(500).send({ message: 'Error con DB', error: err });
         });
 });
 
@@ -153,7 +153,7 @@ app.put('/reservaciones/:id', (req, res) => {
         })
         .catch(err => {
             console.error(err);
-            res.status(500).send('Error updating reservation');
+            res.status(500).send({ message: 'Error con DB', error: err });
         });
 });
 
@@ -174,9 +174,10 @@ app.delete('/reservaciones/:id', (req, res) => {
         })
         .catch(err => {
             console.error(err);
-            res.status(500).send('Error deleting reservation');
+            res.status(500).send({ message: 'Error con DB', error: err });
         });
 });
+
 
 
 
