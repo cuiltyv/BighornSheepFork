@@ -3,7 +3,7 @@ const sql = require("mssql");
 const config = require("./config");
 //var cors = require("cors");
 // config no esta publico en github, crear archivo de config ustedes
-
+//
 const app = express();
 app.use(express.json());
 //app.use(cors());
