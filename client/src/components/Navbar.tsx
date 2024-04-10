@@ -44,6 +44,9 @@ const Navbar = () => {
           <li className="mx-6 p-5">
             <a href="/BighornSheep/reservaciones">Reservaciones</a>
           </li>
+          <li className="mx-6 p-5">
+            <a href="/BighornSheep/admin">Administrador</a>
+          </li>
         </ul>
 
         <a
