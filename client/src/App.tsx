@@ -1,11 +1,10 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+
 import "./App.css";
 import Landing from "./pages/landing/Landing";
 import Navbar from "./components/Navbar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/login/Login";
+import Register from "./pages/login/Register";
 
 function App() {
   return (
@@ -14,7 +13,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/BighornSheep" element={<Landing />} />
-          <Route path="/BighornSheep/login" element={<Login />} />
+          <Route path="/BighornSheep/login" element={<Register />} />
         </Routes>
       </BrowserRouter>
     </div>
