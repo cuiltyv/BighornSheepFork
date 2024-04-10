@@ -6,6 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Register.css";
+import axios from "axios";
 
 const USER_REGEX = /^[Aa][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -88,7 +89,7 @@ const Register = () => {
 
   return (
     <>
-      <div className="flex h-[800px] items-center justify-center bg-blue md:w-7/12">
+      <div className="h-[800px] items-center justify-center bg-blue md:w-7/12">
         {success ? (
           <section>
             <h1>Success!</h1>
