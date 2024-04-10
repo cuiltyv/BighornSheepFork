@@ -82,6 +82,9 @@ const Navbar = () => {
             <li className="my-2 p-2">
               <a href="/BighornSheep/reservaciones">Reservaciones</a>
             </li>
+            <li className="my-2 bg-blue p-2 text-white">
+              <a href="/BighornSheep/login">Iniciar Sesión</a>
+            </li>
             <li className="my-2 bg-violet p-2 text-white" onClick={handleNav}>
               Cerrar
             </li>
