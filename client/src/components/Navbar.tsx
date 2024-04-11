@@ -36,17 +36,23 @@ const Navbar = () => {
       <div className="mx-auto flex h-[100px] max-w-[1400px] items-center justify-end bg-darkWhite text-black md:mb-6">
         <ul className="hidden border-b border-black md:flex">
           <li className="mx-6 p-5">
-            <a href="/inicio">Inicio</a>
+            <a href="/BighornSheep/">Inicio</a>
           </li>
           <li className="mx-6 p-5">
-            <a href="/contacto">Contacto</a>
+            <a href="/BighornSheep/contacto">Contacto</a>
           </li>
           <li className="mx-6 p-5">
-            <a href="/reservaciones">Reservaciones</a>
+            <a href="/BighornSheep/reservaciones">Reservaciones</a>
+          </li>
+          <li className="mx-6 p-5">
+            <a href="/BighornSheep/admin">Administrador</a>
           </li>
         </ul>
 
-        <a href="/login" className="mr-6 hidden items-center md:flex">
+        <a
+          href="/BighornSheep/login"
+          className="mr-6 hidden items-center md:flex"
+        >
           <div className="ml-4 rounded-full bg-blue px-4 py-2 text-white">
             {login}
           </div>
@@ -68,13 +74,16 @@ const Navbar = () => {
         >
           <ul className="p-2 text-2xl">
             <li className="my-2 p-2">
-              <a href="/inicio">Inicio</a>
+              <a href="/BighornSheep/">Inicio</a>
             </li>
             <li className="my-2 p-2">
-              <a href="/contacto">Contacto</a>
+              <a href="/BighornSheep/contacto">Contacto</a>
             </li>
             <li className="my-2 p-2">
-              <a href="/reservaciones">Reservaciones</a>
+              <a href="/BighornSheep/reservaciones">Reservaciones</a>
+            </li>
+            <li className="my-2 bg-blue p-2 text-white">
+              <a href="/BighornSheep/login">Iniciar Sesión</a>
             </li>
             <li className="my-2 bg-violet p-2 text-white" onClick={handleNav}>
               Cerrar

@@ -1,14 +1,18 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+
 import "./App.css";
 import Landing from "./pages/landing/Landing";
 import Navbar from "./components/Navbar";
 import Perfil from "./pages/perfil/Perfil";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Register from "./pages/login/Register";
+
+
+import Dashboard from "./pages/admin/Dashboard";
+
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <div className="bg-darkWhite">
       <Navbar />
@@ -35,6 +39,15 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
       <Perfil />
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/BighornSheep" element={<Landing />} />
+          <Route path="/BighornSheep/login" element={<Register />} />
+          <Route path="/BighornSheep/admin" element={<Dashboard />} />
+
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

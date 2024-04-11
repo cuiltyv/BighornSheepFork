@@ -1,0 +1,23 @@
+name: CI Build
+
+# This workflow is triggered on pushes and pull requests to the main branch.
+on:
+  push:
+    branches: [ main , alberto/ci-cd ]
+  pull_request:
+    branches: [ main , alberto/ci-cd]
+
+# Defines the job to run.
+jobs:
+  build:
+    # This job runs on a Linux virtual machine.
+    runs-on: ubuntu-latest
+
+    steps:
+    # This step uses GitHub's checkout action to fetch the repository code
+    - name: Check out repository code
+      uses: actions/checkout@v2
+
+    # This step prints "Hello, World!" to the console
+    - name: Run a one-line script
+      run: echo "Hello, World!"

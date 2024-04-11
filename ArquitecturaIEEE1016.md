@@ -66,7 +66,7 @@ El sistema dependerá de la infraestructura tecnológica que ya existe en el Tec
 
 Describir el modelo arquitectónico elegido para el sistema, incluyendo estilos, patrones y estrategias de diseño utilizados.
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/1955db18-85bf-4d26-8193-e6ed9e35937b/1f03e2da-9593-45ff-b6a5-f6357247fddc/Untitled.png)
+![DiagramaER](https://imgur.com/3E3Uv9w)
 
 ### ~~3.2 Descomposición del Sistema~~
 
@@ -81,6 +81,8 @@ Describir el modelo arquitectónico elegido para el sistema, incluyendo estilos,
 ~~Detallar el diseño de la estructura de datos, incluyendo modelos de datos, diagramas de entidad-relación y cualquier consideración de persistencia de datos.~~
 
 ## 4. Detalles del Diseño
+![DiagramaER](https://i.imgur.com/3E3Uv9w.png)
+
 
 ### 4.1 Detalles de los Componentes del Sistema
 
