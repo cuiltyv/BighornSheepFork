@@ -20,6 +20,7 @@ export default function Perfil() {
       matricula: Yup.string().required("Campo requerido"),
       password: Yup.string().required("Campo requerido"),
       passwordConfirm: Yup.string()
+        .nullable()
         .oneOf([Yup.ref("password"), null], "Passwords must match")
         .required("Campo requerido"),
       carrera: Yup.string().required("Campo requerido"),

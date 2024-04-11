@@ -12,7 +12,7 @@ const USER_REGEX = /^[Aa][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const REGISTER_URL = "/registro";
 
-const Register = () => {
+export default function Register () {
   const userRef = useRef();
   const errRef = useRef();
 
@@ -249,6 +249,4 @@ const Register = () => {
       </div>
     </>
   );
-};
-
-export default Register;
+}
