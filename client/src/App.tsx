@@ -7,6 +7,8 @@ import Perfil from "./pages/perfil/Perfil";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Register from "./pages/login/Register";
+import Login from "./pages/login/Login";
+
 
 import Dashboard from "./pages/admin/Dashboard";
 
@@ -24,8 +26,10 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/BighornSheep" element={<Landing />} />
-          <Route path="/BighornSheep/login" element={<Register />} />
+          <Route path="/BighornSheep/register" element={<Register />} />
           <Route path="/BighornSheep/admin" element={<Dashboard />} />
+
+          <Route path="/BighornSheep/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,3 +1,4 @@
+
 const express = require('express');
 const sql = require('mssql');
 const config = require('./configs/config');
@@ -6,13 +7,24 @@ const reservationsRoutes = require('./routes/reservationsRoutes');
 const roomsRoutes = require('./routes/salasRoutes');  // Make sure this matches the exported name from the file
 const miscRoutes = require('./routes/miscRoutes');
 
+
 const app = express();
 
 app.use(express.json());
 
 // !Comentar antes de subir a GitHub
+
+// ?Descomentar para poder probar con localhost
+
+=======
 // ?Descomentar para poder probar con localhost en react
 /*
+
+// !Comentar antes de subir a GitHub
+// ?Descomentar para poder probar con localhost
+const cors = require("cors");
+// config no esta publico en github, crear archivo de config ustedes
+
 app.use((req, res, next) => {
   // Set the 'Access-Control-Allow-Origin' header to the value of the 'Origin' header in the incoming request
   res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
@@ -25,6 +37,7 @@ app.use((req, res, next) => {
   // Proceed to the next middleware
   next();
 });
+
 */
 
 
