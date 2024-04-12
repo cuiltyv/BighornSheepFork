@@ -50,7 +50,7 @@ const Navbar = () => {
         </ul>
 
         <a
-          href="/BighornSheep/login"
+          href="/BighornSheep/register"
           className="mr-6 hidden items-center md:flex"
         >
           <div className="ml-4 rounded-full bg-blue px-4 py-2 text-white">
@@ -83,7 +83,7 @@ const Navbar = () => {
               <a href="/BighornSheep/reservaciones">Reservaciones</a>
             </li>
             <li className="my-2 bg-blue p-2 text-white">
-              <a href="/BighornSheep/login">Iniciar Sesión</a>
+              <a href="/BighornSheep/register">Iniciar Sesión</a>
             </li>
             <li className="my-2 bg-violet p-2 text-white" onClick={handleNav}>
               Cerrar
