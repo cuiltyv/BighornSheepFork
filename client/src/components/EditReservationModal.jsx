@@ -18,6 +18,17 @@ const EditReservationModal = ({ isOpen, closeModal, reservation, updateReservati
     return null;
   }
 
+  function toLocalDateTimeString(isoString) {
+    const date = new Date(isoString);
+    const offset = date.getTimezoneOffset();
+    const adjustedDate = new Date(date.getTime() - offset * 60 * 1000);
+    return adjustedDate.toISOString().slice(0, 16); //Cortar Z
+  }
+  
+  
+  const horaInicioLocal = toLocalDateTimeString(formData.HoraInicio);
+  const horaFinLocal = toLocalDateTimeString(formData.HoraFin);
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
       <div className="bg-white rounded-lg max-w-2xl w-full overflow-hidden">
@@ -27,11 +38,11 @@ const EditReservationModal = ({ isOpen, closeModal, reservation, updateReservati
             
             <div>
               <label className="block text-sm font-medium text-gray-700">Hora Inicio:</label>
-              <input type="datetime-local" name="HoraInicio" value={formData.HoraInicio} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded shadow-sm w-full" />
+              <input type="datetime-local" name="HoraInicio" value={horaInicioLocal} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded shadow-sm w-full" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Hora Fin:</label>
-              <input type="datetime-local" name="HoraFin" value={formData.HoraFin} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded shadow-sm w-full" />
+              <input type="datetime-local" name="HoraFin" value={horaFinLocal} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded shadow-sm w-full" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Propósito:</label>
@@ -50,7 +61,7 @@ const EditReservationModal = ({ isOpen, closeModal, reservation, updateReservati
                 Cancel
               </button>
               <button type="submit" className="bg-green-500 hover:bg-blue-700 text-green font-medium py-2 px-4 rounded">
-                Update
+                Actualizar
               </button>
             </div>
           </form>
