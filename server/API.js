@@ -16,7 +16,6 @@ app.use(express.json());
 
 // ?Descomentar para poder probar con localhost
 
-=======
 // ?Descomentar para poder probar con localhost en react
 /*
 
