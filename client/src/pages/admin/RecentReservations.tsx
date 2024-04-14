@@ -33,7 +33,6 @@ const RecentReservations = () => {
   }, []);
 
   const handleEdit = (reservacionID: number) => {
-    // FALTA LOGICA DE EDIT, YA ESTA EN EL API PERO NO LO HE METIDO
     setCurrentReservation(reservations.find((res: Reservation) => res.ReservacionID === reservacionID));
     setIsEditing(true);
     console.log('Editing reservation with ID:', reservacionID);
@@ -54,10 +53,23 @@ const RecentReservations = () => {
     }
   };
 
-  const handleDelete = (reservacionID: number) => {
-    // FALTA LOGICA DE DELETE, YA ESTA EN EL API PERO NO LO HE METIDO
-    console.log('Deleting reservation with ID:', reservacionID);
+  //DECIDIR QUE HACER CON LAS FOREIGN KEY DE LAS TABLAS
+  const handleDelete = async (reservacionID: number) => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this reservation?');
+    if (confirmDelete) {
+      try {
+        console.log('Deleting reservation with ID:', reservacionID);
+        const response = await axios.delete(`https://dreamapi.azurewebsites.net/reservaciones/${reservacionID}`);
+        console.log(response.data);
+        setReservations(reservations.filter((res: Reservation) => res.ReservacionID !== reservacionID));
+        alert('Reservation deleted successfully'); 
+      } catch (error) {
+        console.error('Error deleting reservation:', error);
+        alert('There was an error deleting the reservation.'); 
+      }
+    }
   };
+  
 
   return (
     <div className="mt-4 mx-2 p-4 bg-white rounded shadow-lg">
@@ -92,11 +104,12 @@ const RecentReservations = () => {
                     <PencilIcon className="h-5 w-5" />
                   </button>
                   <button
-                    onClick={() => console.log('Deleting reservation with ID:', res.ReservacionID)}
-                    className="p-1 m-1 text-red-500 hover:text-red-700"
-                  >
-                    <TrashIcon className="h-5 w-5" />
-                  </button>
+                  onClick={() => handleDelete(res.ReservacionID)}
+                  className="p-1 m-1 text-red-500 hover:text-red-700"
+                >
+                  <TrashIcon className="h-5 w-5" />
+                </button>
+
                 </td>
               </tr>
             ))}
