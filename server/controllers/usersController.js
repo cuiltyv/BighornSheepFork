@@ -112,7 +112,12 @@ const loginUser = async (req, res) => {
       // Create JWT
 
       const accessToken = jwt.sign(
-        { Matricula: Matricula },
+        {
+          UserInfo: {
+            Matricula: Matricula,
+            roles: roles,
+          },
+        },
         process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: "15m" } //15min
       );

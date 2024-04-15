@@ -17,6 +17,8 @@ const handleLogout = async (req, res) => {
       .request()
       .input("refreshToken", sql.VarChar(500), refreshToken)
       .output("userExists", sql.Bit)
+      .output("matricula", sql.VarChar(10))
+      .output("role", sql.Int)
       .execute("sp_GetUserByRefreshToken");
 
     const userExists = result.output.userExists;

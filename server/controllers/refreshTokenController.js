@@ -15,9 +15,12 @@ const handleRefreshToken = async (req, res) => {
       .request()
       .input("refreshToken", sql.VarChar(500), refreshToken)
       .output("userExists", sql.Bit)
+      .output("matricula", sql.VarChar(10))
+      .output("role", sql.Int)
       .execute("sp_GetUserByRefreshToken");
 
     const userExists = result.output.userExists;
+    const role = result.output.role;
 
     if (!userExists) return res.sendStatus(403);
 
@@ -27,7 +30,7 @@ const handleRefreshToken = async (req, res) => {
       (err, decoded) => {
         if (err) return res.sendStatus(403);
         const accessToken = jwt.sign(
-          { Matricula: decoded.Matricula },
+          { UserInfo: { Matricula: decoded.Matricula, roles: role } },
           process.env.ACCESS_TOKEN_SECRET,
           { expiresIn: "15m" } //15min
         );
