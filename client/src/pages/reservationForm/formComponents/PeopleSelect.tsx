@@ -1,19 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { GrAdd, GrSubtract } from "react-icons/gr";
+import { Person } from "./../Form";
 
 import "tailwindcss/tailwind.css";
 import "../styles/styles.css";
 
-interface Person {
-  name: string;
-  registration: string;
-}
-
-const PeopleSelect: React.FC = () => {
-  const [people, setPeople] = useState<Person[]>([
-    { name: "", registration: "" },
-  ]);
-
+const PeopleSelect: React.FC<{
+  people: Person[];
+  setPeople: React.Dispatch<React.SetStateAction<Person[]>>;
+}> = ({ people, setPeople }) => {
   const addPerson = () => {
     if (people.length < 6) {
       setPeople([...people, { name: "", registration: "" }]);

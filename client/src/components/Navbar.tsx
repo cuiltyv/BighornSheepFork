@@ -42,7 +42,7 @@ const Navbar = () => {
             <a href="/BighornSheep/contacto">Contacto</a>
           </li>
           <li className="mx-6 p-5">
-            <a href="/BighornSheep/reservaciones">Reservaciones</a>
+            <a href="/BighornSheep/form">Reservaciones</a>
           </li>
           <li className="mx-6 p-5">
             <a href="/BighornSheep/admin">Administrador</a>
@@ -80,7 +80,7 @@ const Navbar = () => {
               <a href="/BighornSheep/contacto">Contacto</a>
             </li>
             <li className="my-2 p-2">
-              <a href="/BighornSheep/reservaciones">Reservaciones</a>
+              <a href="/BighornSheep/form">Reservaciones</a>
             </li>
             <li className="my-2 bg-blue p-2 text-white">
               <a href="/BighornSheep/register">Iniciar Sesión</a>

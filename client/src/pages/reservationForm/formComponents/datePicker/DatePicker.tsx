@@ -2,20 +2,25 @@ import Calendar from "./Calendar.tsx";
 import HourSelector from "./HourSelector.tsx";
 import dayjs from "dayjs";
 
-import { SetStateAction, useState } from "react";
+import { SetStateAction } from "react";
 
 import "tailwindcss/tailwind.css";
 import "../../styles/styles.css";
 
-function DatePicker() {
-  const [horaSeleccionada, setHoraSeleccionada] = useState("9:00am - 10:00am");
-  const [diaSeleccionado, setDiaSeleccionado] = useState(dayjs());
+type DatePickerProps = {
+  setHoraSeleccionada: (hora: SetStateAction<string>) => void;
+  setDiaSeleccionado: (dia: SetStateAction<dayjs.Dayjs>) => void;
+  diaSeleccionado: dayjs.Dayjs;
+  horaSeleccionada: string;
+};
+
+function DatePicker(props: DatePickerProps) {
   const handleHoraSeleccionadaChange = (hora: SetStateAction<string>) => {
-    setHoraSeleccionada(hora);
+    props.setHoraSeleccionada(hora);
   };
 
   const handleDiaSeleccionadoChange = (dia: SetStateAction<dayjs.Dayjs>) => {
-    setDiaSeleccionado(dia);
+    props.setDiaSeleccionado(dia);
   };
   const getDiaSemana = (dia: dayjs.Dayjs): string => {
     const diasSemana = [
@@ -43,12 +48,12 @@ function DatePicker() {
             <h2 className="my-5 text-xl font-bold">Datos de la reserva</h2>
             <div className="  calendar-container rounded-lg p-10">
               <p className="w-36 font-semibold">
-                {`${getDiaSemana(diaSeleccionado)}, `}
+                {`${getDiaSemana(props.diaSeleccionado)}, `}
               </p>
               <p className="w-36 font-semibold">
-                {diaSeleccionado.format("DD-MM-YYYY")}
+                {props.diaSeleccionado.format("DD-MM-YYYY")}
               </p>
-              <p>{horaSeleccionada}</p>
+              <p>{props.horaSeleccionada}</p>
             </div>
           </div>
         </div>

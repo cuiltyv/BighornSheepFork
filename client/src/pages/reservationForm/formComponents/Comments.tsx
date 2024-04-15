@@ -1,12 +1,13 @@
-import { SetStateAction, useState } from "react";
 import "tailwindcss/tailwind.css";
 
-function Comments() {
-  const [comment, setComment] = useState("");
-
-  const handleCommentChange = (e: {
-    target: { value: SetStateAction<string> };
-  }) => {
+function Comments({
+  comment,
+  setComment,
+}: {
+  comment: string;
+  setComment: (comment: string) => void;
+}) {
+  const handleCommentChange = (e: { target: { value: string } }) => {
     setComment(e.target.value);
   };
 

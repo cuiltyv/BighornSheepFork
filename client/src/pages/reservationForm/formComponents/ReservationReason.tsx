@@ -1,17 +1,19 @@
-import { useState, ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 import "tailwindcss/tailwind.css";
 
-function ReservationReason() {
+function ReservationReason({
+  razonSeleccionada,
+  setRazonSeleccionada,
+}: {
+  razonSeleccionada: string;
+  setRazonSeleccionada: (value: string) => void;
+}) {
   const reasons: string[] = [
     "Unidad de Formacion",
     "Exploracion personal",
     "Proyecto Personal",
     "Otro",
   ];
-
-  const [razonSeleccionada, setRazonSeleccionada] = useState<string>(
-    "Unidad de Formacion",
-  );
 
   const onChangeSelection = (event: ChangeEvent<HTMLSelectElement>) => {
     setRazonSeleccionada(event.target.value);
