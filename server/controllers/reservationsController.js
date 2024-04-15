@@ -52,8 +52,16 @@ const getReservationById = async (req, res) => {
 // Crear una reservacion
 // Ruta: /reservations (POST)
 const createReservation = async (req, res) => {
-  const { Matricula, ZonaID, HoraInicio, HoraFin, Proposito, Estado } =
-    req.body;
+  const {
+    Matricula,
+    ZonaID,
+    HoraInicio,
+    HoraFin,
+    Proposito,
+    Estado,
+    Alumnos,
+    Hardware,
+  } = req.body;
   try {
     let pool = await sql.connect(config);
     await pool
@@ -66,6 +74,24 @@ const createReservation = async (req, res) => {
       .input("Estado", sql.NVarChar(50), Estado)
       .execute("sp_InsertReservacion");
     res.status(201).send("Reservation created successfully");
+
+    Alumnos.forEach(async (alumno) => {
+      pool
+        .request()
+        .input("Matricula", sql.VarChar(10), alumno.Matricula)
+        .input("ReservacionID", sql.Int, alumno.ReservacionID)
+        .execute("sp_InsertAlumnoReservacion");
+      res.status(201).send("Student added to reservation successfully");
+    });
+
+    Hardware.forEach(async (hardware) => {
+      pool
+        .request()
+        .input("HardwareID", sql.Int, hardware.HardwareID)
+        .input("ReservacionID", sql.Int, hardware.ReservacionID)
+        .execute("sp_InsertHardwareReservacion");
+      res.status(201).send("Hardware added to reservation successfully");
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send({ message: "Error con DB", error: err });
