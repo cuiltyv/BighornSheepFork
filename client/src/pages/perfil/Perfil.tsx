@@ -58,10 +58,6 @@ export function CardWithForm() {
               <Input id="name" placeholder={defaultUser.apellidos} />
             </div>
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="framework">Email</Label>
-              <Input id="name" placeholder= "Correo Electronico" />
-            </div>
-            <div className="flex flex-col space-y-1.5">
               <Label htmlFor="framework">Matricula</Label>
               <Input id="name" placeholder={defaultUser.matricula} />
             </div>
