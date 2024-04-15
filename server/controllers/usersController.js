@@ -137,10 +137,12 @@ const loginUser = async (req, res) => {
       res.cookie("jwt", refreshToken, {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000,
+        secure: true,
+        sameSite: "none",
         //secure: true y sameSite: "none" para https no hace que funcione el request en thunderclient
       }); // 1 day
       //res.json({ roles, accessToken }); Para cuando se implementen los roles
-      res.json({ accessToken });
+      res.json({ roles, accessToken });
     } else {
       res.status(401).send("Usuario o Contraseña incorrectos");
     }

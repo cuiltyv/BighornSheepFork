@@ -45,6 +45,7 @@ const Login = () => {
       console.log(JSON.stringify(response));
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
+
       setAuth({ user, pwd, roles, accessToken });
       setUser("");
       setPwd("");
@@ -104,7 +105,7 @@ const Login = () => {
               No tiene cuenta?
               <br />
               <span className="line">
-                <a href="/BighornSheep/register">Registro</a>
+                <Link to="/BighornSheep/register">Registro</Link>
               </span>
             </p>
           </section>
