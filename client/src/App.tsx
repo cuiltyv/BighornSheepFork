@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 
 import "./App.css";
 import Landing from "./pages/landing/Landing";
@@ -18,6 +18,7 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
+          <Route path="/BighornSheep/perfil" element={<Perfil />} />
           <Route path="/BighornSheep" element={<Landing />} />
           <Route path="/BighornSheep/register" element={<Register />} />
           <Route path="/BighornSheep/admin" element={<Dashboard />} />
