@@ -11,13 +11,6 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 
 interface User {
   matricula: string;
@@ -28,22 +21,30 @@ interface User {
   semestre: number;
 }
 
-const defaultUser: User = {
-  matricula: "defaultMatricula",
-  nombre: "defaultNombre",
-  apellidos: "defaultApellidos",
-  contrasena: "defaultContrasena",
-  carrera: "defaultCarrera",
-  semestre: -1,
-};
+
+function syncProfile() {
+  const user:User = {
+    matricula: "defaultMatricula",
+    nombre: "defaultNombre",
+    apellidos: "defaultApellidos",
+    contrasena: "defaultContrasena",
+    carrera: "defaultCarrera",
+    semestre: -1,
+  };
+  return user
+}
+
+
+
 
 
 export function CardWithForm() {
+  const user = syncProfile();
   return (
     <div className="flex justify-center w-screen pb-20">
     <Card className="w-[350px] min-h">
       <CardHeader>
-        <CardTitle>Bienvenido {defaultUser.nombre}</CardTitle>
+        <CardTitle>Bienvenido {user.nombre}</CardTitle>
         <CardDescription>Modifica o consulta la información de tu perfil</CardDescription>
       </CardHeader>
       <CardContent>
@@ -51,23 +52,23 @@ export function CardWithForm() {
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="framework">Nombre</Label>
-              <Input id="name" placeholder={defaultUser.nombre} />
+              <Input id="name" placeholder={user.nombre} />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="framework">Apellido(s)</Label>
-              <Input id="name" placeholder={defaultUser.apellidos} />
+              <Input id="name" placeholder={user.apellidos} />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="framework">Matricula</Label>
-              <Input id="name" placeholder={defaultUser.matricula} />
+              <Input id="name" placeholder={user.matricula} />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="framework">Password</Label>
-              <Input id="name" placeholder={defaultUser.contrasena} />
+              <Input id="name" placeholder={user.contrasena} />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="framework">Carrera</Label>
-              <Input id="name" placeholder={defaultUser.carrera} />
+              <Input id="name" placeholder={user.carrera} />
             </div>
           </div>
         </form>
