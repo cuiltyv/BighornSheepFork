@@ -8,6 +8,7 @@ const handleRefreshToken = async (req, res) => {
   if (!cookies?.jwt) return res.sendStatus(401);
 
   const refreshToken = cookies.jwt;
+  console.log("refreshToken: ", refreshToken);
 
   try {
     let pool = await sql.connect(config);

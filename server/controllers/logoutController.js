@@ -4,9 +4,8 @@ const config = require("../configs/config");
 const handleLogout = async (req, res) => {
   //En el cliente tmb borrar el accessToken
 
-  const cookies = req.cookies;
+  const cookies = req.cookies; //Aqui hay error
   if (!cookies?.jwt) return res.sendStatus(204); //204: No Content
-
   const refreshToken = cookies.jwt;
 
   // Is refreshToken in DB?

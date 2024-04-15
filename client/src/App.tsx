@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import "./App.css";
 import Landing from "./pages/landing/Landing";
 import Home from "./pages/landing/Home";
-import Navbar from "./components/Navbar";
+
 import Perfil from "./pages/perfil/Perfil";
 import Register from "./pages/login/Register";
 import Login from "./pages/login/Login";
@@ -14,6 +14,8 @@ import RequireAuth from "./components/RequireAuth";
 import PersistLogin from "./components/PersistLogin";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
+import WithLayout from "./components/WithLayout";
+import WithLayoutLogout from "./components/WithLayoutLogout";
 
 const ROLES = {
   User: 1,
@@ -23,19 +25,20 @@ const ROLES = {
 function App() {
   return (
     <div className="bg-darkWhite">
-      <Navbar />
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<WithLayout />}>
+          <Route path="/BighornSheep/landing" element={<Landing />} />
           <Route path="/BighornSheep/register" element={<Register />} />
           <Route path="/BighornSheep/login" element={<Login />} />
-          <Route path="/BighornSheep/unauthorized" element={<Unauthorized />} />
-
+          <Route path="*" element={<Missing />} />
+        </Route>
+        <Route path="/" element={<WithLayoutLogout />}>
           {/* Ruta solo para usuarios autenticados */}
           <Route element={<PersistLogin />}>
             <Route
               element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Admin]} />}
             >
-              <Route path="/BighornSheep" element={<Landing />} />
+              <Route path="/BighornSheep" element={<Home />} />
               <Route path="/BighornSheep/perfil" element={<Perfil />} />
             </Route>
 
@@ -43,6 +46,11 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
               <Route path="/BighornSheep/admin" element={<Dashboard />} />
             </Route>
+
+            <Route
+              path="/BighornSheep/unauthorized"
+              element={<Unauthorized />}
+            />
           </Route>
 
           {/* Ruta si no hay match */}
