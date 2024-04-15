@@ -7,7 +7,7 @@ const config = require("../configs/config");
 const getAllHardware = async (req, res) => {
   try {
     const pool = await sql.connect(config);
-    const result = await pool.request().query("SELECT * FROM hardware");
+    const result = await pool.request().execute("sp_GetAllHardware");
     res.json(result.recordset);
   } catch (error) {
     res.status(500);
