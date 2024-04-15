@@ -1,10 +1,11 @@
-const express = require('express');
-const sql = require('mssql');
-const config = require('./configs/config');
-const usersRoutes = require('./routes/usersRoutes');
-const reservationsRoutes = require('./routes/reservationsRoutes');
-const roomsRoutes = require('./routes/salasRoutes');  // Make sure this matches the exported name from the file
-const miscRoutes = require('./routes/miscRoutes');
+const express = require("express");
+const cors = require("cors");
+const sql = require("mssql");
+const config = require("./configs/config");
+const usersRoutes = require("./routes/usersRoutes");
+const reservationsRoutes = require("./routes/reservationsRoutes");
+const roomsRoutes = require("./routes/salasRoutes"); // Make sure this matches the exported name from the file
+const miscRoutes = require("./routes/miscRoutes");
 
 const app = express();
 
@@ -12,6 +13,14 @@ app.use(express.json());
 
 // !Comentar antes de subir a GitHub
 // ?Descomentar para poder probar con localhost en react
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
 /*
 app.use((req, res, next) => {
   // Set the 'Access-Control-Allow-Origin' header to the value of the 'Origin' header in the incoming request
@@ -27,21 +36,20 @@ app.use((req, res, next) => {
 });
 */
 
-
 const requestLogger = (request, response, next) => {
-    console.log("Method:", request.method);
-    console.log("Path:  ", request.path);
-    console.log("Body:  ", request.body);
-    console.log("---");
-    next();
+  console.log("Method:", request.method);
+  console.log("Path:  ", request.path);
+  console.log("Body:  ", request.body);
+  console.log("---");
+  next();
 };
 
 app.use(requestLogger);
 
-app.use('/usuarios', usersRoutes);
-app.use('/reservaciones', reservationsRoutes);
-app.use('/salas', roomsRoutes);
-app.use('/', miscRoutes);
+app.use("/usuarios", usersRoutes);
+app.use("/reservaciones", reservationsRoutes);
+app.use("/salas", roomsRoutes);
+app.use("/", miscRoutes);
 
 sql
   .connect(config)
@@ -60,10 +68,8 @@ sql
     connected = false;
   });
 
-
 const PORT = process.env.PORT || 3000;
 
-
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

@@ -1,5 +1,5 @@
-const express = require('express');
-const usersController = require('../controllers/usersController');
+const express = require("express");
+const usersController = require("../controllers/usersController");
 const router = express.Router();
 
 /* /usuarios ES EL URL BASE
@@ -12,11 +12,10 @@ const router = express.Router();
 
 */
 
-
-router.get('/', usersController.getAllUsers);
-router.get('/:matricula', usersController.getUserByMatricula);
-router.post('/', usersController.createUser);
-router.post('/registro', usersController.registerUser);
-
+router.get("/", usersController.getAllUsers);
+router.get("/:matricula", usersController.getUserByMatricula);
+router.post("/", usersController.createUser);
+router.post("/registro", usersController.registerUser);
+router.post("/auth", usersController.loginUser);
 
 module.exports = router;
