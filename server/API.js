@@ -7,6 +7,9 @@ const reservationsRoutes = require("./routes/reservationsRoutes");
 const roomsRoutes = require("./routes/salasRoutes"); // Make sure this matches the exported name from the file
 const miscRoutes = require("./routes/miscRoutes");
 
+const verifyJWT = require("./middleware/verifyJWT");
+const cookieParser = require("cookie-parser");
+
 const app = express();
 
 app.use(express.json());
@@ -20,6 +23,9 @@ app.use(
     credentials: true,
   })
 );
+
+//middleware for cookies
+app.use(cookieParser());
 
 /*
 app.use((req, res, next) => {
@@ -50,6 +56,8 @@ app.use("/usuarios", usersRoutes);
 app.use("/reservaciones", reservationsRoutes);
 app.use("/salas", roomsRoutes);
 app.use("/", miscRoutes);
+app.use("/refresh", require("./routes/refreshRoutes"));
+app.use("/logout", require("./routes/logoutRoutes"));
 
 sql
   .connect(config)

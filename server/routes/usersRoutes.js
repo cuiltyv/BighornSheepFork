@@ -1,6 +1,7 @@
 const express = require("express");
 const usersController = require("../controllers/usersController");
 const router = express.Router();
+//const verifyJWT = require("../middleware/verifyJWT");
 
 /* /usuarios ES EL URL BASE
 
@@ -11,6 +12,7 @@ const router = express.Router();
 
 
 */
+//router.get("/", verifyJWT, usersController.getAllUsers); Para que se necesite token para acceder
 
 router.get("/", usersController.getAllUsers);
 router.get("/:matricula", usersController.getUserByMatricula);

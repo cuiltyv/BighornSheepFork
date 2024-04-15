@@ -104,6 +104,7 @@ const loginUser = async (req, res) => {
       .execute("sp_UserLogin");
 
     const hashedPwd = result.recordset[0].hashed_password;
+    const roles = result.recordset[0].roles;
 
     const passwordMatch = await bcrypt.compare(Contrasena, hashedPwd);
 
@@ -113,7 +114,7 @@ const loginUser = async (req, res) => {
       const accessToken = jwt.sign(
         { Matricula: Matricula },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: "50s" } //15min
+        { expiresIn: "15m" } //15min
       );
       const refreshToken = jwt.sign(
         { Matricula: Matricula },
@@ -125,9 +126,14 @@ const loginUser = async (req, res) => {
       await pool
         .request()
         .input("Matricula", sql.VarChar(10), Matricula)
-        .input("RefreshToken", sql.Text, refreshToken)
+        .input("RefreshToken", sql.VarChar(500), refreshToken)
         .execute("sp_RefreshTokenSet");
 
+      res.cookie("jwt", refreshToken, {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000,
+        //secure: true y sameSite: "none" para https no hace que funcione el request en thunderclient
+      }); // 1 day
       //res.json({ roles, accessToken }); Para cuando se implementen los roles
       res.json({ accessToken });
     } else {
