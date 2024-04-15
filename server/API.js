@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const express = require("express");
 const sql = require("mssql");
 const config = require("./configs/config");
@@ -6,27 +7,22 @@ const reservationsRoutes = require("./routes/reservationsRoutes");
 const roomsRoutes = require("./routes/salasRoutes"); // Make sure this matches the exported name from the file
 const miscRoutes = require("./routes/miscRoutes");
 const hardWareRoutes = require("./routes/hardwareRoutes");
+=======
+
+const express = require('express');
+const sql = require('mssql');
+const config = require('./configs/config');
+const usersRoutes = require('./routes/usersRoutes');
+const reservationsRoutes = require('./routes/reservationsRoutes');
+const roomsRoutes = require('./routes/salasRoutes');  
+const miscRoutes = require('./routes/miscRoutes');
+>>>>>>> main
+
 
 const app = express();
 
 app.use(express.json());
 
-// !Comentar antes de subir a GitHub
-// ?Descomentar para poder probar con localhost en react
-/*
-app.use((req, res, next) => {
-  // Set the 'Access-Control-Allow-Origin' header to the value of the 'Origin' header in the incoming request
-  res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
-  // Allow other required headers
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  // Allow the necessary HTTP methods
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  // Indicate that credentials (e.g., cookies) should be included in the request
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  // Proceed to the next middleware
-  next();
-});
-*/
 
 const requestLogger = (request, response, next) => {
   console.log("Method:", request.method);

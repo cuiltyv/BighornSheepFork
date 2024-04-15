@@ -1,19 +1,34 @@
+import React, { useState , useEffect } from 'react';
 import RecentReservations from './RecentReservations';
 import StatCard from './StatCard';
-
+import axios from 'axios';
 const Dashboard = () => {
 
-    
+  const [stats, setStats] = useState([
+    { icon: '🏠', count: 0, label: 'Tipos de cuartos' },
+    { icon: '📘', count: 0, label: 'Reservaciones' },
+    { icon: '👍', count: 0, label: 'Confirmadas' },
+    { icon: '👥', count: 0, label: 'Eventos' },
+  ]);
+
+
+  useEffect(() => {
+    axios.get('https://dreamapi.azurewebsites.net/reservaciones/stats')
+      .then(response => {
+        setStats(response.data.iconStats);
+      })
+      .catch(error => {
+        console.error('Error fetching data: ', error);
+        // We're not updating the state here because it's already initialized with zeros.
+      });
+  }, []); // The empty array ensures this effect runs once on mount
+
+
 
     // STATS ESTAN HARDCODEADOS, FALTA HACERLO CON API
     // tal vez con axios.get('https://dreamapi.azurewebsites.net/stats')
     // despues de que implemente la ruta en el API
-    const stats = [
-        { icon: '🏠', count: 5, label: 'Tipos de cuartos' },
-        { icon: '📘', count: 11, label: 'Reservaciones' },
-        { icon: '👍', count: 5, label: 'Confirmadas' },
-        { icon: '👥', count: 0, label: 'Eventos' },
-    ];
+   
 
     
     return (

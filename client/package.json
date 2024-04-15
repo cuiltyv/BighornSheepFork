@@ -13,24 +13,24 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "formik": "^2.4.5",
-
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-brands-svg-icons": "^6.5.2",
     "@fortawesome/free-regular-svg-icons": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@heroicons/react": "^1.0.0",
-
     "axios": "^1.6.8",
+    "formik": "^2.4.5",
     "gh-pages": "^6.1.1",
+    "lucide-react": "^0.368.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
-    "yup": "^1.4.0",
-    "react-router-dom": "^6.22.3"
+    "react-router-dom": "^6.22.3",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@types/node": "^20.12.7",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",

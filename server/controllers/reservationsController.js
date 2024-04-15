@@ -140,6 +140,39 @@ const deleteReservation = async (req, res) => {
   }
 };
 
+const getReservationStats = async (req, res) => {
+  try {
+    let pool = await sql.connect(config);
+    let result = await pool.request().execute("sp_GetStats");
+
+    const stats = {
+      iconStats: [
+        {
+          icon: "🏠",
+          count: result.recordset[0].TiposDeCuartos,
+          label: "Tipos de cuartos",
+        },
+        {
+          icon: "📘",
+          count: result.recordset[0].Reservaciones,
+          label: "Reservaciones",
+        },
+        {
+          icon: "👍",
+          count: result.recordset[0].Confirmadas,
+          label: "Confirmadas",
+        },
+        { icon: "👥", count: result.recordset[0].Eventos, label: "Eventos" },
+      ],
+    };
+
+    res.status(200).json(stats);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Error con DB", error: err });
+  }
+};
+
 module.exports = {
   getAllReservations,
   getUpcomingReservations,
