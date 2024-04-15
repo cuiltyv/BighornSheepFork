@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Register.css";
 import axios from "../../api/axios";
 
-const USER_REGEX = /^[Aa][A-z0-9-_]{3,23}$/;
+const USER_REGEX = /^[AaLl][0-9]{8}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const REGISTER_URL = "/registro";
 
@@ -112,7 +112,7 @@ export default function Register () {
               <h1 className="text-2xl font-extrabold">Registro</h1>
               <form onSubmit={handleSubmit}>
                 <label htmlFor="username">
-                  Username:
+                  Matricula:
                   <FontAwesomeIcon
                     icon={faCheck}
                     className={validName ? "valid" : "hide"}
@@ -144,11 +144,11 @@ export default function Register () {
                   }
                 >
                   <FontAwesomeIcon icon={faInfoCircle} />
-                  De 4 a 24 Caracteres.
+                  De 8 Caracteres.
                   <br />
-                  Debe empezar con una A.
+                  Debe empezar con una A o L.
                   <br />
-                  Letras, numeros y guion bajo permitidos.
+                  Ingresar una matricula valida.
                 </p>
 
                 <label htmlFor="password">
