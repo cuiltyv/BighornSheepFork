@@ -108,6 +108,7 @@ const deleteReservation = async (req, res) => {
 
 const getReservationStats = async (req, res) => {
     try {
+        let pool = await sql.connect(config);
         let result = await pool.request().execute('sp_GetStats');
         
         const stats = {
