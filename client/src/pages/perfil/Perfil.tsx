@@ -40,7 +40,7 @@ const defaultUser: User = {
 
 export function CardWithForm() {
   return (
-    <div className="flex justify-center w-screen">
+    <div className="flex justify-center w-screen pb-20">
     <Card className="w-[350px] min-h">
       <CardHeader>
         <CardTitle>Bienvenido {defaultUser.nombre}</CardTitle>
