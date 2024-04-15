@@ -1,11 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
+import { useNavigate, Link } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "../context/AuthProvider";
 
 const Navbar = () => {
-  const [nav, setNav] = useState<boolean>(false);
+  const [nav, setNav] = useState(false);
 
   const handleNav = () => {
     setNav(!nav);
+  };
+
+  const { setAuth } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const logout = async () => {
+    // if used in more components, this should be in context
+    // axios to /logout endpoint
+    setAuth({});
+    navigate("/linkpage");
   };
 
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -36,27 +49,27 @@ const Navbar = () => {
       <div className="mx-auto flex h-[100px] max-w-[1400px] items-center justify-end bg-darkWhite text-black md:mb-6">
         <ul className="hidden border-b border-black md:flex">
           <li className="mx-6 p-5">
-            <a href="/BighornSheep/">Inicio</a>
+            <Link to="/BighornSheep/">Inicio</Link>
           </li>
           <li className="mx-6 p-5">
-            <a href="/BighornSheep/contacto">Contacto</a>
+            <Link to="/BighornSheep/contacto">Contacto</Link>
           </li>
           <li className="mx-6 p-5">
-            <a href="/BighornSheep/reservaciones">Reservaciones</a>
+            <Link to="/BighornSheep/reservaciones">Reservaciones</Link>
           </li>
           <li className="mx-6 p-5">
-            <a href="/BighornSheep/admin">Administrador</a>
+            <Link to="/BighornSheep/admin">Administrador</Link>
           </li>
         </ul>
 
-        <a
-          href="/BighornSheep/register"
+        <Link
+          to="/BighornSheep/register"
           className="mr-6 hidden items-center md:flex"
         >
           <div className="ml-4 rounded-full bg-blue px-4 py-2 text-white">
             {login}
           </div>
-        </a>
+        </Link>
 
         <div
           onClick={handleNav}
@@ -74,16 +87,16 @@ const Navbar = () => {
         >
           <ul className="p-2 text-2xl">
             <li className="my-2 p-2">
-              <a href="/BighornSheep/">Inicio</a>
+              <Link to="/BighornSheep">Inicio</Link>
             </li>
             <li className="my-2 p-2">
-              <a href="/BighornSheep/contacto">Contacto</a>
+              <Link to="/BighornSheep/contacto">Contacto</Link>
             </li>
             <li className="my-2 p-2">
-              <a href="/BighornSheep/reservaciones">Reservaciones</a>
+              <Link to="/BighornSheep/reservaciones">Reservaciones</Link>
             </li>
             <li className="my-2 bg-blue p-2 text-white">
-              <a href="/BighornSheep/register">Iniciar Sesión</a>
+              <Link to="/BighornSheep/register">Iniciar Sesión</Link>
             </li>
             <li className="my-2 bg-violet p-2 text-white" onClick={handleNav}>
               Cerrar
