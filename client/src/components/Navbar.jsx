@@ -52,17 +52,13 @@ const Navbar = () => {
             <Link to="/BighornSheep/Landing">Inicio</Link>
           </li>
           <li className="mx-6 p-5">
-<<<<<<< HEAD:client/src/components/Navbar.tsx
-            <a href="/BighornSheep/contacto">Contacto</a>
+            <Link to="/BighornSheep/form">Reservaciones</Link>
           </li>
           <li className="mx-6 p-5">
-            <a href="/BighornSheep/form">Reservaciones</a>
+            <Link to="/BighornSheep/admin">Administrador</Link>
           </li>
           <li className="mx-6 p-5">
-            <a href="/BighornSheep/admin">Administrador</a>
-=======
             <Link to="/BighornSheep/Landing">Contacto</Link>
->>>>>>> main:client/src/components/Navbar.jsx
           </li>
         </ul>
 
@@ -94,14 +90,10 @@ const Navbar = () => {
               <Link to="/BighornSheep/Landing">Inicio</Link>
             </li>
             <li className="my-2 p-2">
-<<<<<<< HEAD:client/src/components/Navbar.tsx
-              <a href="/BighornSheep/contacto">Contacto</a>
+              <Link to="/BighornSheep/form">Reservaciones</Link>
             </li>
             <li className="my-2 p-2">
-              <a href="/BighornSheep/form">Reservaciones</a>
-=======
               <Link to="/BighornSheep/Landing">Contacto</Link>
->>>>>>> main:client/src/components/Navbar.jsx
             </li>
 
             <li className="my-2 bg-blue p-2 text-white">

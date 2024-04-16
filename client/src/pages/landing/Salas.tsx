@@ -7,11 +7,7 @@ export default function Salas() {
 
   useEffect(() => {
     axios
-<<<<<<< HEAD
       .get("http://localhost:3000/salas")
-=======
-      .get("https://dreamapi.azurewebsites.net/salas")
->>>>>>> main
       .then(function (res) {
         console.log(res.data);
         setSalas(res.data);
