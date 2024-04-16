@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { PencilIcon, TrashIcon } from '@heroicons/react/solid';
+import EditReservationModal from '../../components/EditReservationModal';
 
 interface Reservation {
   ReservacionID: number;
@@ -9,12 +10,15 @@ interface Reservation {
   HoraFin: string;
   Proposito: string;
   Estado: string;
+  isDeleted: boolean
 }
 
 // PENDIENTE: DECIDIR QUE HACER CON LAS RESERVACIONES QUE SALEN EN PENDIENTE
 
 const RecentReservations = () => {
   const [reservations, setReservations] = useState<Reservation[]>([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentReservation, setCurrentReservation] = useState(null);
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -30,14 +34,44 @@ const RecentReservations = () => {
   }, []);
 
   const handleEdit = (reservacionID: number) => {
-    // FALTA LOGICA DE EDIT, YA ESTA EN EL API PERO NO LO HE METIDO
+    setCurrentReservation(reservations.find((res: Reservation) => res.ReservacionID === reservacionID));
+    setIsEditing(true);
     console.log('Editing reservation with ID:', reservacionID);
   };
 
-  const handleDelete = (reservacionID: number) => {
-    // FALTA LOGICA DE DELETE, YA ESTA EN EL API PERO NO LO HE METIDO
-    console.log('Deleting reservation with ID:', reservacionID);
+  const closeModal = () => {
+    setIsEditing(false);
+    setCurrentReservation(null);
   };
+
+  const updateReservation = async (updatedData: Reservation) => {
+    try {
+      console.log('Updating reservation:', updatedData)
+      const response = await axios.put(`https://dreamapi.azurewebsites.net/reservaciones/${updatedData.ReservacionID}`, updatedData);
+      setReservations(reservations.map((res: Reservation) => res.ReservacionID === updatedData.ReservacionID ? { ...res, ...updatedData } : res));
+    } catch (error) {
+      console.error('Error updating reservation:', error);
+    }
+  };
+
+  //DECIDIR QUE HACER CON LAS FOREIGN KEY DE LAS TABLAS
+  const handleDelete = async (reservacionID: number) => {
+    const confirmDelete = window.confirm('Are you sure you want to mark this reservation as deleted?');
+    if (confirmDelete) {
+        try {
+            console.log('Marking reservation as deleted with ID:', reservacionID);
+            const response = await axios.put(`https://dreamapi.azurewebsites.net/reservaciones/set-deleted/${reservacionID}`);
+            console.log(response.data);
+            setReservations(reservations.filter((res: Reservation) => res.ReservacionID !== reservacionID));
+            alert('Reservation marked as deleted successfully');
+        } catch (error) {
+            console.error('Error marking reservation as deleted:', error);
+            alert('There was an error marking the reservation as deleted.');
+        }
+    }
+};
+
+  
 
   return (
     <div className="mt-4 mx-2 p-4 bg-white rounded shadow-lg">
@@ -56,7 +90,7 @@ const RecentReservations = () => {
             </tr>
           </thead>
           <tbody>
-            {reservations.map((res) => (
+            {reservations.map((res: Reservation) => (
               <tr key={res.ReservacionID} className="text-sm">
                 <td>{res.ReservacionID}</td>
                 <td>{res.Matricula}</td>
@@ -72,17 +106,26 @@ const RecentReservations = () => {
                     <PencilIcon className="h-5 w-5" />
                   </button>
                   <button
-                    onClick={() => handleDelete(res.ReservacionID)}
-                    className="p-1 m-1 text-red-500 hover:text-red-700"
-                  >
-                    <TrashIcon className="h-5 w-5" />
-                  </button>
+                  onClick={() => handleDelete(res.ReservacionID)}
+                  className="p-1 m-1 text-red-500 hover:text-red-700"
+                >
+                  <TrashIcon className="h-5 w-5" />
+                </button>
+
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      {currentReservation && (
+        <EditReservationModal
+          isOpen={isEditing}
+          closeModal={closeModal}
+          reservation={currentReservation}
+          updateReservation={updateReservation}
+        />
+      )}
     </div>
   );
 };

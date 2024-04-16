@@ -6,26 +6,11 @@ textarea {
   font-size: 22px;
   padding: 0.25rem;
   border-radius: 0.5rem;
-  margin-bottom: 6px;
 }
 
+label,
 button {
   margin-top: 1rem;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-label {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-input {
-  margin-left: 10px;
 }
 
 button {
@@ -40,7 +25,6 @@ button {
   padding: 0.25rem;
   position: relative;
   bottom: -10px;
-  margin-bottom: 10px;
 }
 
 .instructions > svg {
