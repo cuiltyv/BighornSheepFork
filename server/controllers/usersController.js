@@ -15,6 +15,25 @@ const getAllUsers = async (req, res) => {
     }
 };
 
+// server/controllers/usersController.js
+const getUserProfile = async (req, res) => {
+    const { matricula } = req.params;
+    try {
+        let pool = await sql.connect(config);
+        let result = await pool.request()
+            .input("Matricula", sql.VarChar(10), matricula)
+            .execute("sp_GetUsuarioPerfilByMatricula");
+        if (result.recordset.length > 0) {
+            res.json(result.recordset[0]);
+        } else {
+            res.status(404).send("User profile not found");
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({ message: "Error con DB", error: err });
+    }
+};
+
 // Sacar un usuario por matricula
 // Ruta: /usuarios/:matricula
 const getUserByMatricula = async (req, res) => {
@@ -78,5 +97,6 @@ module.exports = {
     getAllUsers,
     getUserByMatricula,
     createUser,
-    registerUser
+    registerUser,
+    getUserProfile,
 };

@@ -12,7 +12,8 @@ const router = express.Router();
 
 */
 
-
+// server/routes/usersRoutes.js
+router.get('/perfil/:matricula', usersController.getUserProfile);
 router.get('/', usersController.getAllUsers);
 router.get('/:matricula', usersController.getUserByMatricula);
 router.post('/', usersController.createUser);
