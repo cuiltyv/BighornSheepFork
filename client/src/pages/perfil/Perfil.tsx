@@ -1,4 +1,3 @@
-import * as React from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -12,39 +11,38 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-interface User {
-  matricula: string;
-  nombre: string;
-  apellidos: string;
-  contrasena: string;
-  carrera: string;
-  semestre: number;
-}
+import { User } from "@interfaces"
+
+import { getUser } from "@api"
+
+import { useEffect, useState } from 'react';
 
 
-function syncProfile() {
-  const user:User = {
-    matricula: "defaultMatricula",
-    nombre: "defaultNombre",
-    apellidos: "defaultApellidos",
-    contrasena: "defaultContrasena",
-    carrera: "defaultCarrera",
-    semestre: -1,
-  };
-  return user
-}
+
 
 
 
 
 
 export function CardWithForm() {
-  const user = syncProfile();
+  // Inside your component
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const result = await getUser("A01234567");
+      setUser(result);
+    };
+
+    fetchUser();
+  }, []); // Empty dependency array means this effect runs once on mount
+
+  
   return (
     <div className="flex justify-center w-screen pb-20">
     <Card className="w-[350px] min-h">
       <CardHeader>
-        <CardTitle>Bienvenido {user.nombre}</CardTitle>
+        <CardTitle>Bienvenido {user.nombre ?? "Loading.."}</CardTitle>
         <CardDescription>Modifica o consulta la información de tu perfil</CardDescription>
       </CardHeader>
       <CardContent>
@@ -52,23 +50,23 @@ export function CardWithForm() {
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="framework">Nombre</Label>
-              <Input id="name" placeholder={user.nombre} />
+              <Input id="name" placeholder={user.nombre ?? "Loading.."} />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="framework">Apellido(s)</Label>
-              <Input id="name" placeholder={user.apellidos} />
+              <Input id="name" placeholder={user.apellidos ?? "Loading.."} />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="framework">Matricula</Label>
-              <Input id="name" placeholder={user.matricula} />
+              <Input id="name" placeholder={user.matricula ?? "Loading.."} />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="framework">Password</Label>
-              <Input id="name" placeholder={user.contrasena} />
+              <Input id="name" placeholder={user.contrasena ?? "Loading.."} />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="framework">Carrera</Label>
-              <Input id="name" placeholder={user.carrera} />
+              <Input id="name" placeholder={user.carrera ?? "Loading.."} />
             </div>
           </div>
         </form>

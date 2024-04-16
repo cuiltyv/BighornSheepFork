@@ -26,8 +26,9 @@
     "allowJs": true,
     "baseUrl": ".",
     "paths": {
+      "@api": ["./src/api"],
+      "@interfaces": ["./src/components/interfaces"],
       "@/*": [
-
         "./src/*"
       ]
     }
