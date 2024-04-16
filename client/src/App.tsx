@@ -1,22 +1,16 @@
-import { useState, useContext } from "react";
-// import { useState } from "react";
-
 import "./App.css";
 import Landing from "./pages/landing/Landing";
 import Home from "./pages/landing/Home";
-
 import Perfil from "./pages/perfil/Perfil";
 import Register from "./pages/login/Register";
 import Login from "./pages/login/Login";
-import Login from "./pages/login/Login";
-
 import Dashboard from "./pages/admin/Dashboard";
 import Missing from "./pages/extra/Missing";
 import Unauthorized from "./pages/extra/Unauthorized";
 import RequireAuth from "./components/RequireAuth";
 import PersistLogin from "./components/PersistLogin";
 import { Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout";
+
 import WithLayout from "./components/WithLayout";
 import WithLayoutLogout from "./components/WithLayoutLogout";
 
@@ -60,17 +54,6 @@ function App() {
           <Route path="*" element={<Missing />} />
         </Route>
       </Routes>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/BighornSheep" element={<Landing />} />
-          <Route path="/BighornSheep/perfil" element={<Perfil />} />
-          <Route path="/BighornSheep/register" element={<Register />} />
-          <Route path="/BighornSheep/admin" element={<Dashboard />} />
-
-          <Route path="/BighornSheep/login" element={<Login />} />
-        </Routes>
-      </BrowserRouter>
     </div>
   );
 }
