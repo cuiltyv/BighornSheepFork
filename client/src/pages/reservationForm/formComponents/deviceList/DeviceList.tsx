@@ -5,8 +5,10 @@ function DeviceList({
   aparatos,
   setAparatos,
 }: {
-  aparatos: { nombre: string; cantidad: number }[];
-  setAparatos: (aparatos: { nombre: string; cantidad: number }[]) => void;
+  aparatos: { id: number; nombre: string; cantidad: number }[];
+  setAparatos: (
+    aparatos: { id: number; nombre: string; cantidad: number }[],
+  ) => void;
 }) {
   const handleSetCantidad = (index: number, cantidad: number) => {
     const newAparatos = [...aparatos];

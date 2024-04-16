@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const express = require("express");
 const sql = require("mssql");
 const config = require("./configs/config");
@@ -6,23 +5,14 @@ const usersRoutes = require("./routes/usersRoutes");
 const reservationsRoutes = require("./routes/reservationsRoutes");
 const roomsRoutes = require("./routes/salasRoutes"); // Make sure this matches the exported name from the file
 const miscRoutes = require("./routes/miscRoutes");
-const hardWareRoutes = require("./routes/hardwareRoutes");
-=======
-
-const express = require('express');
-const sql = require('mssql');
-const config = require('./configs/config');
-const usersRoutes = require('./routes/usersRoutes');
-const reservationsRoutes = require('./routes/reservationsRoutes');
-const roomsRoutes = require('./routes/salasRoutes');  
-const miscRoutes = require('./routes/miscRoutes');
->>>>>>> main
-
+const hardwareRoutes = require("./routes/hardwareRoutes");
+const cors = require("cors");
 
 const app = express();
 
-app.use(express.json());
+app.use(cors());
 
+app.use(express.json());
 
 const requestLogger = (request, response, next) => {
   console.log("Method:", request.method);

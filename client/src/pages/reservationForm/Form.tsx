@@ -17,6 +17,7 @@ interface Person {
 }
 
 interface Aparato {
+  id: number;
   nombre: string;
   cantidad: number;
 }
@@ -36,39 +37,68 @@ function Form() {
   );
 
   const [aparatos, setAparatos] = useState<Aparato[]>([
-    { nombre: "Computadora", cantidad: 0 },
-    { nombre: "Impresora 3D", cantidad: 0 },
-    { nombre: "Cable USB-C", cantidad: 0 },
-    { nombre: "Robot Pro", cantidad: 0 },
-    { nombre: "Vision Pro", cantidad: 0 },
-    { nombre: "IPad Pro", cantidad: 0 },
-    { nombre: "Meta Quest 3", cantidad: 0 },
-    { nombre: "Ray Ban x Meta", cantidad: 0 },
+    { id: 0, nombre: "Computadora", cantidad: 0 },
+    { id: 1, nombre: "Impresora 3D", cantidad: 0 },
+    { id: 2, nombre: "Cable USB-C", cantidad: 0 },
+    { id: 3, nombre: "Robot Pro", cantidad: 0 },
+    { id: 4, nombre: "Vision Pro", cantidad: 0 },
+    { id: 5, nombre: "IPad Pro", cantidad: 0 },
+    { id: 6, nombre: "Meta Quest 3", cantidad: 0 },
+    { id: 7, nombre: "Ray Ban x Meta", cantidad: 0 },
   ]);
 
   const [comment, setComment] = useState("");
 
   //pendiente
   const enviar = () => {
-    console.log("enviado");
-    const reserva = {
-      hora: horaSeleccionada,
-      dia: diaSeleccionado,
-      personas: people,
-      razon: razonSeleccionada,
-      aparatos: aparatos,
-      comentario: comment,
+    const parseHour = (hour: string) => {
+      const [time, period] = hour.split(" ");
+      const [hours, minutes] = time.split(":");
+      return period === "pm" ? parseInt(hours) + 12 : parseInt(hours);
     };
+
+    const fechaInicio = dayjs(diaSeleccionado)
+      .hour(parseHour(horaSeleccionada.split(" - ")[0]))
+      .minute(0);
+    const fechaFin = dayjs(diaSeleccionado)
+      .hour(parseHour(horaSeleccionada.split(" - ")[1]))
+      .minute(0);
+
+    const reserva = {
+      Matricula: people[0].registration, // Asumiendo que el primer elemento tiene la matrícula relevante
+      ZonaID: 1, // Asumiendo que ZonaID es estático o lo obtienes de alguna manera
+      HoraInicio: fechaInicio.toISOString(),
+      HoraFin: fechaFin.toISOString(),
+      Proposito: razonSeleccionada,
+      Estado: "Activa", // Asumiendo que necesitas enviar un estado
+      Alumnos: people.map((persona) => ({
+        Matricula: persona.registration,
+        ReservacionID: undefined, // Esto deberá ser manejado en el servidor
+      })),
+      Hardware: aparatos
+        .filter((ap) => ap.cantidad > 0)
+        .map((ap) => ({
+          HardwareID: ap.id, // Asumiendo que tienes un identificador único para el hardware
+          Cantidad: ap.cantidad,
+        })),
+      Comentario: comment, // Asumiendo que quieres enviar un comentario
+    };
+
     console.log(reserva);
 
     // Post request with Axios
-    axios.post("bighorn.database.windows.net", reserva).then((response) => {
-      console.log(response.data);
-    });
+    axios
+      .post("http://localhost:3000/reservaciones", reserva)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error posting reservation:", error);
+      });
   };
 
   const cancelar = () => {
-    console.log("cancelado");
+    console.log("Cancelado");
   };
 
   return (

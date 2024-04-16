@@ -5,13 +5,12 @@ import axios from "axios";
 export default function Salas() {
   const [salas, setSalas] = useState([]);
 
-
   useEffect(() => {
     axios
-      .get("http//:localhost:4000/salas")
+      .get("http://localhost:3000/salas")
       .then(function (res) {
         console.log(res.data);
-        setSalas([]);
+        setSalas(res.data);
       })
       .catch(function (err) {
         console.log(err);

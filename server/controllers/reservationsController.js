@@ -52,6 +52,8 @@ const getReservationById = async (req, res) => {
 // Crear una reservacion
 // Ruta: /reservations (POST)
 const createReservation = async (req, res) => {
+  console.log(req.body);
+
   const {
     Matricula,
     ZonaID,
@@ -62,8 +64,24 @@ const createReservation = async (req, res) => {
     Alumnos,
     Hardware,
   } = req.body;
+
   try {
     let pool = await sql.connect(config);
+
+    const alumnoTable = new sql.Table("AlumnoType");
+    alumnoTable.columns.add("Matricula", sql.VarChar(10));
+    alumnoTable.columns.add("Rol", sql.NVarChar(50));
+    Alumnos.forEach((alumno) => {
+      alumnoTable.rows.add(alumno.Matricula, alumno.Rol || "Estudiante");
+    });
+
+    const hardwareTable = new sql.Table("HardwareType");
+    hardwareTable.columns.add("HardwareID", sql.Int);
+    hardwareTable.columns.add("Cantidad", sql.Int);
+    Hardware.forEach((hardware) => {
+      hardwareTable.rows.add(hardware.HardwareID, hardware.Cantidad);
+    });
+
     await pool
       .request()
       .input("Matricula", sql.VarChar(10), Matricula)
@@ -72,29 +90,14 @@ const createReservation = async (req, res) => {
       .input("HoraFin", sql.DateTime, HoraFin)
       .input("Proposito", sql.NVarChar(255), Proposito)
       .input("Estado", sql.NVarChar(50), Estado)
-      .execute("sp_InsertReservacion");
-    res.status(201).send("Reservation created successfully");
+      .input("Alumnos", alumnoTable)
+      .input("Hardware", hardwareTable)
+      .execute("sp_InsertCompleteReservacion");
 
-    Alumnos.forEach(async (alumno) => {
-      pool
-        .request()
-        .input("Matricula", sql.VarChar(10), alumno.Matricula)
-        .input("ReservacionID", sql.Int, alumno.ReservacionID)
-        .execute("sp_InsertAlumnoReservacion");
-      res.status(201).send("Student added to reservation successfully");
-    });
-
-    Hardware.forEach(async (hardware) => {
-      pool
-        .request()
-        .input("HardwareID", sql.Int, hardware.HardwareID)
-        .input("ReservacionID", sql.Int, hardware.ReservacionID)
-        .execute("sp_InsertHardwareReservacion");
-      res.status(201).send("Hardware added to reservation successfully");
-    });
+    res.status(201).send("Complete reservation added successfully");
   } catch (err) {
     console.error(err);
-    res.status(500).send({ message: "Error con DB", error: err });
+    res.status(500).send({ message: "Error with DB", error: err });
   }
 };
 
@@ -176,6 +179,7 @@ const getReservationStats = async (req, res) => {
 module.exports = {
   getAllReservations,
   getUpcomingReservations,
+  getReservationStats,
   getReservationById,
   createReservation,
   updateReservation,
