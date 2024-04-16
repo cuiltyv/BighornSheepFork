@@ -1,9 +1,11 @@
 import ButtonFilled from "./ButtonFilled";
+import { Link } from "react-router-dom";
 
 export default function SalaCard({
   sala,
 }: {
   sala: {
+    SalaId: string;
     Link: string;
     Nombre: string;
     Descripcion: string;
@@ -26,7 +28,9 @@ export default function SalaCard({
         <h3 className="font-semibold">{sala.Nombre}</h3>
         <p className="text-xs font-medium">{sala.Lugar}</p>
       </div>
-      <ButtonFilled text="Reservar" />
+      <Link to={`http://localhost:5173/BighornSheep/form/${sala.SalaId}`}>
+        <ButtonFilled text="Reservar" />
+      </Link>
     </div>
   );
 }

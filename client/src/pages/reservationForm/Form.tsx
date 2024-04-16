@@ -5,7 +5,8 @@ import Comments from "./formComponents/Comments";
 import DatePicker from "./formComponents/datePicker/DatePicker";
 import dayjs from "dayjs";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import "tailwindcss/tailwind.css";
 import "./styles/Form.css";
@@ -23,8 +24,10 @@ interface Aparato {
 }
 
 function Form() {
+  const { id } = useParams();
+  const [sala, setSala] = useState({} as unknown);
+
   //estas constantes las voy a cambiar (se llamarán desde la api)
-  const nombreSala = "PCB Factory";
   const imgSala = "src/pages/reservationForm/roomImages/PCB.jpg";
 
   const [horaSeleccionada, setHoraSeleccionada] = useState("9:00am - 10:00am");
@@ -49,7 +52,20 @@ function Form() {
 
   const [comment, setComment] = useState("");
 
-  //pendiente
+  // GET Project by id
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/salas/${id}`)
+      .then((response) => {
+        setSala(response.data[0]);
+        console.log(response.data[0].Link);
+      })
+      .catch((error) => {
+        console.error("Error getting room:", error);
+      });
+  }, [id]);
+
+  // POST
   const enviar = () => {
     const parseHour = (hour: string) => {
       const [time, period] = hour.split(" ");
@@ -104,9 +120,11 @@ function Form() {
   return (
     <div className="flex justify-center bg-black">
       <div className="form-container my-5 w-fit overflow-auto rounded-xl">
-        <img src={imgSala} className="h-72 w-full object-cover " />
+        <img src={`${sala.Link}.png`} className="h-72 w-full object-cover " />
         <div className="px-28 py-14 ">
-          <h1 className="bh-text-blue ml-4 text-5xl font-bold">{nombreSala}</h1>
+          <h1 className="bh-text-blue ml-4 text-5xl font-bold">
+            {sala.Nombre}
+          </h1>
           <DatePicker
             horaSeleccionada={horaSeleccionada}
             setHoraSeleccionada={setHoraSeleccionada}

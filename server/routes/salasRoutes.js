@@ -1,5 +1,5 @@
-const express = require('express');
-const roomsController = require('../controllers/salasController');
+const express = require("express");
+const roomsController = require("../controllers/salasController");
 const router = express.Router();
 
 /*  /salas ES EL URL BASE
@@ -15,7 +15,7 @@ const router = express.Router();
 
 */
 
-router.get('/', roomsController.getAllRooms);
-
+router.get("/", roomsController.getAllRooms);
+router.get("/:id", roomsController.getRoomById);
 
 module.exports = router;

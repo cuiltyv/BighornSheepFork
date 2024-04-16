@@ -28,7 +28,7 @@ function App() {
           <Route path="/BighornSheep/landing" element={<Landing />} />
           <Route path="/BighornSheep/register" element={<Register />} />
           <Route path="/BighornSheep/admin" element={<Dashboard />} />
-          <Route path="/BighornSheep/form" element={<Form />} />
+          <Route path="/BighornSheep/form/:id" element={<Form />} />
 
           <Route path="/BighornSheep/login" element={<Login />} />
           <Route path="*" element={<Missing />} />
