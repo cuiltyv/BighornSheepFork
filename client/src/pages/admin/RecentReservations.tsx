@@ -49,12 +49,18 @@ const RecentReservations = () => {
       console.log('Updating reservation:', updatedData)
       const response = await axios.put(`https://dreamapi.azurewebsites.net/reservaciones/${updatedData.ReservacionID}`, updatedData);
       setReservations(reservations.map((res: Reservation) => res.ReservacionID === updatedData.ReservacionID ? { ...res, ...updatedData } : res));
+      alert('Reservation updated successfully');
+
     } catch (error) {
       console.error('Error updating reservation:', error);
     }
   };
 
-  //DECIDIR QUE HACER CON LAS FOREIGN KEY DE LAS TABLAS
+  // COMO LO HIZE EN EL BACKEND, NO SE ELIMINAN LAS RESERVACIONES, SOLO SE MARCAN COMO ELIMINADAS
+  // POR LO QUE NO SE ELIMINAN DE LA BASE DE DATOS, SOLO SE ACTUALIZA EL ESTADO DE LA RESERVACION
+  // ESTO ES PORQUE LOS IDS DE RESERVACIONES SON LLAVES FORANEAS EN OTRAS TABLAS Y NO SE PUEDEN ELIMINAR
+  // A MENOS QUE SE ELIMINEN TODAS LAS REFERENCIAS A ESA RESERVACION COMO UNA CASCADA
+  // pero no hize esto porque la informacion de reservaciones previas puede ser importante
   const handleDelete = async (reservacionID: number) => {
     const confirmDelete = window.confirm('Are you sure you want to mark this reservation as deleted?');
     if (confirmDelete) {
