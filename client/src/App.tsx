@@ -4,6 +4,7 @@ import Home from "./pages/landing/Home";
 import Perfil from "./pages/perfil/Perfil";
 import Register from "./pages/login/Register";
 import Login from "./pages/login/Login";
+import Form from "./pages/reservationForm/Form";
 import Dashboard from "./pages/admin/Dashboard";
 import Missing from "./pages/extra/Missing";
 import Unauthorized from "./pages/extra/Unauthorized";
@@ -26,6 +27,9 @@ function App() {
         <Route path="/" element={<WithLayout />}>
           <Route path="/BighornSheep/landing" element={<Landing />} />
           <Route path="/BighornSheep/register" element={<Register />} />
+          <Route path="/BighornSheep/admin" element={<Dashboard />} />
+          <Route path="/BighornSheep/form/:id" element={<Form />} />
+
           <Route path="/BighornSheep/login" element={<Login />} />
           <Route path="*" element={<Missing />} />
         </Route>

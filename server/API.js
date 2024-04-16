@@ -6,11 +6,14 @@ const usersRoutes = require("./routes/usersRoutes");
 const reservationsRoutes = require("./routes/reservationsRoutes");
 const roomsRoutes = require("./routes/salasRoutes"); // Make sure this matches the exported name from the file
 const miscRoutes = require("./routes/miscRoutes");
+const hardwareRoutes = require("./routes/hardwareRoutes");
 
 const verifyJWT = require("./middleware/verifyJWT");
 const cookieParser = require("cookie-parser");
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 
@@ -56,6 +59,7 @@ app.use("/usuarios", usersRoutes);
 app.use("/reservaciones", reservationsRoutes);
 app.use("/salas", roomsRoutes);
 app.use("/", miscRoutes);
+app.use("/hardware", hardwareRoutes);
 app.use("/refresh", require("./routes/refreshRoutes"));
 app.use("/logout", require("./routes/logoutRoutes"));
 
