@@ -13,15 +13,9 @@ import { Label } from "@/components/ui/label"
 
 import { User } from "@interfaces"
 
-import { getUser } from "@api"
+import { getUser } from "@api_helper"
 
 import { useEffect, useState } from 'react';
-
-
-
-
-
-
 
 
 export function CardWithForm() {
