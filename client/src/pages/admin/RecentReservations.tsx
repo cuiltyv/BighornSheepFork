@@ -10,6 +10,7 @@ interface Reservation {
   HoraFin: string;
   Proposito: string;
   Estado: string;
+  isDeleted: boolean
 }
 
 // PENDIENTE: DECIDIR QUE HACER CON LAS RESERVACIONES QUE SALEN EN PENDIENTE
@@ -55,20 +56,21 @@ const RecentReservations = () => {
 
   //DECIDIR QUE HACER CON LAS FOREIGN KEY DE LAS TABLAS
   const handleDelete = async (reservacionID: number) => {
-    const confirmDelete = window.confirm('Are you sure you want to delete this reservation?');
+    const confirmDelete = window.confirm('Are you sure you want to mark this reservation as deleted?');
     if (confirmDelete) {
-      try {
-        console.log('Deleting reservation with ID:', reservacionID);
-        const response = await axios.delete(`https://dreamapi.azurewebsites.net/reservaciones/${reservacionID}`);
-        console.log(response.data);
-        setReservations(reservations.filter((res: Reservation) => res.ReservacionID !== reservacionID));
-        alert('Reservation deleted successfully'); 
-      } catch (error) {
-        console.error('Error deleting reservation:', error);
-        alert('There was an error deleting the reservation.'); 
-      }
+        try {
+            console.log('Marking reservation as deleted with ID:', reservacionID);
+            const response = await axios.put(`https://dreamapi.azurewebsites.net/reservaciones/set-deleted/${reservacionID}`);
+            console.log(response.data);
+            setReservations(reservations.filter((res: Reservation) => res.ReservacionID !== reservacionID));
+            alert('Reservation marked as deleted successfully');
+        } catch (error) {
+            console.error('Error marking reservation as deleted:', error);
+            alert('There was an error marking the reservation as deleted.');
+        }
     }
-  };
+};
+
   
 
   return (

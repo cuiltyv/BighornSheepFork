@@ -54,6 +54,7 @@ const EditReservationModal = ({ isOpen, closeModal, reservation, updateReservati
                 <option value="Pendiente">Pendiente</option>
                 <option value="Confirmado">Confirmado</option>
                 <option value="Cancelado">Cancelado</option>
+                <option value="Activa">Completado</option>
               </select>
             </div>
             <div className="flex justify-between space-x-2">

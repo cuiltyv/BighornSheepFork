@@ -21,7 +21,9 @@ router.get('/stats', reservationsController.getReservationStats);
 router.get('/:id', reservationsController.getReservationById);
 router.post('/', reservationsController.createReservation);
 router.put('/:id', reservationsController.updateReservation);
+router.put('/set-deleted/:id', reservationsController.setReservacionDeleted); // Mark as deleted
 router.delete('/:id', reservationsController.deleteReservation);
+
 
 
 module.exports = router;
