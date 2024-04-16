@@ -5,6 +5,7 @@ const config = require("../configs/config");
 // Ruta: /reservations
 // Todas las reservaciones
 const getAllReservations = async (req, res) => {
+<<<<<<< HEAD
   try {
     let pool = await sql.connect(config);
     let result = await pool.request().execute("sp_GetAllReservaciones");
@@ -13,7 +14,19 @@ const getAllReservations = async (req, res) => {
     console.error(err);
     res.status(500).send({ message: "Error con DB", error: err });
   }
+=======
+    try {
+        let pool = await sql.connect(config);
+        let result = await pool.request().execute('sp_GetReservacionesNotDeleted');
+        res.json(result.recordset);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({ message: "Error con DB", error: err });
+    }
+>>>>>>> main
 };
+
+
 
 // Ruta: /reservations/upcoming
 // Reservaciones del futuro
@@ -176,6 +189,7 @@ const getReservationStats = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 module.exports = {
   getAllReservations,
   getUpcomingReservations,
@@ -184,4 +198,35 @@ module.exports = {
   createReservation,
   updateReservation,
   deleteReservation,
+=======
+// Marcar reservacion como eliminada
+// Ruta: /reservations/set-deleted/:id (PUT)
+const setReservacionDeleted = async (req, res) => {
+    const { id } = req.params;
+    try {
+        let pool = await sql.connect(config);
+        await pool.request()
+            .input("ReservacionID", sql.Int, id)
+            .execute("sp_SetReservacionDeleted");
+        res.status(200).send("Reservation marked as deleted successfully");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({ message: "Error with DB", error: err });
+    }
+};
+
+
+
+
+
+module.exports = {
+    getAllReservations,
+    getUpcomingReservations,
+    getReservationById,
+    createReservation,
+    updateReservation,
+    deleteReservation,
+    getReservationStats,
+    setReservacionDeleted
+>>>>>>> main
 };

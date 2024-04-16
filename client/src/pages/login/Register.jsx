@@ -10,7 +10,7 @@ import axios from "../../api/axios";
 
 const USER_REGEX = /^[AaLl][0-9]{8}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = "/registro";
+const REGISTER_URL = "/usuarios/registro";
 
 export default function Register () {
   const userRef = useRef();
@@ -97,7 +97,7 @@ export default function Register () {
             <section>
               <h1>Success!</h1>
               <p>
-                <a href="#">Sign In</a>
+                <a href="/BighornSheep/login">Sign In</a>
               </p>
             </section>
           ) : (
@@ -239,8 +239,7 @@ export default function Register () {
               </form>
               <p>
                 <span className="line">
-                  {/*put router link here*/}
-                  <a href="#">Iniciar Sesión</a>
+                  <a href="/BighornSheep/login">Iniciar Sesión</a>
                 </span>
               </p>
             </section>

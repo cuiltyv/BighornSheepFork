@@ -7,7 +7,11 @@ export default function Salas() {
 
   useEffect(() => {
     axios
+<<<<<<< HEAD
       .get("http://localhost:3000/salas")
+=======
+      .get("https://dreamapi.azurewebsites.net/salas")
+>>>>>>> main
       .then(function (res) {
         console.log(res.data);
         setSalas(res.data);
@@ -29,13 +33,13 @@ export default function Salas() {
         {salas &&
           salas.map(
             (sala: {
-              id: string;
-              image: string;
-              name: string;
-              description: string;
-              lugar: string;
-              cupo: string;
-            }) => <SalaCard key={sala.id} sala={sala} />,
+              SalaId: string;
+              Link: string;
+              Nombre: string;
+              Descripcion: string;
+              Lugar: string;
+              Cupo: string;
+            }) => <SalaCard key={sala.SalaId} sala={sala} />,
           )}
       </div>
     </div>

@@ -15,6 +15,7 @@ const router = express.Router();
     /reservaciones/stats : GET -> devuelve estadisticas de las reservaciones para el dashboard de administardor
 */
 
+<<<<<<< HEAD
 router.get("/", reservationsController.getAllReservations);
 router.get("/upcoming", reservationsController.getUpcomingReservations);
 router.get("/stats", reservationsController.getReservationStats);
@@ -22,5 +23,17 @@ router.get("/:id", reservationsController.getReservationById);
 router.post("/", reservationsController.createReservation);
 router.put("/:id", reservationsController.updateReservation);
 router.delete("/:id", reservationsController.deleteReservation);
+=======
+router.get('/', reservationsController.getAllReservations);
+router.get('/upcoming', reservationsController.getUpcomingReservations);
+router.get('/stats', reservationsController.getReservationStats);
+router.get('/:id', reservationsController.getReservationById);
+router.post('/', reservationsController.createReservation);
+router.put('/:id', reservationsController.updateReservation);
+router.put('/set-deleted/:id', reservationsController.setReservacionDeleted); // Mark as deleted
+router.delete('/:id', reservationsController.deleteReservation);
+
+>>>>>>> main
+
 
 module.exports = router;
