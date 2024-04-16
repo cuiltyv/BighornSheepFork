@@ -10,6 +10,7 @@ interface Reservation {
   HoraFin: string;
   Proposito: string;
   Estado: string;
+  isDeleted: boolean
 }
 
 // PENDIENTE: DECIDIR QUE HACER CON LAS RESERVACIONES QUE SALEN EN PENDIENTE
@@ -48,27 +49,34 @@ const RecentReservations = () => {
       console.log('Updating reservation:', updatedData)
       const response = await axios.put(`https://dreamapi.azurewebsites.net/reservaciones/${updatedData.ReservacionID}`, updatedData);
       setReservations(reservations.map((res: Reservation) => res.ReservacionID === updatedData.ReservacionID ? { ...res, ...updatedData } : res));
+      alert('Reservation updated successfully');
+
     } catch (error) {
       console.error('Error updating reservation:', error);
     }
   };
 
-  //DECIDIR QUE HACER CON LAS FOREIGN KEY DE LAS TABLAS
+  // COMO LO HIZE EN EL BACKEND, NO SE ELIMINAN LAS RESERVACIONES, SOLO SE MARCAN COMO ELIMINADAS
+  // POR LO QUE NO SE ELIMINAN DE LA BASE DE DATOS, SOLO SE ACTUALIZA EL ESTADO DE LA RESERVACION
+  // ESTO ES PORQUE LOS IDS DE RESERVACIONES SON LLAVES FORANEAS EN OTRAS TABLAS Y NO SE PUEDEN ELIMINAR
+  // A MENOS QUE SE ELIMINEN TODAS LAS REFERENCIAS A ESA RESERVACION COMO UNA CASCADA
+  // pero no hize esto porque la informacion de reservaciones previas puede ser importante
   const handleDelete = async (reservacionID: number) => {
-    const confirmDelete = window.confirm('Are you sure you want to delete this reservation?');
+    const confirmDelete = window.confirm('Are you sure you want to mark this reservation as deleted?');
     if (confirmDelete) {
-      try {
-        console.log('Deleting reservation with ID:', reservacionID);
-        const response = await axios.delete(`https://dreamapi.azurewebsites.net/reservaciones/${reservacionID}`);
-        console.log(response.data);
-        setReservations(reservations.filter((res: Reservation) => res.ReservacionID !== reservacionID));
-        alert('Reservation deleted successfully'); 
-      } catch (error) {
-        console.error('Error deleting reservation:', error);
-        alert('There was an error deleting the reservation.'); 
-      }
+        try {
+            console.log('Marking reservation as deleted with ID:', reservacionID);
+            const response = await axios.put(`https://dreamapi.azurewebsites.net/reservaciones/set-deleted/${reservacionID}`);
+            console.log(response.data);
+            setReservations(reservations.filter((res: Reservation) => res.ReservacionID !== reservacionID));
+            alert('Reservation marked as deleted successfully');
+        } catch (error) {
+            console.error('Error marking reservation as deleted:', error);
+            alert('There was an error marking the reservation as deleted.');
+        }
     }
-  };
+};
+
   
 
   return (

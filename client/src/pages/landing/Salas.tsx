@@ -5,13 +5,12 @@ import axios from "axios";
 export default function Salas() {
   const [salas, setSalas] = useState([]);
 
-
   useEffect(() => {
     axios
-      .get("http//:localhost:4000/salas")
+      .get("http://localhost:3000/salas")
       .then(function (res) {
         console.log(res.data);
-        setSalas([]);
+        setSalas(res.data);
       })
       .catch(function (err) {
         console.log(err);
@@ -30,13 +29,13 @@ export default function Salas() {
         {salas &&
           salas.map(
             (sala: {
-              id: string;
-              image: string;
-              name: string;
-              description: string;
-              lugar: string;
-              cupo: string;
-            }) => <SalaCard key={sala.id} sala={sala} />,
+              SalaId: string;
+              Link: string;
+              Nombre: string;
+              Descripcion: string;
+              Lugar: string;
+              Cupo: string;
+            }) => <SalaCard key={sala.SalaId} sala={sala} />,
           )}
       </div>
     </div>
