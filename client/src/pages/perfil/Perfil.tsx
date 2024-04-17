@@ -24,18 +24,19 @@ export function CardWithForm() {
 
   // @ts-expect-error //ignore warning
   const {auth} = useAuth(); 
-  console.log(auth);
+  const userID = auth?.userID;
+
 
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
-      const result = await getUser("A01234567");
+      if (!userID) return;
+      const result = await getUser(userID);
       setUser(result);
     };
-
     fetchUser();
-  }, []); // Empty dependency array means this effect runs once on mount
+  }, [userID]); // Empty dependency array means this effect runs once on mount
 
 
   return (
