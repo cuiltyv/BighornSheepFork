@@ -52,6 +52,12 @@ const Navbar = () => {
             <Link to="/BighornSheep/Landing">Inicio</Link>
           </li>
           <li className="mx-6 p-5">
+            <Link to="/BighornSheep/form">Reservaciones</Link>
+          </li>
+          <li className="mx-6 p-5">
+            <Link to="/BighornSheep/admin">Administrador</Link>
+          </li>
+          <li className="mx-6 p-5">
             <Link to="/BighornSheep/Landing">Contacto</Link>
           </li>
         </ul>
@@ -82,6 +88,9 @@ const Navbar = () => {
           <ul className="p-2 text-2xl">
             <li className="my-2 p-2">
               <Link to="/BighornSheep/Landing">Inicio</Link>
+            </li>
+            <li className="my-2 p-2">
+              <Link to="/BighornSheep/form">Reservaciones</Link>
             </li>
             <li className="my-2 p-2">
               <Link to="/BighornSheep/Landing">Contacto</Link>

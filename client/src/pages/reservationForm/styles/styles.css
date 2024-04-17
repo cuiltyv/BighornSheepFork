@@ -1,0 +1,32 @@
+.calendar-container{
+  background-color: #F0F0F0;
+  box-shadow: 2px 4px 8px 2px rgba(0, 0, 0, 0.25);
+  width: auto;
+  max-width: max-content;
+}
+.date-current{
+  background-color: white;
+}
+.date-today{
+  background-color: #654F6F;
+}
+
+.date-selected{
+  background-color: #549CAD;
+}
+
+.date-box:hover{
+  background-color: #549CAD;
+}
+
+.bh-bg-blue{
+  background-color: #549CAD;
+}
+
+.bh-border-blue{
+  border-color: #549CAD;
+}
+
+.bh-text-blue{
+  color: #549CAD;
+}

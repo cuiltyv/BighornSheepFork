@@ -1,5 +1,5 @@
-const express = require('express');
-const roomsController = require('../controllers/salasController');
+const express = require("express");
+const roomsController = require("../controllers/salasController");
 const router = express.Router();
 
 /*  /salas ES EL URL BASE
@@ -14,6 +14,7 @@ const router = express.Router();
         /salas/1/reservaciones : GET -> devuelve todas las reservaciones de la sala con ID 1
 
 */
+
 
 /**
  * @swagger
@@ -47,6 +48,10 @@ const router = express.Router();
  *       - Rooms
  */
 router.get('/', roomsController.getAllRooms);
+
+
+router.get("/", roomsController.getAllRooms);
+router.get("/:id", roomsController.getRoomById);
 
 
 
