@@ -33,6 +33,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
+
       const response = await axios.post(
         LOGIN_URL,
         JSON.stringify({ Matricula: user, Contrasena: pwd }),
@@ -41,8 +42,9 @@ const Login = () => {
           withCredentials: true,
         },
       );
-      console.log(JSON.stringify(response?.data));
-      console.log(JSON.stringify(response));
+
+      // console.log(JSON.stringify(response?.data)); // Porfavor agrega contexto a tus console log
+      // console.log(JSON.stringify(response));
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
 
