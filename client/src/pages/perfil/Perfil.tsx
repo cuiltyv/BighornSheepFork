@@ -17,9 +17,15 @@ import { getUser } from "@api_helper"
 
 import { useEffect, useState } from 'react';
 
+import useAuth from "@UserAuth";
 
 export function CardWithForm() {
   // Inside your component
+
+  // @ts-expect-error //ignore warning
+  const {auth} = useAuth(); 
+  console.log(auth);
+
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
