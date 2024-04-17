@@ -31,45 +31,46 @@ export function CardWithForm() {
     fetchUser();
   }, []); // Empty dependency array means this effect runs once on mount
 
-  
+
   return (
     <div className="flex justify-center w-screen pb-20">
-    <Card className="w-[350px] min-h">
-      <CardHeader>
-        <CardTitle>Bienvenido {user.nombre ?? "Loading.."}</CardTitle>
-        <CardDescription>Modifica o consulta la información de tu perfil</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form>
-          <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="framework">Nombre</Label>
-              <Input id="name" placeholder={user.nombre ?? "Loading.."} />
+      <Card className="w-[350px] min-h">
+        <CardHeader>
+          <CardTitle>Bienvenido {user?.nombre ?? "Loading.."}</CardTitle>
+          <CardDescription>Modifica o consulta la información de tu perfil</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form>
+            <div className="grid w-full items-center gap-4">
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="nombre">Nombre</Label>
+                <Input id="nombre" placeholder={user?.nombre ?? "Loading.."} />
+              </div>
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="apellidos">Apellido(s)</Label>
+                <Input id="apellidos" placeholder={user?.apellidos ?? "Loading.."} />
+              </div>
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="matricula">Matricula</Label>
+                <Input id="matricula" placeholder={user?.matricula ?? "Loading.."} />
+              </div>
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="contrasena">Password</Label>
+                <Input id="contrasena" placeholder={user?.contrasena ?? "Loading.."} />
+              </div>
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="carrera">Carrera</Label>
+                <Input id="carrera" placeholder={user?.carrera ?? "Loading.."} />
+              </div>
+
             </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="framework">Apellido(s)</Label>
-              <Input id="name" placeholder={user.apellidos ?? "Loading.."} />
-            </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="framework">Matricula</Label>
-              <Input id="name" placeholder={user.matricula ?? "Loading.."} />
-            </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="framework">Password</Label>
-              <Input id="name" placeholder={user.contrasena ?? "Loading.."} />
-            </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="framework">Carrera</Label>
-              <Input id="name" placeholder={user.carrera ?? "Loading.."} />
-            </div>
-          </div>
-        </form>
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        <Button variant="outline">Cancelar</Button>
-        <Button>Guardar</Button>
-      </CardFooter>
-    </Card>
+          </form>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <Button variant="outline">Cancelar</Button>
+          <Button>Guardar</Button>
+        </CardFooter>
+      </Card>
     </div>
   )
 }

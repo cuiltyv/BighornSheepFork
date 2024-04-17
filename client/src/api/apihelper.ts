@@ -3,7 +3,7 @@ import { User } from "@interfaces";
 
 export async function getUser(matricula: string): Promise<User | null> {
   try {
-    const response = await axios.get("/perfil/" + matricula);
+    const response = await axios.get("usuarios/" + matricula);
     if (response.status === 200) {
       const data = response.data;
       const user: User = {

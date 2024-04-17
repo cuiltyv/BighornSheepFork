@@ -8,8 +8,8 @@ export default defineConfig({
   resolve: {
     alias: {
       "@api_helper": path.resolve(__dirname, "./src/api/"),
+
       "@": path.resolve(__dirname, "./src"),
-      
     },
   },
 })
