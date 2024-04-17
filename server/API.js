@@ -6,10 +6,15 @@ const usersRoutes = require("./routes/usersRoutes");
 const reservationsRoutes = require("./routes/reservationsRoutes");
 const roomsRoutes = require("./routes/salasRoutes"); // Make sure this matches the exported name from the file
 const miscRoutes = require("./routes/miscRoutes");
+
+const setupSwagger = require("./configs/swagger");
+
 const hardwareRoutes = require("./routes/hardwareRoutes");
+
 
 const verifyJWT = require("./middleware/verifyJWT");
 const cookieParser = require("cookie-parser");
+const { setup } = require("swagger-ui-express");
 
 const app = express();
 
@@ -54,6 +59,18 @@ const requestLogger = (request, response, next) => {
 };
 
 app.use(requestLogger);
+
+app.use((error, req, res, next) => {
+  console.error(error.stack);
+  res.status(500).send('Something broke!');
+});
+/*
+app.use((req, res, next) => {
+  res.status(404).send('404: Page not found');
+});
+*/
+
+setupSwagger(app);
 
 app.use("/usuarios", usersRoutes);
 app.use("/reservaciones", reservationsRoutes);
