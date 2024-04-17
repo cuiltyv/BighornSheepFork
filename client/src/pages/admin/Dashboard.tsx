@@ -18,13 +18,11 @@ const Dashboard = () => {
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
-        // We're not updating the state here because it's already initialized with zeros.
+       
       });
-  }, []); // The empty array ensures this effect runs once on mount
+  }, []); 
 
-  // STATS ESTAN HARDCODEADOS, FALTA HACERLO CON API
-  // tal vez con axios.get('https://dreamapi.azurewebsites.net/stats')
-  // despues de que implemente la ruta en el API
+
 
   return (
     <div className="min-h-screen bg-darkWhite">

@@ -104,26 +104,22 @@ const createReservation = async (req, res) => {
 // Actualizar una reservacion
 // Ruta: /reservations/:id (PUT)
 const updateReservation = async (req, res) => {
-  const { id } = req.params;
-  const { Matricula, ZonaID, HoraInicio, HoraFin, Proposito, Estado } =
-    req.body;
-  try {
-    let pool = await sql.connect(config);
-    await pool
-      .request()
-      .input("ReservacionID", sql.Int, id)
-      .input("Matricula", sql.VarChar(10), Matricula)
-      .input("ZonaID", sql.Int, ZonaID)
-      .input("HoraInicio", sql.DateTime, HoraInicio)
-      .input("HoraFin", sql.DateTime, HoraFin)
-      .input("Proposito", sql.NVarChar(255), Proposito)
-      .input("Estado", sql.NVarChar(50), Estado)
-      .execute("sp_UpdateReservacion");
-    res.status(200).send("Reservation updated successfully");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send({ message: "Error con DB", error: err });
-  }
+    const { id } = req.params;
+    const { HoraInicio, HoraFin, Proposito, Estado } = req.body;
+    try {
+        let pool = await sql.connect(config);
+        await pool.request()
+            .input("ReservacionID", sql.Int, id)
+            .input("HoraInicio", sql.DateTime, HoraInicio)
+            .input("HoraFin", sql.DateTime, HoraFin)
+            .input("Proposito", sql.NVarChar(255), Proposito)
+            .input("Estado", sql.NVarChar(50), Estado)
+            .execute("sp_UpdateReservacion");
+        res.status(200).send("Reservation updated successfully");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({ message: "Error con DB", error: err });
+    }
 };
 
 // Borrar una reservacion

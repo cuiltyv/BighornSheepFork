@@ -15,7 +15,44 @@ const router = express.Router();
 
 */
 
+
+/**
+ * @swagger
+ * /salas:
+ *   get:
+ *     summary: Get all rooms
+ *     description: Retrieve a list of all rooms.
+ *     responses:
+ *       200:
+ *         description: An array of rooms.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     description: The unique identifier for the room.
+ *                   name:
+ *                     type: string
+ *                     description: The name of the room.
+ *                   capacity:
+ *                     type: integer
+ *                     description: The capacity of the room.
+ *                   
+ *       500:
+ *         description: Internal server error, issue with database connectivity or execution.
+ *     tags:
+ *       - Rooms
+ */
+router.get('/', roomsController.getAllRooms);
+
+
 router.get("/", roomsController.getAllRooms);
 router.get("/:id", roomsController.getRoomById);
+
+
 
 module.exports = router;
