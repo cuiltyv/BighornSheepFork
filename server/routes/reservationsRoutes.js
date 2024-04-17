@@ -20,7 +20,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /reservations:
+ * /reservaciones:
  *   get:
  *     summary: Get all reservations
  *     description: Retrieve a list of all reservations that are not marked as deleted.
@@ -42,7 +42,7 @@ router.get('/', reservationsController.getAllReservations);
 
 /**
  * @swagger
- * /reservations/upcoming:
+ * /reservaciones/upcoming:
  *   get:
  *     summary: Get upcoming reservations
  *     description: Retrieve a list of all future reservations.
@@ -65,7 +65,7 @@ router.get('/upcoming', reservationsController.getUpcomingReservations);
 
 /**
  * @swagger
- * /reservations/stats:
+ * /reservaciones/stats:
  *   get:
  *     summary: Get reservation statistics
  *     description: Retrieve statistics for the dashboard such as number of reservations, confirmed reservations, etc.
@@ -101,7 +101,7 @@ router.get('/stats', reservationsController.getReservationStats);
 
 /**
  * @swagger
- * /reservations/{id}:
+ * /reservaciones/{id}:
  *   get:
  *     summary: Get a specific reservation by ID
  *     description: Retrieve details of a specific reservation by its unique ID.
@@ -130,7 +130,7 @@ router.get('/:id', reservationsController.getReservationById);
 
 /**
  * @swagger
- * /reservations:
+ * /reservaciones:
  *   post:
  *     summary: Create a new reservation
  *     description: Add a new reservation with the specified details.
@@ -184,7 +184,7 @@ router.post('/', reservationsController.createReservation);
 
 /**
  * @swagger
- * /reservations/{id}:
+ * /reservaciones/{id}:
  *   put:
  *     summary: Update an existing reservation
  *     description: Update an existing reservation with new details.
@@ -232,7 +232,7 @@ router.put('/:id', reservationsController.updateReservation);
 
 /**
  * @swagger
- * /reservations/set-deleted/{id}:
+ * /reservaciones/set-deleted/{id}:
  *   put:
  *     summary: Mark a reservation as deleted
  *     description: Mark the specified reservation as deleted without actually removing it from the database.
@@ -255,7 +255,7 @@ router.put('/set-deleted/:id', reservationsController.setReservacionDeleted);
 
 /**
  * @swagger
- * /reservations/{id}:
+ * /reservaciones/{id}:
  *   delete:
  *     summary: Delete a specific reservation
  *     description: Delete a reservation by its unique ID.
