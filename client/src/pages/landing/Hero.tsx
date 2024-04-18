@@ -19,16 +19,22 @@ export default function Hero() {
           D.R.E.A.M. Lab
         </h1>
         <p className="font-medium">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
+          El Laboratorio D.R.E.A.M (Desarrollo, Recursos, Experimentación,
+          Avance y Modelado) del Tecnológico de Monterrey promete ser un
+          epicentro de innovación y estudio, abriendo sus puertas a estudiantes
+          y profesores para la reserva de equipos y espacios especializados.
+          Orientado a una diversidad de proyectos, desde la realidad virtual
+          hasta la computación avanzada, este laboratorio busca impulsar la
+          investigación y el desarrollo tecnológico en un ambiente colaborativo.
         </p>
         <p>
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-          dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-          proident, sunt in culpa qui officia deserunt mollit anim id est
-          laborum.
+          Equipado con la tecnología más avanzada, incluyendo simuladores de
+          alta fidelidad y estaciones de trabajo para modelado 3D, el D.R.E.A.M
+          Lab facilitará el avance académico y profesional de su comunidad. La
+          integración de estas herramientas avanzadas permitirá a los usuarios
+          del Tec de Monterrey superar los límites tradicionales de su
+          aprendizaje y exploración, fomentando soluciones innovadoras y un
+          aprendizaje interdisciplinario para enfrentar los desafíos del mañana.
         </p>
         <div className="flex flex-col gap-6 md:flex-row">
           <ButtonFilled text="Reserva un espacio" />
