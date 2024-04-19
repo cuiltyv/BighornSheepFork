@@ -105,7 +105,7 @@ const createReservation = async (req, res) => {
 // Ruta: /reservations/:id (PUT)
 const updateReservation = async (req, res) => {
     const { id } = req.params;
-    const { HoraInicio, HoraFin, Proposito, Estado } = req.body;
+    const { HoraInicio, HoraFin, Proposito, Estado, ZonaID } = req.body;
     try {
         let pool = await sql.connect(config);
         await pool.request()
@@ -114,6 +114,7 @@ const updateReservation = async (req, res) => {
             .input("HoraFin", sql.DateTime, HoraFin)
             .input("Proposito", sql.NVarChar(255), Proposito)
             .input("Estado", sql.NVarChar(50), Estado)
+            .input("ZonaID", sql.Int, ZonaID)
             .execute("sp_UpdateReservacion");
         res.status(200).send("Reservation updated successfully");
     } catch (err) {
