@@ -6,19 +6,19 @@ const logoutController = require("../controllers/logoutController");
  * @swagger
  * /logout:
  *   get:
- *     summary: Log out a user
- *     description: Clears the refresh token cookie to log out the user.
+ *     summary: Cerrar sesión de un usuario
+ *     description: Limpia la cookie del token de actualización para cerrar la sesión del usuario.
  *     responses:
  *       204:
- *         description: No content, successful logout and cookie cleared.
+ *         description: Sin contenido, cierre de sesión exitoso y cookie eliminada.
  *       400:
- *         description: Bad request, no JWT cookie to clear.
+ *         description: Solicitud incorrecta, no hay cookie JWT para limpiar.
  *       500:
- *         description: Internal server error, error with database connection or execution.
+ *         description: Error interno del servidor, problema con la conexión o ejecución de la base de datos.
  *     security:
  *       - cookieAuth: []
- *   tags: 
- *      - Authentication
+ *     tags: 
+ *       - Autenticación
  */
 router.get("/", logoutController.handleLogout);
 
