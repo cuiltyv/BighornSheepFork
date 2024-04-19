@@ -1,24 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
-import { useNavigate, Link } from "react-router-dom";
-import { useContext } from "react";
-import AuthContext from "../context/AuthProvider";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
 
   const handleNav = () => {
     setNav(!nav);
-  };
-
-  const { setAuth } = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  const logout = async () => {
-    // if used in more components, this should be in context
-    // axios to /logout endpoint
-    setAuth({});
-    navigate("/linkpage");
   };
 
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -51,12 +39,7 @@ const Navbar = () => {
           <li className="mx-6 p-5">
             <Link to="/BighornSheep/Landing">Inicio</Link>
           </li>
-          <li className="mx-6 p-5">
-            <Link to="/BighornSheep/form">Reservaciones</Link>
-          </li>
-          <li className="mx-6 p-5">
-            <Link to="/BighornSheep/admin">Administrador</Link>
-          </li>
+
           <li className="mx-6 p-5">
             <Link to="/BighornSheep/Landing">Contacto</Link>
           </li>
@@ -89,9 +72,7 @@ const Navbar = () => {
             <li className="my-2 p-2">
               <Link to="/BighornSheep/Landing">Inicio</Link>
             </li>
-            <li className="my-2 p-2">
-              <Link to="/BighornSheep/form">Reservaciones</Link>
-            </li>
+
             <li className="my-2 p-2">
               <Link to="/BighornSheep/Landing">Contacto</Link>
             </li>
