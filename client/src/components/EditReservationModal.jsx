@@ -1,10 +1,28 @@
-import React, { useState } from 'react';
-import { PencilIcon } from '@heroicons/react/solid';
+import React, { useState } from "react";
+import { PencilIcon } from "@heroicons/react/solid";
 
-const EditReservationModal = ({ isOpen, closeModal, reservation, updateReservation }) => {
+const EditReservationModal = ({
+  isOpen,
+  closeModal,
+  reservation,
+  updateReservation,
+}) => {
+  // PENDIENTE: NO HARDCODEAR ESTO
+  const idToSalasMap = {
+    1: "New Horizons",
+    2: "Graveyard",
+    3: "PCB Factory",
+    4: "Electric garage",
+    5: "Deep Net",
+    6: "Hack Battlefield",
+    7: "Testing Land",
+    8: "Dimension Forge",
+  };
+
   const [formData, setFormData] = useState({ ...reservation });
 
   const handleChange = (e) => {
+    console.log(e.target.name, e.target.value);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -24,33 +42,81 @@ const EditReservationModal = ({ isOpen, closeModal, reservation, updateReservati
     const adjustedDate = new Date(date.getTime() - offset * 60 * 1000);
     return adjustedDate.toISOString().slice(0, 16); //Cortar Z
   }
-  
-  
+
   const horaInicioLocal = toLocalDateTimeString(formData.HoraInicio);
   const horaFinLocal = toLocalDateTimeString(formData.HoraFin);
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
-      <div className="bg-white rounded-lg max-w-2xl w-full overflow-hidden">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
+      <div className="w-full max-w-2xl overflow-hidden rounded-lg bg-white">
         <div className="p-5">
-          <h3 className="text-lg font-medium leading-6 text-gray-900">Edit Reservation</h3>
-          <form onSubmit={handleSubmit} className="space-y-4 mt-5">
-            
+          <h3 className="text-lg font-medium leading-6 text-gray-900">
+            Editar Reservacion
+          </h3>
+          <form onSubmit={handleSubmit} className="mt-5 space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700">Hora Inicio:</label>
-              <input type="datetime-local" name="HoraInicio" value={horaInicioLocal} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded shadow-sm w-full" />
+              <label className="block text-sm font-medium text-gray-700">
+                Hora Inicio:
+              </label>
+              <input
+                type="datetime-local"
+                name="HoraInicio"
+                value={horaInicioLocal}
+                onChange={handleChange}
+                className="mt-1 w-full rounded border border-gray-300 p-2 shadow-sm"
+              />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">Hora Fin:</label>
-              <input type="datetime-local" name="HoraFin" value={horaFinLocal} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded shadow-sm w-full" />
+              <label className="block text-sm font-medium text-gray-700">
+                Hora Fin:
+              </label>
+              <input
+                type="datetime-local"
+                name="HoraFin"
+                value={horaFinLocal}
+                onChange={handleChange}
+                className="mt-1 w-full rounded border border-gray-300 p-2 shadow-sm"
+              />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">Propósito:</label>
-              <input type="text" name="Proposito" value={formData.Proposito} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded shadow-sm w-full" />
+              <label className="block text-sm font-medium text-gray-700">
+                Propósito:
+              </label>
+              <input
+                type="text"
+                name="Proposito"
+                value={formData.Proposito}
+                onChange={handleChange}
+                className="mt-1 w-full rounded border border-gray-300 p-2 shadow-sm"
+              />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">Estado:</label>
-              <select name="Estado" value={formData.Estado} onChange={handleChange} className="mt-1 p-2 border border-gray-300 rounded shadow-sm w-full">
+              <label className="block text-sm font-medium text-gray-700">
+                Cuarto
+              </label>
+              <select
+                name="ZonaID"
+                value={formData.ZonaID}
+                onChange={handleChange}
+                className="mt-1 w-full rounded border border-gray-300 p-2 shadow-sm"
+              >
+                {Object.entries(idToSalasMap).map(([id, sala]) => (
+                  <option key={id} value={id}>
+                    {sala}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Estado:
+              </label>
+              <select
+                name="Estado"
+                value={formData.Estado}
+                onChange={handleChange}
+                className="mt-1 w-full rounded border border-gray-300 p-2 shadow-sm"
+              >
                 <option value="Pendiente">Pendiente</option>
                 <option value="Confirmado">Confirmado</option>
                 <option value="Cancelado">Cancelado</option>
@@ -58,10 +124,17 @@ const EditReservationModal = ({ isOpen, closeModal, reservation, updateReservati
               </select>
             </div>
             <div className="flex justify-between space-x-2">
-              <button type="button" onClick={closeModal} className="bg-red-500 hover:bg-red-700 text-white font-medium py-2 px-4 rounded">
+              <button
+                type="button"
+                onClick={closeModal}
+                className="rounded bg-red-500 px-4 py-2 font-medium text-white hover:bg-red-700"
+              >
                 Cancel
               </button>
-              <button type="submit" className="bg-green-500 hover:bg-blue-700 text-green font-medium py-2 px-4 rounded">
+              <button
+                type="submit"
+                className="hover:bg-blue-700 text-green rounded bg-green-500 px-4 py-2 font-medium"
+              >
                 Actualizar
               </button>
             </div>
@@ -70,7 +143,6 @@ const EditReservationModal = ({ isOpen, closeModal, reservation, updateReservati
       </div>
     </div>
   );
-  
 };
 
 export default EditReservationModal;
