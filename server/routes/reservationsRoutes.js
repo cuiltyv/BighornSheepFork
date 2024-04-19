@@ -22,21 +22,32 @@ const router = express.Router();
  * @swagger
  * /reservaciones:
  *   get:
- *     summary: Get all reservations
- *     description: Retrieve a list of all reservations that are not marked as deleted.
+ *     summary: Obtener todas las reservaciones
+ *     description: Recupera una lista de todas las reservaciones que no están marcadas como eliminadas.
  *     responses:
  *       200:
- *         description: An array of reservations.
+ *         description: Un array de reservaciones.
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Reservation'
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     description: El ID de la reservación.
+ *                   nombre:
+ *                     type: string
+ *                     description: El nombre asociado a la reservación.
+ *                   fecha:
+ *                     type: string
+ *                     format: date
+ *                     description: La fecha de la reservación.
  *       500:
- *         description: Server error or database connectivity issue.
- *   tags:
- *      - Reservations
+ *         description: Error del servidor o problema de conectividad con la base de datos.
+ *     tags:
+ *       - Reservaciones
  */
 router.get('/', reservationsController.getAllReservations);
 
@@ -44,34 +55,44 @@ router.get('/', reservationsController.getAllReservations);
  * @swagger
  * /reservaciones/upcoming:
  *   get:
- *     summary: Get upcoming reservations
- *     description: Retrieve a list of all future reservations.
+ *     summary: Obtener las reservaciones futuras
+ *     description: Recupera una lista de todas las reservaciones futuras.
  *     responses:
  *       200:
- *         description: An array of upcoming reservations.
+ *         description: Un array de reservaciones futuras.
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Reservation'
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     description: El ID de la reservación.
+ *                   nombre:
+ *                     type: string
+ *                     description: El nombre asociado a la reservación.
+ *                   fecha:
+ *                     type: string
+ *                     format: date
+ *                     description: La fecha de la reservación futura.
  *       500:
- *         description: Server error or database connectivity issue.
- *   tags:
- *    - Reservations
+ *         description: Error del servidor o problema de conectividad con la base de datos.
+ *     tags:
+ *       - Reservaciones
  */
 router.get('/upcoming', reservationsController.getUpcomingReservations);
-
 
 /**
  * @swagger
  * /reservaciones/stats:
  *   get:
- *     summary: Get reservation statistics
- *     description: Retrieve statistics for the dashboard such as number of reservations, confirmed reservations, etc.
+ *     summary: Obtener estadísticas de las reservaciones
+ *     description: Sacar estadísticas de las reservaciones para el dashboard de administrador.
  *     responses:
  *       200:
- *         description: Statistics data.
+ *         description: Estadísticas de las reservaciones.
  *         content:
  *           application/json:
  *             schema:
@@ -84,17 +105,17 @@ router.get('/upcoming', reservationsController.getUpcomingReservations);
  *                     properties:
  *                       icon:
  *                         type: string
- *                         description: Emoji representing the statistic.
+ *                         description: Icono para la estadística.
  *                       count:
  *                         type: integer
- *                         description: The count of the statistic.
+ *                         description: Cantidad de reservaciones asociadas a la estadística.
  *                       label:
  *                         type: string
- *                         description: Label for the statistic.
+ *                         description: Etiqueta para la estadística.
  *       500:
  *         description: Server error or database connectivity issue.
- *   tags:
- *   - Reservations
+ *     tags:
+ *       - Reservaciones
  */
 router.get('/stats', reservationsController.getReservationStats);
 
@@ -103,28 +124,26 @@ router.get('/stats', reservationsController.getReservationStats);
  * @swagger
  * /reservaciones/{id}:
  *   get:
- *     summary: Get a specific reservation by ID
- *     description: Retrieve details of a specific reservation by its unique ID.
+ *     summary: Sacar una reservacion por ID
+ *     description: Recupera una reservación por su ID único.
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: integer
- *         description: Unique ID of the reservation.
+ *         description: ID único de la reservación a recuperar.
  *     responses:
  *       200:
- *         description: A reservation object.
+ *         description: Un objeto de reservación.
  *         content:
  *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Reservation'
  *       404:
- *         description: Reservation not found.
+ *         description: Reservación no encontrada.
  *       500:
- *         description: Server error or database connectivity issue.
- *   tags:
- *   - Reservations
+ *         description: Error del servidor o problema de conectividad con la base de datos
+ *     tags:
+ *       - Reservaciones
  */
 router.get('/:id', reservationsController.getReservationById);
 
@@ -132,8 +151,8 @@ router.get('/:id', reservationsController.getReservationById);
  * @swagger
  * /reservaciones:
  *   post:
- *     summary: Create a new reservation
- *     description: Add a new reservation with the specified details.
+ *     summary: Crear una nueva reservación
+ *     description: Agrega una nueva reservación a la base de datos.
  *     requestBody:
  *       required: true
  *       content:
@@ -142,18 +161,18 @@ router.get('/:id', reservationsController.getReservationById);
  *             $ref: '#/components/schemas/NewReservation'
  *     responses:
  *       201:
- *         description: Reservation created successfully.
+ *         description: Reservación creada exitosamente.
  *       500:
- *         description: Server error or database connectivity issue.
- *   tags:
- *     - Reservations
+ *         description: Error del servidor o problema de conectividad con la base de datos.
+ *     tags:
+ *       - Reservaciones
  * components:
  *   schemas:
  *     NewReservation:
  *       type: object
  *       required:
  *         - Matricula
- *         - ZonaID
+ *         - SalaID
  *         - HoraInicio
  *         - HoraFin
  *         - Proposito
@@ -161,24 +180,24 @@ router.get('/:id', reservationsController.getReservationById);
  *       properties:
  *         Matricula:
  *           type: string
- *           description: Student registration number.
- *         ZonaID:
+ *           description: Matricula del estudiante.
+ *         SalaID:
  *           type: integer
- *           description: Identifier of the zone where the reservation is made.
+ *           description: Identificador de la sala reservada.
  *         HoraInicio:
  *           type: string
  *           format: date-time
- *           description: Start time of the reservation.
+ *           description: Tiempo de inicio de la reservación.
  *         HoraFin:
  *           type: string
  *           format: date-time
- *           description: End time of the reservation.
+ *           description: Fin de la reservación.
  *         Proposito:
  *           type: string
- *           description: Purpose of the reservation.
+ *           description: Prpósito de la reservación.
  *         Estado:
  *           type: string
- *           description: State of the reservation.
+ *           description: Estado de la reservación.
  */
 router.post('/', reservationsController.createReservation);
 
@@ -186,15 +205,15 @@ router.post('/', reservationsController.createReservation);
  * @swagger
  * /reservaciones/{id}:
  *   put:
- *     summary: Update an existing reservation
- *     description: Update an existing reservation with new details.
+ *     summary: Actualizar una reservación existente
+ *     description: Actualiza una reservación existente en la base de datos
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: integer
- *         description: Unique ID of the reservation to update.
+ *         description: ID único de la reservación a actualizar.
  *     requestBody:
  *       required: true
  *       content:
@@ -203,11 +222,11 @@ router.post('/', reservationsController.createReservation);
  *             $ref: '#/components/schemas/UpdateReservation'
  *     responses:
  *       200:
- *         description: Reservation updated successfully.
+ *         description: Reservación actualizada exitosamente.
  *       500:
- *         description: Server error or database connectivity issue.
- *   tags:
- *    - Reservations
+ *         description: Error del servidor o problema de conectividad con la base de datos.
+ *     tags:
+ *       - Reservaciones
  * components:
  *   schemas:
  *     UpdateReservation:
@@ -216,17 +235,17 @@ router.post('/', reservationsController.createReservation);
  *         HoraInicio:
  *           type: string
  *           format: date-time
- *           description: New start time of the reservation.
+ *           description: Nuevo tiempo de inicio de la reservación
  *         HoraFin:
  *           type: string
  *           format: date-time
- *           description: New end time of the reservation.
+ *           description: Nuevo tiempo de fin de la reservación
  *         Proposito:
  *           type: string
- *           description: New purpose of the reservation.
+ *           description: Nuevo propósito de la reservación
  *         Estado:
  *           type: string
- *           description: New state of the reservation.
+ *           description: Nuevo estado de la reservación
  */
 router.put('/:id', reservationsController.updateReservation);
 
@@ -234,22 +253,22 @@ router.put('/:id', reservationsController.updateReservation);
  * @swagger
  * /reservaciones/set-deleted/{id}:
  *   put:
- *     summary: Mark a reservation as deleted
- *     description: Mark the specified reservation as deleted without actually removing it from the database.
+ *     summary: Marcar una reservación como eliminada
+ *     description: Marca una reservación como eliminada en la base de datos.
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: integer
- *         description: Unique ID of the reservation to mark as deleted.
+ *         description: ID único de la reservación a marcar como eliminada.
  *     responses:
  *       200:
- *         description: Reservation marked as deleted successfully.
+ *         description: Reservación marcada como eliminada exitosamente.
  *       500:
- *         description: Server error or database connectivity issue.
- *   tags:
- *    - Reservations
+ *         description: Error del servidor o problema de conectividad con la base de datos.
+ *     tags:
+ *       - Reservaciones
  */
 router.put('/set-deleted/:id', reservationsController.setReservacionDeleted);
 
@@ -257,22 +276,22 @@ router.put('/set-deleted/:id', reservationsController.setReservacionDeleted);
  * @swagger
  * /reservaciones/{id}:
  *   delete:
- *     summary: Delete a specific reservation
- *     description: Delete a reservation by its unique ID.
+ *     summary: Eliminar una reservación por ID
+ *     description: Elimina una reservación por su ID único.
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: integer
- *         description: Unique ID of the reservation to delete.
+ *         description: ID único de la reservación a eliminar.
  *     responses:
  *       200:
- *         description: Reservation deleted successfully.
+ *         description: Reservación eliminada exitosamente.
  *       500:
- *         description: Server error or database connectivity issue.
- *   tags:
- *   - Reservations
+ *         description: Error del servidor o problema de conectividad con la base de datos.
+ *     tags:
+ *       - Reservaciones
  */
 router.delete('/:id', reservationsController.deleteReservation);
 

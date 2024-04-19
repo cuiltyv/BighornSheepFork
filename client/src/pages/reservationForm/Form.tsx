@@ -35,6 +35,7 @@ function Form() {
 
   const goBack = () => navigate(-1);
 
+
   const [horaSeleccionada, setHoraSeleccionada] = useState("9:00am - 10:00am");
   const [diaSeleccionado, setDiaSeleccionado] = useState(dayjs());
   const [people, setPeople] = useState<Person[]>([
@@ -44,16 +45,9 @@ function Form() {
     "Unidad de Formacion",
   );
 
-  const [aparatos, setAparatos] = useState<Aparato[]>([
-    { id: 0, nombre: "Computadora", cantidad: 0 },
-    { id: 1, nombre: "Impresora 3D", cantidad: 0 },
-    { id: 2, nombre: "Cable USB-C", cantidad: 0 },
-    { id: 3, nombre: "Robot Pro", cantidad: 0 },
-    { id: 4, nombre: "Vision Pro", cantidad: 0 },
-    { id: 5, nombre: "IPad Pro", cantidad: 0 },
-    { id: 6, nombre: "Meta Quest 3", cantidad: 0 },
-    { id: 7, nombre: "Ray Ban x Meta", cantidad: 0 },
-  ]);
+  const [aparatos, setAparatos] = useState<Aparato[]>([]);
+
+  const [aparatosDisponibles, setAparatosDisponibles] = useState([]);
 
   const [comment, setComment] = useState("");
 
@@ -67,6 +61,23 @@ function Form() {
       })
       .catch((error) => {
         console.error("Error getting room:", error);
+      });
+  }, [id]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/hardware")
+      .then((response) => {
+        setAparatos([]);
+        response.data.map((hardware) => {
+          setAparatos((prev) => [
+            ...prev,
+            { id: hardware.HardwareID, nombre: hardware.Nombre, cantidad: 0 },
+          ]);
+        });
+      })
+      .catch((error) => {
+        console.error("Error getting hardware:", error);
       });
   }, [id]);
 

@@ -68,6 +68,123 @@ Describir el modelo arquitectónico elegido para el sistema, incluyendo estilos,
 
 ![DiagramaER](https://imgur.com/3E3Uv9w)
 
+
+## 3.1.2 Stack Tecnológico
+
+## Stack Tecnológico
+
+### Front-end
+
+- Desarrollo
+    - React
+    - TSX
+    - JSX
+    - Vite
+    - Axios
+- Estilos
+    - Tailwind
+    - Prettier
+- Librerías
+    
+    
+    ```
+      	"@fortawesome/fontawesome-svg-core": "^6.5.2",
+        "@fortawesome/free-brands-svg-icons": "^6.5.2",
+        "@fortawesome/free-regular-svg-icons": "^6.5.2",
+        "@fortawesome/free-solid-svg-icons": "^6.5.2",
+        "@fortawesome/react-fontawesome": "^0.2.0",
+        "@heroicons/react": "^1.0.0",
+        "@radix-ui/react-label": "^2.0.2",
+        "@radix-ui/react-slot": "^1.0.2",
+        "axios": "^1.6.8",
+        "class-variance-authority": "^0.7.0",
+        "clsx": "^2.1.0",
+        "formik": "^2.4.5",
+        "gh-pages": "^6.1.1",
+        "lucide-react": "^0.368.0",
+        "react": "^18.2.0",
+        "react-cookie": "^7.1.4",
+        "react-dom": "^18.2.0",
+        "react-icons": "^5.0.1",
+        "react-router-dom": "^6.22.3",
+        "tailwind-merge": "^2.2.2",
+        "yup": "^1.4.0"
+    ```
+    
+- Testing
+    - Cypress
+    
+
+### Back-end
+
+ExpressJS → API Gateway Service
+
+Mocha & Chai → Unit Testing
+
+Javascript → Programming Language
+
+MSSQL  → Conexión a base de Datos
+
+# Base de Datos
+
+Stored procedures:
+
+- registroUsuario
+- SelectAllSalas
+- sp_ClearRefershToken
+- sp_DeleteReservacion
+- sp_GetAllReservaciones
+- sp_GetAllSalas
+- sp_GetAllUsuarios
+- sp_GetReservacionByID
+- sp_GetReservacionesNotDeleted
+- sp_GetStats
+- sp_GetUpcomingReservaciones
+- sp_GetUserByRefreshToken
+- sp_GetUserRoles
+- sp_GetUsuarioByMatricula
+- sp_GetUsuarioPerfilByMatricula
+- sp_InsertAlumnoReservacion
+- sp_InsertCompleteReservacion
+- sp_InsertReservacion
+- sp_InsertReservacionHardware
+- sp_InsertUsuario
+- sp_LoginUser
+- sp_RefreshTokenSet
+- sp_SetReservacionDeleted
+- sp_UpdateReservacion
+- sp_UserLogin
+- Librerías
+    - Prod
+    
+    ```json
+        "bcrypt": "^5.1.1",
+        "cookie-parser": "^1.4.6",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.5",
+        "express": "^4.19.2",
+        "jsonwebtoken": "^9.0.2",
+        "mssql": "^10.0.2",
+    ```
+    
+    - Dev
+    
+    ```
+       "nodemon": "^3.1.0"
+    ```
+    
+
+### AI Service
+
+Python
+FastAPI → API Gateway service
+
+GPT 3.5 OpenAI API → LLM Model
+
+### Call Service
+
+Twilio Service
+
 ### ~~3.2 Descomposición del Sistema~~
 
 ~~Detallar la descomposición del sistema en subsistemas y componentes, incluyendo una descripción de la funcionalidad de cada uno.~~
