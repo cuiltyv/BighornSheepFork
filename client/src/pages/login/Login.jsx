@@ -32,6 +32,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    let capitalizedStr = user.charAt(0).toUpperCase() + user.slice(1);
+    setUser(capitalizedStr);
+
     try {
       const response = await axios.post(
         LOGIN_URL,

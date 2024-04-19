@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import "tailwindcss/tailwind.css";
 import "./styles/Form.css";
@@ -29,6 +30,10 @@ function Form() {
 
   //estas constantes las voy a cambiar (se llamarán desde la api)
   const imgSala = "src/pages/reservationForm/roomImages/PCB.jpg";
+
+  const navigate = useNavigate();
+
+  const goBack = () => navigate(-1);
 
   const [horaSeleccionada, setHoraSeleccionada] = useState("9:00am - 10:00am");
   const [diaSeleccionado, setDiaSeleccionado] = useState(dayjs());
@@ -147,7 +152,7 @@ function Form() {
             </button>
 
             <button
-              onClick={cancelar}
+              onClick={goBack}
               className="bh-border-blue bh-text-blue align-center flex justify-center self-center rounded-lg border-2 px-4 py-2 font-bold"
             >
               Cancelar

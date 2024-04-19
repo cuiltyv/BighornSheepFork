@@ -27,11 +27,8 @@ function App() {
         <Route path="/" element={<WithLayout />}>
           <Route path="/BighornSheep/landing" element={<Landing />} />
           <Route path="/BighornSheep/register" element={<Register />} />
-          <Route path="/BighornSheep/admin" element={<Dashboard />} />
-          <Route path="/BighornSheep/form/:id" element={<Form />} />
-
           <Route path="/BighornSheep/login" element={<Login />} />
-          <Route path="*" element={<Missing />} />
+          <Route path="*" element={<Login />} />
         </Route>
         <Route path="/" element={<WithLayoutLogout />}>
           {/* Ruta solo para usuarios autenticados */}
@@ -39,6 +36,7 @@ function App() {
             <Route
               element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Admin]} />}
             >
+              <Route path="/BighornSheep/form/:id" element={<Form />} />
               <Route path="/BighornSheep" element={<Home />} />
               <Route path="/BighornSheep/perfil" element={<Perfil />} />
             </Route>
