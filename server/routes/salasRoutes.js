@@ -20,11 +20,11 @@ const router = express.Router();
  * @swagger
  * /salas:
  *   get:
- *     summary: Get all rooms
- *     description: Retrieve a list of all rooms.
+ *     summary: Sacar todas las salas
+ *     description: Recupera una lista de todas las salas en el DREAM Lab.
  *     responses:
  *       200:
- *         description: An array of rooms.
+ *         description: Un arreglo de salas
  *         content:
  *           application/json:
  *             schema:
@@ -34,23 +34,47 @@ const router = express.Router();
  *                 properties:
  *                   id:
  *                     type: integer
- *                     description: The unique identifier for the room.
+ *                     description: El ID de la sala.
  *                   name:
  *                     type: string
- *                     description: The name of the room.
+ *                     description: El nombre de la sala.
  *                   capacity:
  *                     type: integer
- *                     description: The capacity of the room.
+ *                     description: La capacidad de la sala.
  *                   
  *       500:
- *         description: Internal server error, issue with database connectivity or execution.
+ *         description: Error del servidor o problema de conectividad con la base de datos.
  *     tags:
- *       - Rooms
+ *       - Salas
  */
 router.get('/', roomsController.getAllRooms);
 
 
-router.get("/", roomsController.getAllRooms);
+/**
+ * @swagger
+ * /salas/{id}:
+ *   get:
+ *     summary: Sacar una sala
+ *     description: Recupera una sala por su ID único.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID único de la sala a recuperar.
+ *     responses:
+ *       200:
+ *         description: Un objeto de sala.
+ *         content:
+ *           application/json:
+ *       404:
+ *         description: Sala no encontrada.
+ *       500:
+ *         description: Error del servidor o problema de conectividad con la base de datos
+ *     tags:
+ *       - Salas
+ */
 router.get("/:id", roomsController.getRoomById);
 
 

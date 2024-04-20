@@ -40,21 +40,21 @@ router.get(
  * @swagger
  * /usuarios:
  *   get:
- *     summary: Get all users
- *     description: Retrieve a list of all users.
+ *     summary: Saca todos los usuarios
+ *     description: Recupera una lista de todos los usuarios registrados en la base de datos.
  *     responses:
  *       200:
- *         description: An array of user objects.
+ *         description: Un arreglo de usuarios.
  *         content:
  *           application/json:
  *             schema:
  *               type: array
- *               items:
- *                 $ref: '#/components/schemas/User'
+ *               
+ *                 
  *       500:
  *         description: Server error or database connectivity issue.
- *   tags:
- *      - Users
+ *     tags:
+ *       - Usuarios
  */
 router.get("/", usersController.getAllUsers);
 
@@ -64,28 +64,25 @@ router.get("/", usersController.getAllUsers);
  * @swagger
  * /usuarios/{matricula}:
  *   get:
- *     summary: Get a user by matricula
- *     description: Retrieve a user object by its matricula.
+ *     summary: Sacar un usuario por matricula
+ *     description: Saca un usuario por su matricula.
  *     parameters:
  *       - in: path
  *         name: matricula
  *         required: true
  *         schema:
  *           type: string
- *         description: The user's matricula.
+ *         description: La matricula del usuario.
  *     responses:
  *       200:
- *         description: A user object.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
+ *         description: Un objeto de usuario
+ *
  *       404:
- *         description: User not found.
+ *         description: Usuario no encontrado.
  *       500:
- *         description: Server error or database connectivity issue.
- *   tags:
- *    - Users
+ *         description: Error interno del servidor o problema de conectividad con la base de datos.
+ *     tags:
+ *       - Usuarios
  */
 router.get("/:matricula", usersController.getUserByMatricula);
 
@@ -95,10 +92,8 @@ router.get("/:matricula", usersController.getUserByMatricula);
  * @swagger
  * /usuarios:
  *   post:
- *     summary: Create a new user
- *     description: Create a new user with the provided details such as matricula, name, last name, password, career, and semester.
- *     tags:
- *       - Users
+ *     summary: Crear un nuevo usuario
+ *     description: Crea un nuevo usuario con los datos de matricula, nombre, apellidos, contraseña, carrera y semestre.
  *     requestBody:
  *       required: true
  *       content:
@@ -115,27 +110,29 @@ router.get("/:matricula", usersController.getUserByMatricula);
  *             properties:
  *               Matricula:
  *                 type: string
- *                 description: Unique registration number of the user.
+ *                 description: ID único del usuario.
  *               Nombre:
  *                 type: string
- *                 description: First name of the user.
+ *                 description: Primer nombre del usuario.
  *               Apellidos:
  *                 type: string
- *                 description: Last name of the user.
+ *                 description: Apellidos del usuario.
  *               Contraseña:
  *                 type: string
- *                 description: Password for the user account.
+ *                 description: Password del usuario.
  *               Carrera:
  *                 type: string
- *                 description: Career or major of the user.
+ *                 description: Carrera del usuario.
  *               Semestre:
  *                 type: integer
- *                 description: Current semester of the user.
+ *                 description: Semestre en el que se encuentra el usuario.
+ *     tags:
+ *       - Usuarios
  *     responses:
  *       201:
- *         description: User created successfully.
+ *         description: Usuario creado exitosamente.
  *       500:
- *         description: Server error or database connectivity issue.
+ *         description: Error interno del servidor o problema de conectividad con la base de datos.
  */
 router.post("/", usersController.createUser);
 
@@ -145,8 +142,8 @@ router.post("/", usersController.createUser);
  * @swagger
  * /usuarios/registro:
  *   post:
- *     summary: Register a new user
- *     description: Register a new user with just matricula and password.
+ *     summary: Registrar un nuevo usuario
+ *     description: Registrar un nuevo usuario con matricula y contraseña.
  *     requestBody:
  *       required: true
  *       content:
@@ -155,13 +152,13 @@ router.post("/", usersController.createUser);
  *             $ref: '#/components/schemas/Registration'
  *     responses:
  *       201:
- *         description: User registered successfully.
+ *         description: Usuario registrado exitosamente.
  *       400:
- *         description: Bad request, matricula or password not provided.
+ *         description: Mala solicitud, usuario ya registrado.
  *       500:
- *         description: Server error or database connectivity issue.
- *   tags:
- *     - Users
+ *         description: Error interno del servidor o problema de conectividad con la base de datos.
+ *     tags:
+ *       - Usuarios
  */
 router.post("/registro", usersController.registerUser);
 
@@ -171,8 +168,8 @@ router.post("/registro", usersController.registerUser);
  * @swagger
  * /usuarios/auth:
  *   post:
- *     summary: Authenticate user
- *     description: Authenticate user and provide access and refresh tokens.
+ *     summary: Autenticar usuario
+ *     description: Autenticar un usuario, proporcionar tokens de acceso y actualización.
  *     requestBody:
  *       required: true
  *       content:
@@ -181,7 +178,7 @@ router.post("/registro", usersController.registerUser);
  *             $ref: '#/components/schemas/Login'
  *     responses:
  *       200:
- *         description: Successfully authenticated, tokens provided.
+ *         description: El usuario ha sido autenticado exitosamente.
  *         content:
  *           application/json:
  *             schema:
@@ -194,11 +191,11 @@ router.post("/registro", usersController.registerUser);
  *                   type: string
  *                   description: JWT access token.
  *       401:
- *         description: Unauthorized, user or password incorrect.
+ *         description: Sin autorización, credenciales incorrectas.
  *       500:
- *         description: Server error or database connectivity issue.
- *   tags:
- *    - Users
+ *         description: Error interno del servidor o problema de conectividad con la base de datos.
+ *     tags:
+ *       - Usuarios
  */
 router.post("/auth", usersController.loginUser);
 

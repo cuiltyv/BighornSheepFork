@@ -11,7 +11,6 @@ const setupSwagger = require("./configs/swagger");
 
 const hardwareRoutes = require("./routes/hardwareRoutes");
 
-
 const verifyJWT = require("./middleware/verifyJWT");
 const cookieParser = require("cookie-parser");
 const { setup } = require("swagger-ui-express");
@@ -24,14 +23,14 @@ app.use(express.json());
 
 // !Comentar antes de subir a GitHub
 // ?Descomentar para poder probar con localhost en react
-
+/*
 app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
   })
 );
-
+*/
 //middleware for cookies
 app.use(cookieParser());
 
@@ -62,7 +61,7 @@ app.use(requestLogger);
 
 app.use((error, req, res, next) => {
   console.error(error.stack);
-  res.status(500).send('Something broke!');
+  res.status(500).send("Something broke!");
 });
 /*
 app.use((req, res, next) => {

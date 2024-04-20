@@ -4,42 +4,37 @@ const miscController = require('../controllers/miscController');
 const router = express.Router();
 
 // Ruta: /
-
 /**
  * @swagger
  * /:
  *   get:
- *     summary: Test route
- *     description: Find out if the server is running.
+ *     summary: Ruta de prueba
+ *     description: Verifica si el servidor está funcionando.
  *     responses:
  *       200:
- *         description: Route functioning.
- *         
- *             
+ *         description: Ruta funcionando correctamente.
  *       500:
  *         description: Error.
- *   tags:
- *    - Misc
+ *     tags:
+ *       - Misceláneo
  */
 router.get('/', miscController.getRoot);
-
 
 /**
  * @swagger
  * /test:
  *   get:
- *     summary: Test route
- *     description: Attempt to connect to database
+ *     summary: Ruta de prueba
+ *     description: Intenta conectar a la base de datos
  *     responses:
  *       200:
- *         description: Connected to database.
- *         
- *             
+ *         description: Conectado a la base de datos.
  *       500:
  *         description: Error.
- *   tags:
- *   - Misc
+ *     tags:
+ *       - Misceláneo
  */
 router.get('/test', miscController.getTest);
+
 
 module.exports = router;

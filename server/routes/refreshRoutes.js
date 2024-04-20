@@ -7,11 +7,11 @@ const refreshTokenController = require("../controllers/refreshtokenController");
  * @swagger
  * /refresh:
  *   get:
- *     summary: Refresh the access token
- *     description: Validate the refresh token from cookies and issue a new access token.
+ *     summary: Actualizar el token de acceso
+ *     description: Valida el token de actualización desde las cookies y emite un nuevo token de acceso.
  *     responses:
  *       200:
- *         description: A new access token has been successfully created and returned.
+ *         description: Se ha creado y devuelto exitosamente un nuevo token de acceso.
  *         content:
  *           application/json:
  *             schema:
@@ -19,22 +19,23 @@ const refreshTokenController = require("../controllers/refreshtokenController");
  *               properties:
  *                 role:
  *                   type: integer
- *                   description: The role ID of the user.
+ *                   description: El ID de rol del usuario.
  *                 accessToken:
  *                   type: string
- *                   description: The newly generated access token.
+ *                   description: El token de acceso recién generado.
  *       401:
- *         description: Unauthorized, no refresh token cookie provided.
+ *         description: No autorizado, no se proporcionó la cookie del token de actualización.
  *       403:
- *         description: Forbidden, refresh token is not valid or has expired.
+ *         description: Prohibido, el token de actualización no es válido o ha expirado.
  *       500:
- *         description: Internal server error, issue with database connectivity or execution.
+ *         description: Error interno del servidor, problema con la conectividad o ejecución de la base de datos.
  *     security:
  *       - cookieAuth: []
  *     tags:
- *       - Authentication
+ *       - Autenticación
  */
 router.get("/", refreshTokenController.handleRefreshToken);
+
 
 
 module.exports = router;

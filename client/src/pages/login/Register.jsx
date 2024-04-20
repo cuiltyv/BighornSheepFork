@@ -12,7 +12,7 @@ const USER_REGEX = /^[AaLl][0-9]{8}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const REGISTER_URL = "/usuarios/registro";
 
-export default function Register () {
+export default function Register() {
   const userRef = useRef();
   const errRef = useRef();
 
@@ -58,6 +58,10 @@ export default function Register () {
       setErrMsg("Invalid Entry");
       return;
     }
+
+    let capitalizedStr = user.charAt(0).toUpperCase() + user.slice(1);
+    setUser(capitalizedStr);
+
     try {
       const response = await axios.post(
         REGISTER_URL,
