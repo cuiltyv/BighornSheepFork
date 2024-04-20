@@ -171,24 +171,26 @@ const loginUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { Matricula, Nombre, Apellido, Carrera, Semestre } = req.body;
+  const { matricula, nombre, apellidos, carrera, semestre } = req.body;
+
   try {
     let pool = await sql.connect(config);
     let request = pool.request();
 
-    request = request.input("Matricula", sql.VarChar(10), Matricula);
 
-    if (Nombre !== undefined) {
-      request = request.input("Nombre", sql.NVarChar(50), Nombre);
+    request = request.input("Matricula", sql.VarChar(10), matricula);
+
+    if (nombre !== undefined) {
+      request = request.input("Nombre", sql.NVarChar(50), nombre);
     }
-    if (Apellido !== undefined) {
-      request = request.input("Apellidos", sql.NVarChar(50), Apellido);
+    if (apellidos !== undefined) {
+      request = request.input("Apellidos", sql.NVarChar(50), apellidos);
     }
-    if (Carrera !== undefined) {
-      request = request.input("Carrera", sql.NVarChar(50), Carrera);
+    if (carrera !== undefined) {
+      request = request.input("Carrera", sql.NVarChar(50), carrera);
     }
-    if (Semestre !== undefined) {
-      request = request.input("Semestre", sql.Int, Semestre);
+    if (semestre !== undefined) {
+      request = request.input("Semestre", sql.Int, semestre);
     }
     await request.execute("sp_UpdateUsuario");
     res.status(201).send("User updated successfully");

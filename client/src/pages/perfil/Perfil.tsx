@@ -18,8 +18,9 @@ import {
 } from "@/components/ui/tabs";
 
 import { User } from "@interfaces";
-import { getUser } from "@api_helper";
+import { getUser, updateUser } from "@api_helper";
 import useAuth from "@UserAuth";
+
 
 export default function TabsDemo() {
   // @ts-expect-error //ignore warning
@@ -36,6 +37,31 @@ export default function TabsDemo() {
     };
     fetchUser();
   }, [userID]);
+
+  const handleInputChange = (event: { target: { id: string; value: unknown; }; }) => {
+    const field = event.target.id;
+    const value = event.target.value;
+    setUser(previousUser => {
+      if (previousUser) {
+        return { ...previousUser, [field]: value };
+      }
+      return null;
+    });
+  };
+  const handleUpdateClick =  () => {
+    if (user) {
+      try {
+        console.log("Updated User", user)
+        // Assuming updateUser is the function to call to your update API
+        // You would need to implement this function
+        updateUser(user);
+        // show some success message
+      } catch (error) {
+        // Handle the error, possibly show an error message to the user
+      }
+    }
+  };
+
 
   return (
     <div className="flex justify-center w-screen pb-20 h-screen">
@@ -54,23 +80,23 @@ export default function TabsDemo() {
               {/* Replaced static content with dynamic user state content */}
               <div className="space-y-1">
                 <Label htmlFor="nombre">Nombre(s)</Label>
-                <Input id="nombre" defaultValue={user?.nombre ?? ""} />
+                <Input onChange={handleInputChange} id="nombre" defaultValue={user?.nombre ?? ""} />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="apellidos">Apellido(s)</Label>
-                <Input id="apellidos" defaultValue={user?.apellidos ?? ""} />
+                <Input onChange={handleInputChange} id="apellidos" defaultValue={user?.apellidos ?? ""} />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="matricula">Matricula</Label>
-                <Input disabled id="matricula" defaultValue={user?.matricula ?? ""} />
+                <Input onChange={handleInputChange} disabled id="matricula" defaultValue={user?.matricula ?? ""} />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="carrera">Carrera</Label>
-                <Input id="carrera" defaultValue={user?.carrera ?? ""} />
+                <Input onChange={handleInputChange} id="carrera" defaultValue={user?.carrera ?? ""} />
               </div>
             </CardContent>
             <CardFooter>
-              <Button>Guardar Cambios</Button>
+              <Button onClick={handleUpdateClick}>Guardar Cambios</Button>
             </CardFooter>
           </Card>
         </TabsContent>
@@ -89,12 +115,12 @@ export default function TabsDemo() {
                 <Input id="current" type="password" />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="new">Nueva Contraseña password</Label>
+                <Label htmlFor="new">Nueva Contraseña</Label>
                 <Input id="new" type="password" />
               </div>
             </CardContent>
             <CardFooter>
-              <Button>Save password</Button>
+              <Button>Guardar Contraseña</Button>
             </CardFooter>
           </Card>
         </TabsContent>

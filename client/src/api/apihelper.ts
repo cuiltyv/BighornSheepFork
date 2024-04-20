@@ -23,3 +23,16 @@ export async function getUser(matricula: string): Promise<User | null> {
     return null;
   }
 }
+export async function updateUser(user: User): Promise<boolean> {
+  try {
+    const response = await axios.put("usuarios/" + user.matricula, user);
+    if (response.status === 200 || response.status === 201) {
+      return true;
+    } else {
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+    }
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
