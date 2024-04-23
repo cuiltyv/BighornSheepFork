@@ -35,7 +35,7 @@ const handleRefreshToken = async (req, res) => {
           process.env.ACCESS_TOKEN_SECRET,
           { expiresIn: "15m" } //15min
         );
-        res.json({ role, accessToken });
+        res.json({ role, accessToken,  matricula: decoded.Matricula});
       }
     );
   } catch (err) {

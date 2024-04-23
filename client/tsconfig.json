@@ -22,12 +22,14 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     
-
     "allowJs": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
+      "@api_helper": ["./src/api/"],
+      "@interfaces": ["./src/components/interfaces"],
+      "@UserAuth": ["./src/context"],
 
+      "@/*": [
         "./src/*"
       ]
     }

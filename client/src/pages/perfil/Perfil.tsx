@@ -1,6 +1,5 @@
-import * as React from "react"
-
-import { Button } from "@/components/ui/button"
+import { useState, useEffect } from 'react';
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,77 +7,127 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
 
-interface User {
-  matricula: string;
-  nombre: string;
-  apellidos: string;
-  contrasena: string;
-  carrera: string;
-  semestre: number;
-}
-
-const defaultUser: User = {
-  matricula: "defaultMatricula",
-  nombre: "defaultNombre",
-  apellidos: "defaultApellidos",
-  contrasena: "defaultContrasena",
-  carrera: "defaultCarrera",
-  semestre: -1,
-};
+import { User } from "@interfaces";
+import { getUser, updateUser } from "@api_helper";
+import useAuth from "@UserAuth";
 
 
-export function CardWithForm() {
+export default function TabsDemo() {
+  // @ts-expect-error //ignore warning
+  const { auth } = useAuth();
+  const userID = auth?.userID;
+
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (!userID) return;
+      const result = await getUser(userID);
+      setUser(result);
+    };
+    fetchUser();
+  }, [userID]);
+
+  const handleInputChange = (event: { target: { id: string; value: unknown; }; }) => {
+    const field = event.target.id;
+    const value = event.target.value;
+    setUser(previousUser => {
+      if (previousUser) {
+        return { ...previousUser, [field]: value };
+      }
+      return null;
+    });
+  };
+  const handleUpdateClick =  () => {
+    if (user) {
+      try {
+        console.log("Updated User", user)
+        // Assuming updateUser is the function to call to your update API
+        // You would need to implement this function
+        updateUser(user);
+        // show some success message
+      } catch (error) {
+        // Handle the error, possibly show an error message to the user
+      }
+    }
+  };
+
+
   return (
-    <div className="flex justify-center w-screen pb-20">
-    <Card className="w-[350px] min-h">
-      <CardHeader>
-        <CardTitle>Bienvenido {defaultUser.nombre}</CardTitle>
-        <CardDescription>Modifica o consulta la información de tu perfil</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form>
-          <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="framework">Nombre</Label>
-              <Input id="name" placeholder={defaultUser.nombre} />
-            </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="framework">Apellido(s)</Label>
-              <Input id="name" placeholder={defaultUser.apellidos} />
-            </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="framework">Matricula</Label>
-              <Input id="name" placeholder={defaultUser.matricula} />
-            </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="framework">Password</Label>
-              <Input id="name" placeholder={defaultUser.contrasena} />
-            </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="framework">Carrera</Label>
-              <Input id="name" placeholder={defaultUser.carrera} />
-            </div>
-          </div>
-        </form>
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        <Button variant="outline">Cancelar</Button>
-        <Button>Guardar</Button>
-      </CardFooter>
-    </Card>
+    <div className="flex justify-center w-screen pb-20 h-screen">
+      <Tabs defaultValue="account" className="w-[400px]">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="account">Cuenta</TabsTrigger>
+          <TabsTrigger value="password">Contraseña</TabsTrigger>
+        </TabsList>
+        <TabsContent value="account">
+          <Card>
+            <CardHeader>
+              <CardTitle>Bienvenido {user?.nombre ?? "Loading.."}</CardTitle>
+              <CardDescription>Modifica o consulta tu información de perfil aqui</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              {/* Replaced static content with dynamic user state content */}
+              <div className="space-y-1">
+                <Label htmlFor="nombre">Nombre(s)</Label>
+                <Input onChange={handleInputChange} id="nombre" defaultValue={user?.nombre ?? ""} />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="apellidos">Apellido(s)</Label>
+                <Input onChange={handleInputChange} id="apellidos" defaultValue={user?.apellidos ?? ""} />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="matricula">Matricula</Label>
+                <Input onChange={handleInputChange} disabled id="matricula" defaultValue={user?.matricula ?? ""} />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="carrera">Carrera</Label>
+                <Input onChange={handleInputChange} id="carrera" defaultValue={user?.carrera ?? ""} />
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button onClick={handleUpdateClick}>Guardar Cambios</Button>
+            </CardFooter>
+          </Card>
+        </TabsContent>
+        <TabsContent value="password">
+          <Card>
+            <CardHeader>
+              <CardTitle>Contraseña</CardTitle>
+              <CardDescription>
+                Cambia tu contraseña aqui. Despues de guardarlo cerraremos tu sesión .
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+
+              <div className="space-y-1">
+                <Label htmlFor="current">Contraseña Actual</Label>
+                <Input id="current" type="password" />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="new">Nueva Contraseña</Label>
+                <Input id="new" type="password" />
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button>Guardar Contraseña</Button>
+            </CardFooter>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
-  )
+  );
 }
 
-export default CardWithForm;
+
+

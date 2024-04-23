@@ -19,6 +19,26 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+// server/controllers/usersController.js
+const getUserProfile = async (req, res) => {
+  const { matricula } = req.params;
+  try {
+    let pool = await sql.connect(config);
+    let result = await pool
+      .request()
+      .input("Matricula", sql.VarChar(10), matricula)
+      .execute("sp_GetUsuarioPerfilByMatricula");
+    if (result.recordset.length > 0) {
+      res.json(result.recordset[0]);
+    } else {
+      res.status(404).send("User profile not found");
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Error con DB", error: err });
+  }
+};
+
 // Sacar un usuario por matricula
 // Ruta: /usuarios/:matricula
 const getUserByMatricula = async (req, res) => {
@@ -110,7 +130,6 @@ const loginUser = async (req, res) => {
 
     if (passwordMatch) {
       // Create JWT
-
       const accessToken = jwt.sign(
         {
           UserInfo: {
@@ -141,8 +160,7 @@ const loginUser = async (req, res) => {
         sameSite: "none",
         //secure: true y sameSite: "none" para https no hace que funcione el request en thunderclient
       }); // 1 day
-      //res.json({ roles, accessToken }); Para cuando se implementen los roles
-      res.json({ roles, accessToken });
+      res.json({ roles, accessToken, matricula: Matricula });
     } else {
       res.status(401).send("Usuario o Contraseña incorrectos");
     }
@@ -152,10 +170,43 @@ const loginUser = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  const { matricula, nombre, apellidos, carrera, semestre } = req.body;
+
+  try {
+    let pool = await sql.connect(config);
+    let request = pool.request();
+
+
+    request = request.input("Matricula", sql.VarChar(10), matricula);
+
+    if (nombre !== undefined) {
+      request = request.input("Nombre", sql.NVarChar(50), nombre);
+    }
+    if (apellidos !== undefined) {
+      request = request.input("Apellidos", sql.NVarChar(50), apellidos);
+    }
+    if (carrera !== undefined) {
+      request = request.input("Carrera", sql.NVarChar(50), carrera);
+    }
+    if (semestre !== undefined) {
+      request = request.input("Semestre", sql.Int, semestre);
+    }
+    await request.execute("sp_UpdateUsuario");
+    res.status(201).send("User updated successfully");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Error con DB", error: err });
+  }
+};
+
+
 module.exports = {
   getAllUsers,
   getUserByMatricula,
   createUser,
   registerUser,
   loginUser,
+  getUserProfile,
+  updateUser,
 };
