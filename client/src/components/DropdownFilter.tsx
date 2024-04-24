@@ -36,7 +36,7 @@ const DropdownFilter: React.FC<DropdownFilterProps> = ({
       </div>
       {showDropdown && (
         <ul className="absolute left-0 z-10 mt-1 max-h-40 w-full overflow-auto rounded border border-gray-200 bg-white">
-          {/* Option to clear selection */}
+          
           <li
             onClick={() => handleSelectOption(noneOption)}
             className="cursor-pointer px-2.5 py-1.5 hover:bg-gray-100"
