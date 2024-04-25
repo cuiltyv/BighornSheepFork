@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 
 interface DropdownFilterProps {
   options: string[];
   selectedOption: string;
   setSelectedOption: (option: string) => void;
+  showDropdown: boolean;
+  setShowDropdown: (showDropdown: boolean) => void;
   title: string;
 }
 
@@ -11,10 +13,10 @@ const DropdownFilter: React.FC<DropdownFilterProps> = ({
   options,
   selectedOption,
   setSelectedOption,
+  showDropdown,
+  setShowDropdown,
   title,
 }) => {
-  const [showDropdown, setShowDropdown] = useState(false);
-
   const toggleDropdown = () => setShowDropdown(!showDropdown);
 
   const handleSelectOption = (option: string) => {
@@ -36,7 +38,6 @@ const DropdownFilter: React.FC<DropdownFilterProps> = ({
       </div>
       {showDropdown && (
         <ul className="absolute left-0 z-10 mt-1 max-h-40 w-full overflow-auto rounded border border-gray-200 bg-white">
-          
           <li
             onClick={() => handleSelectOption(noneOption)}
             className="cursor-pointer px-2.5 py-1.5 hover:bg-gray-100"

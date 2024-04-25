@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "../../api/axios";
-import { PencilIcon, TrashIcon } from "@heroicons/react/solid";
+import {
+  PencilIcon,
+  TrashIcon,
+  InformationCircleIcon,
+} from "@heroicons/react/solid";
 import EditReservationModal from "../../components/EditReservationModal";
+import ViewReservationInfoModal from "@/components/ViewReservationInfoModal";
 import Loading from "../../components/Loading";
 import MultiSelectFilter from "../../components/MultiSelectFilter";
 import DropdownFilter from "../../components/DropdownFilter";
@@ -47,7 +52,9 @@ const RecentReservations = () => {
   const [selectedEstados, setSelectedEstados] = useState(new Set());
   const [searchMatricula, setSearchMatricula] = useState("");
   const [salas, setSalas] = useState([]);
-  const [selectedRoom, setSelectedRoom] = useState(""); // Holds the currently selected room's name
+  const [selectedRoom, setSelectedRoom] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [isViewing, setIsViewing] = useState(false);
 
   const estadoOptions = [
     "Pendiente",
@@ -86,6 +93,17 @@ const RecentReservations = () => {
     fetchReservations();
   }, []);
 
+  const handleView = (reservacionID: number) => {
+    setCurrentReservation(
+      reservations.find(
+        (res: Reservation) => res.ReservacionID === reservacionID,
+      ),
+    );
+    setIsViewing(true);
+    setShowDropdown(false);
+    console.log("Viewing reservation with ID:", reservacionID);
+  };
+
   const handleEdit = (reservacionID: number) => {
     setCurrentReservation(
       reservations.find(
@@ -93,6 +111,7 @@ const RecentReservations = () => {
       ),
     );
     setIsEditing(true);
+    setShowDropdown(false);
     console.log("Editing reservation with ID:", reservacionID);
   };
 
@@ -177,6 +196,8 @@ const RecentReservations = () => {
             options={salas.map((sala) => sala.Nombre)}
             selectedOption={selectedRoom}
             setSelectedOption={setSelectedRoom}
+            showDropdown={showDropdown}
+            setShowDropdown={setShowDropdown}
             title="Filtrar por Sala"
           />
           <MultiSelectFilter
@@ -266,6 +287,15 @@ const RecentReservations = () => {
                     </td>
                     <td className="font-large flex items-center justify-start space-x-2 whitespace-nowrap px-6 py-4 text-sm">
                       <button
+                        onClick={() => handleView(res.ReservacionID)}
+                        className="text-indigo-600 hover:text-indigo-900"
+                        title="Ver"
+                      >
+                        <InformationCircleIcon className="inline h-5 w-5" />
+                        <span className="hidden md:inline">Ver</span>
+                      </button>
+
+                      <button
                         onClick={() => handleEdit(res.ReservacionID)}
                         className="text-indigo-600 hover:text-indigo-900"
                         title="Editar"
@@ -288,12 +318,19 @@ const RecentReservations = () => {
           </table>
         )}
       </div>
-      {currentReservation && (
+      {currentReservation && isEditing && (
         <EditReservationModal
           isOpen={isEditing}
           closeModal={closeModal}
           reservation={currentReservation}
           updateReservation={updateReservation}
+        />
+      )}
+      {currentReservation && isViewing && (
+        <ViewReservationInfoModal
+          isOpen={isViewing}
+          closeModal={() => setIsViewing(false)}
+          reservation={currentReservation}
         />
       )}
     </div>

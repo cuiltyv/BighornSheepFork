@@ -14,10 +14,6 @@ const router = express.Router();
     /reservaciones/stats : GET -> devuelve estadisticas de las reservaciones para el dashboard de administardor
 */
 
-
-
-
-
 /**
  * @swagger
  * /reservaciones:
@@ -49,7 +45,7 @@ const router = express.Router();
  *     tags:
  *       - Reservaciones
  */
-router.get('/', reservationsController.getAllReservations);
+router.get("/", reservationsController.getAllReservations);
 
 /**
  * @swagger
@@ -82,7 +78,64 @@ router.get('/', reservationsController.getAllReservations);
  *     tags:
  *       - Reservaciones
  */
-router.get('/upcoming', reservationsController.getUpcomingReservations);
+router.get("/upcoming", reservationsController.getUpcomingReservations);
+
+/**
+ * @swagger
+ * /reservaciones/participantes/{id}:
+ *   get:
+ *     summary: Sacar los participantes de una reservación por el ID de la reservacion
+ *     description: Saca los participantes de una reservación por el ID de la reservación.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID único de la reservación a recuperar.
+ *     responses:
+ *       200:
+ *         description: Un objeto de usuarios
+ *         content:
+ *           application/json:
+ *       404:
+ *         description: Reservación no encontrada.
+ *       500:
+ *         description: Error del servidor o problema de conectividad con la base de datos
+ *     tags:
+ *       - Reservaciones
+ */
+router.get(
+  "/participantes/:id",
+  reservationsController.getParticipantesByReservacionId
+);
+
+/**
+ * @swagger
+ * /reservaciones/participantes/{id}:
+ *   get:
+ *     summary: Sacar el hardware de una reservación por el ID de la reservacion
+ *     description: Saca el nombre del hardware y su cantidad de una reservacion por el ID de la reservacion
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID único de la reservación a recuperar.
+ *     responses:
+ *       200:
+ *         description: Un objeto de usuarios
+ *         content:
+ *           application/json:
+ *       404:
+ *         description: Reservación no encontrada.
+ *       500:
+ *         description: Error del servidor o problema de conectividad con la base de datos
+ *     tags:
+ *       - Reservaciones
+ */
+router.get("/hardware/:id", reservationsController.getHardwareByReservacionId);
 
 /**
  * @swagger
@@ -117,8 +170,7 @@ router.get('/upcoming', reservationsController.getUpcomingReservations);
  *     tags:
  *       - Reservaciones
  */
-router.get('/stats', reservationsController.getReservationStats);
-
+router.get("/stats", reservationsController.getReservationStats);
 
 /**
  * @swagger
@@ -145,7 +197,7 @@ router.get('/stats', reservationsController.getReservationStats);
  *     tags:
  *       - Reservaciones
  */
-router.get('/:id', reservationsController.getReservationById);
+router.get("/:id", reservationsController.getReservationById);
 
 /**
  * @swagger
@@ -199,7 +251,7 @@ router.get('/:id', reservationsController.getReservationById);
  *           type: string
  *           description: Estado de la reservación.
  */
-router.post('/', reservationsController.createReservation);
+router.post("/", reservationsController.createReservation);
 
 /**
  * @swagger
@@ -247,7 +299,7 @@ router.post('/', reservationsController.createReservation);
  *           type: string
  *           description: Nuevo estado de la reservación
  */
-router.put('/:id', reservationsController.updateReservation);
+router.put("/:id", reservationsController.updateReservation);
 
 /**
  * @swagger
@@ -270,7 +322,7 @@ router.put('/:id', reservationsController.updateReservation);
  *     tags:
  *       - Reservaciones
  */
-router.put('/set-deleted/:id', reservationsController.setReservacionDeleted);
+router.put("/set-deleted/:id", reservationsController.setReservacionDeleted);
 
 /**
  * @swagger
@@ -293,8 +345,6 @@ router.put('/set-deleted/:id', reservationsController.setReservacionDeleted);
  *     tags:
  *       - Reservaciones
  */
-router.delete('/:id', reservationsController.deleteReservation);
-
-
+router.delete("/:id", reservationsController.deleteReservation);
 
 module.exports = router;
