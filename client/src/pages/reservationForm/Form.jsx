@@ -8,6 +8,7 @@ import { getHardware, getSala, createReservation } from "../../api/apihelper";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import emailjs from "@emailjs/browser";
 
 import "tailwindcss/tailwind.css";
 import "./styles/Form.css";
@@ -24,6 +25,7 @@ function Form() {
   );
   const [aparatos, setAparatos] = useState([]);
   const [comment, setComment] = useState("");
+  const [reserva, setReserva] = useState();
 
   // GET Sala by id
   useEffect(() => {
@@ -47,6 +49,35 @@ function Form() {
     });
   }, [id]);
 
+  const sendEmail = () => {
+    emailjs
+      .send(
+        "service_c15c1tk",
+        "template_iddq57v",
+        {
+          // Aquí mapeas las propiedades del objeto Reserva a los nombres de los campos en tu plantilla de EmailJS
+          Matricula: reserva.Matricula,
+          ZonaID: reserva.ZonaID.toString(),
+          HoraInicio: reserva.HoraInicio,
+          HoraFin: reserva.HoraFin,
+          Proposito: reserva.Proposito,
+          Estado: reserva.Estado,
+          Alumnos: JSON.stringify(reserva.Alumnos),
+          Hardware: JSON.stringify(reserva.Hardware),
+          Comentario: reserva.Comentario,
+        },
+        "X1RfWmMKzzLOL26XF",
+      )
+      .then(
+        () => {
+          console.log("SUCCESS!");
+        },
+        (error) => {
+          console.log("FAILED...", error);
+        },
+      );
+  };
+
   const enviar = () => {
     const parseHour = (hour) => {
       const [time, period] = hour.split(" ");
@@ -61,13 +92,13 @@ function Form() {
       .hour(parseHour(horaSeleccionada.split(" - ")[1]))
       .minute(0);
 
-    const reserva = {
+    setReserva({
       Matricula: people[0].registration,
       ZonaID: 1,
       HoraInicio: fechaInicio.toISOString(),
       HoraFin: fechaFin.toISOString(),
       Proposito: razonSeleccionada,
-      Estado: "Activa",
+      Estado: "Pendiente",
       Alumnos: people.map((persona) => ({
         Matricula: persona.registration,
         ReservacionID: undefined,
@@ -79,12 +110,14 @@ function Form() {
           Cantidad: ap.cantidad,
         })),
       Comentario: comment,
-    };
+    });
 
-    // POST request with Axios
+    //POST request with Axios
     createReservation(reserva).then((response) => {
       console.log(response);
     });
+
+    sendEmail();
   };
 
   return (
@@ -109,14 +142,12 @@ function Form() {
           <DeviceList aparatos={aparatos} setAparatos={setAparatos} />
           <Comments comment={comment} setComment={setComment} />
           <div className="mt-10 flex w-full justify-center gap-10">
-            <Link to={"/BighornSheep"}>
-              <button
-                onClick={enviar}
-                className="bh-bg-blue align-center flex justify-center self-center rounded-lg px-4 py-2 font-bold text-white"
-              >
-                Enviar
-              </button>
-            </Link>
+            <button
+              onClick={enviar}
+              className="bh-bg-blue align-center flex justify-center self-center rounded-lg px-4 py-2 font-bold text-white"
+            >
+              Enviar
+            </button>
 
             <Link to={"/BighornSheep"}>
               <button className="bh-border-blue bh-text-blue align-center flex justify-center self-center rounded-lg border-2 px-4 py-2 font-bold">
