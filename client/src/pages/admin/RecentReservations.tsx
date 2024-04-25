@@ -10,7 +10,7 @@ import ViewReservationInfoModal from "@/components/ViewReservationInfoModal";
 import Loading from "../../components/Loading";
 import MultiSelectFilter from "../../components/MultiSelectFilter";
 import DropdownFilter from "../../components/DropdownFilter";
-
+import { idToSalasMap } from "../../components/interfaces/constants";
 interface Reservation {
   ReservacionID: number;
   Matricula: string;
@@ -23,18 +23,6 @@ interface Reservation {
 }
 
 // PENDIENTE: DECIDIR QUE HACER CON LAS RESERVACIONES QUE SALEN EN PENDIENTE
-
-//PENDIENTE: no hardcodear esto, hacer un fetch a la base de datos para obtener los nombres de las salas
-const idToSalasMap = {
-  1: "New Horizons",
-  2: "Graveyard",
-  3: "PCB Factory",
-  4: "Electric Garage",
-  5: "Deep Net",
-  6: "Hack Battlefield",
-  7: "Testing Land",
-  8: "Dimension Forge",
-};
 
 const RESERVACIONES_URL = "/reservaciones";
 const DELETE_RESERVACION_URL = (reservacionID: number) =>

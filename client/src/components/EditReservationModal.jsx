@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { PencilIcon } from "@heroicons/react/solid";
+import { idToSalasMap } from "./interfaces/constants";
 
 const EditReservationModal = ({
   isOpen,
@@ -7,18 +8,6 @@ const EditReservationModal = ({
   reservation,
   updateReservation,
 }) => {
-  // PENDIENTE: NO HARDCODEAR ESTO
-  const idToSalasMap = {
-    1: "New Horizons",
-    2: "Graveyard",
-    3: "PCB Factory",
-    4: "Electric garage",
-    5: "Deep Net",
-    6: "Hack Battlefield",
-    7: "Testing Land",
-    8: "Dimension Forge",
-  };
-
   const [formData, setFormData] = useState({ ...reservation });
 
   const handleChange = (e) => {
