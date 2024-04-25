@@ -1,25 +1,22 @@
 import React from "react";
 import { GrAdd, GrSubtract } from "react-icons/gr";
-import { Person } from "./../Form";
 
 import "tailwindcss/tailwind.css";
 import "../styles/styles.css";
 
-const PeopleSelect: React.FC<{
-  people: Person[];
-  setPeople: React.Dispatch<React.SetStateAction<Person[]>>;
-}> = ({ people, setPeople }) => {
+export default function PeopleSelect({ people, setPeople }) {
   const addPerson = () => {
     if (people.length < 6) {
       setPeople([...people, { name: "", registration: "" }]);
     }
   };
 
-  const handleNameChange = (value: string, index: number) => {
+  const handleNameChange = (value, index) => {
     const updatedPeople = [...people];
     updatedPeople[index].name = value;
     setPeople(updatedPeople);
   };
+
   const removePerson = () => {
     if (people.length > 1) {
       const updatedPeople = [...people];
@@ -27,7 +24,8 @@ const PeopleSelect: React.FC<{
       setPeople(updatedPeople);
     }
   };
-  const handleRegistrationChange = (value: string, index: number) => {
+
+  const handleRegistrationChange = (value, index) => {
     const updatedPeople = [...people];
     updatedPeople[index].registration = value;
     setPeople(updatedPeople);
@@ -73,6 +71,4 @@ const PeopleSelect: React.FC<{
       ))}
     </div>
   );
-};
-
-export default PeopleSelect;
+}
