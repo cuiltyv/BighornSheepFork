@@ -1,13 +1,7 @@
 import React from "react";
 import "tailwindcss/tailwind.css";
 
-interface AparatoProps {
-  nombre: string;
-  cantidad: number;
-  setCantidad: (cantidad: number) => void;
-}
-
-const Device: React.FC<AparatoProps> = ({ nombre, cantidad, setCantidad }) => {
+export default function Device({ nombre, cantidad, setCantidad }) {
   const incrementarCantidad = () => {
     setCantidad(cantidad + 1);
   };
@@ -36,6 +30,4 @@ const Device: React.FC<AparatoProps> = ({ nombre, cantidad, setCantidad }) => {
       </button>
     </div>
   );
-};
-
-export default Device;
+}

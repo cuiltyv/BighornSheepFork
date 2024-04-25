@@ -28,7 +28,10 @@ export default function SalaCard({
         <h3 className="font-semibold">{sala.Nombre}</h3>
         <p className="text-xs font-medium">{sala.Lugar}</p>
       </div>
-      <Link to={`http://localhost:5173/BighornSheep/form/${sala.SalaId}`}>
+      <Link
+        className=""
+        to={`http://localhost:5173/BighornSheep/form/${sala.SalaId}`}
+      >
         <ButtonFilled text="Reservar" />
       </Link>
     </div>

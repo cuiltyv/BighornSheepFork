@@ -1,20 +1,34 @@
 import SalaCard from "../../components/SalaCard";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { getSalas } from "../../api/apihelper";
 
 export default function Salas() {
-  const [salas, setSalas] = useState([]);
+  const [salas, setSalas] = useState<
+    {
+      SalaId: string;
+      Link: string;
+      Nombre: string;
+      Descripcion: string;
+      Lugar: string;
+      Cupo: string;
+    }[]
+  >([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/salas")
-      .then(function (res) {
-        console.log(res.data);
-        setSalas(res.data);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    getSalas().then(
+      (
+        salas: {
+          SalaId: string;
+          Link: string;
+          Nombre: string;
+          Descripcion: string;
+          Lugar: string;
+          Cupo: string;
+        }[],
+      ) => {
+        setSalas(salas);
+      },
+    );
   }, []);
 
   return (

@@ -1,5 +1,48 @@
 import axios from "./axios";
-import { User } from "@interfaces";
+import { User } from "../components/interfaces/IUser";
+import { Sala } from "../components/interfaces/ISala";
+
+export async function getSalas(): Promise<[]> {
+  try {
+    const response = await axios.get("salas/");
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+    }
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+export async function getSala(id: string): Promise<Sala | null> {
+  try {
+    const response = await axios.get("salas/" + id);
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+    }
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+export async function getHardware(): Promise<[]> {
+  try {
+    const response = await axios.get("hardware/");
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+    }
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
 
 export async function getUser(matricula: string): Promise<User | null> {
   try {
@@ -23,6 +66,7 @@ export async function getUser(matricula: string): Promise<User | null> {
     return null;
   }
 }
+
 export async function updateUser(user: User): Promise<boolean> {
   try {
     const response = await axios.put("usuarios/" + user.matricula, user);

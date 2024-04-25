@@ -1,16 +1,8 @@
-import Device from "./utils/device";
+import Device from "./utils/Device";
 import "tailwindcss/tailwind.css";
 
-function DeviceList({
-  aparatos,
-  setAparatos,
-}: {
-  aparatos: { id: number; nombre: string; cantidad: number }[];
-  setAparatos: (
-    aparatos: { id: number; nombre: string; cantidad: number }[],
-  ) => void;
-}) {
-  const handleSetCantidad = (index: number, cantidad: number) => {
+function DeviceList({ aparatos, setAparatos }) {
+  const handleSetCantidad = (index, cantidad) => {
     const newAparatos = [...aparatos];
     newAparatos[index].cantidad = cantidad;
     setAparatos(newAparatos);
@@ -25,9 +17,7 @@ function DeviceList({
             <Device
               nombre={aparato.nombre}
               cantidad={aparato.cantidad}
-              setCantidad={(cantidad: number) =>
-                handleSetCantidad(index, cantidad)
-              }
+              setCantidad={(cantidad) => handleSetCantidad(index, cantidad)}
             />
           </div>
         ))}
