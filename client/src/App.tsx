@@ -2,7 +2,6 @@ import "./App.css";
 import Landing from "./pages/landing/Landing";
 import Home from "./pages/landing/Home";
 import Perfil from "./pages/perfil/Perfil";
-import Register from "./pages/login/Register";
 import Login from "./pages/login/Login";
 import Form from "./pages/reservationForm/Form";
 import Dashboard from "./pages/admin/Dashboard";
@@ -26,7 +25,6 @@ function App() {
       <Routes>
         <Route path="/" element={<WithLayout />}>
           <Route path="/BighornSheep/landing" element={<Landing />} />
-          <Route path="/BighornSheep/register" element={<Register />} />
           <Route path="/BighornSheep/login" element={<Login />} />
           <Route path="*" element={<Login />} />
         </Route>
