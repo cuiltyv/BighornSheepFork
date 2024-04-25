@@ -28,6 +28,40 @@ const getUpcomingReservations = async (req, res) => {
   }
 };
 
+// Ruta: /reservaciones/participantes/:id
+// Participantes por ID de reservacion
+const getParticipantesByReservacionId = async (req, res) => {
+  const { id } = req.params;
+  try {
+    let pool = await sql.connect(config);
+    let result = await pool
+      .request()
+      .input("ReservacionID", sql.Int, id)
+      .execute("sp_GetParticipantesByReservacionID");
+    res.json(result.recordset);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Error con DB", error: err });
+  }
+};
+
+// Ruta: /reservaciones/hardware/:id
+// Hardware por ID de reservacion
+const getHardwareByReservacionId = async (req, res) => {
+  const { id } = req.params;
+  try {
+    let pool = await sql.connect(config);
+    let result = await pool
+      .request()
+      .input("ReservacionID", sql.Int, id)
+      .execute("sp_GetHardwareByReservacionID");
+    res.json(result.recordset);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Error con DB", error: err });
+  }
+};
+
 // Ruta: /reservations/:id
 // Reservacion por ID
 const getReservationById = async (req, res) => {
@@ -104,23 +138,24 @@ const createReservation = async (req, res) => {
 // Actualizar una reservacion
 // Ruta: /reservations/:id (PUT)
 const updateReservation = async (req, res) => {
-    const { id } = req.params;
-    const { HoraInicio, HoraFin, Proposito, Estado, ZonaID } = req.body;
-    try {
-        let pool = await sql.connect(config);
-        await pool.request()
-            .input("ReservacionID", sql.Int, id)
-            .input("HoraInicio", sql.DateTime, HoraInicio)
-            .input("HoraFin", sql.DateTime, HoraFin)
-            .input("Proposito", sql.NVarChar(255), Proposito)
-            .input("Estado", sql.NVarChar(50), Estado)
-            .input("ZonaID", sql.Int, ZonaID)
-            .execute("sp_UpdateReservacion");
-        res.status(200).send("Reservation updated successfully");
-    } catch (err) {
-        console.error(err);
-        res.status(500).send({ message: "Error con DB", error: err });
-    }
+  const { id } = req.params;
+  const { HoraInicio, HoraFin, Proposito, Estado, ZonaID } = req.body;
+  try {
+    let pool = await sql.connect(config);
+    await pool
+      .request()
+      .input("ReservacionID", sql.Int, id)
+      .input("HoraInicio", sql.DateTime, HoraInicio)
+      .input("HoraFin", sql.DateTime, HoraFin)
+      .input("Proposito", sql.NVarChar(255), Proposito)
+      .input("Estado", sql.NVarChar(50), Estado)
+      .input("ZonaID", sql.Int, ZonaID)
+      .execute("sp_UpdateReservacion");
+    res.status(200).send("Reservation updated successfully");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Error con DB", error: err });
+  }
 };
 
 // Borrar una reservacion
@@ -193,6 +228,8 @@ const setReservacionDeleted = async (req, res) => {
 module.exports = {
   getAllReservations,
   getUpcomingReservations,
+  getParticipantesByReservacionId,
+  getHardwareByReservacionId,
   getReservationById,
   createReservation,
   updateReservation,
