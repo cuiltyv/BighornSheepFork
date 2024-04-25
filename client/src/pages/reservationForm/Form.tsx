@@ -3,8 +3,10 @@ import ReservationReason from "./formComponents/ReservationReason";
 import DeviceList from "./formComponents/deviceList/DeviceList";
 import Comments from "./formComponents/Comments";
 import DatePicker from "./formComponents/datePicker/DatePicker";
+
 import dayjs from "dayjs";
 import axios from "axios";
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -24,17 +26,22 @@ interface Aparato {
   cantidad: number;
 }
 
+interface HardwareResponse {
+  HardwareID: number;
+  Nombre: string;
+}
+interface Sala {
+  id: number;
+  nombre: string;
+  link: string; // Asumiendo que 'link' es una propiedad del objeto sala
+}
 function Form() {
   const { id } = useParams();
-  const [sala, setSala] = useState({} as unknown);
-
-  //estas constantes las voy a cambiar (se llamarán desde la api)
-  const imgSala = "src/pages/reservationForm/roomImages/PCB.jpg";
+  const [sala, setSala] = useState<Sala | undefined>(undefined);
 
   const navigate = useNavigate();
 
   const goBack = () => navigate(-1);
-
 
   const [horaSeleccionada, setHoraSeleccionada] = useState("9:00am - 10:00am");
   const [diaSeleccionado, setDiaSeleccionado] = useState(dayjs());
@@ -47,8 +54,6 @@ function Form() {
 
   const [aparatos, setAparatos] = useState<Aparato[]>([]);
 
-  const [aparatosDisponibles, setAparatosDisponibles] = useState([]);
-
   const [comment, setComment] = useState("");
 
   // GET Project by id
@@ -56,11 +61,21 @@ function Form() {
     axios
       .get(`http://localhost:3000/salas/${id}`)
       .then((response) => {
-        setSala(response.data[0]);
-        console.log(response.data[0].Link);
+        if (response.data && response.data.length > 0) {
+          const salaData: Sala = {
+            id: response.data[0].id, // Asumiendo que estos campos están presentes en la respuesta
+            nombre: response.data[0].nombre,
+            link: response.data[0].link,
+          };
+          setSala(salaData);
+        } else {
+          console.error("No data received for the room");
+          setSala(undefined);
+        }
       })
       .catch((error) => {
         console.error("Error getting room:", error);
+        setSala(undefined);
       });
   }, [id]);
 
@@ -68,13 +83,13 @@ function Form() {
     axios
       .get("http://localhost:3000/hardware")
       .then((response) => {
-        setAparatos([]);
-        response.data.map((hardware) => {
-          setAparatos((prev) => [
-            ...prev,
-            { id: hardware.HardwareID, nombre: hardware.Nombre, cantidad: 0 },
-          ]);
-        });
+        const fetchedHardware: HardwareResponse[] = response.data; // Asumiendo que response.data es un array de objetos de tipo HardwareResponse
+        const newAparatos: Aparato[] = fetchedHardware.map((hardware) => ({
+          id: hardware.HardwareID,
+          nombre: hardware.Nombre,
+          cantidad: 0, // inicializamos la cantidad en 0
+        }));
+        setAparatos(newAparatos);
       })
       .catch((error) => {
         console.error("Error getting hardware:", error);
@@ -85,7 +100,7 @@ function Form() {
   const enviar = () => {
     const parseHour = (hour: string) => {
       const [time, period] = hour.split(" ");
-      const [hours, minutes] = time.split(":");
+      const [hours] = time.split(":"); //antes estaba [hours, minutes] pero lo borré porque no se usaba
       return period === "pm" ? parseInt(hours) + 12 : parseInt(hours);
     };
 
@@ -129,17 +144,13 @@ function Form() {
       });
   };
 
-  const cancelar = () => {
-    console.log("Cancelado");
-  };
-
   return (
     <div className="flex justify-center bg-black">
       <div className="form-container my-5 w-fit overflow-auto rounded-xl">
-        <img src={`${sala.Link}.png`} className="h-72 w-full object-cover " />
+        <img src={`${sala?.link}.png`} className="h-72 w-full object-cover" />
         <div className="px-28 py-14 ">
           <h1 className="bh-text-blue ml-4 text-5xl font-bold">
-            {sala.Nombre}
+            {sala?.nombre}
           </h1>
           <DatePicker
             horaSeleccionada={horaSeleccionada}
@@ -176,4 +187,4 @@ function Form() {
 }
 
 export default Form;
-export type { Person };
+export type { Person, Aparato, Sala };
