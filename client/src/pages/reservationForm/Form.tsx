@@ -54,7 +54,7 @@ function Form() {
   // GET Project by id
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/salas/${id}`)
+      .get(`https://dreamapi.azurewebsites.net/salas/${id}`)
       .then((response) => {
         setSala(response.data[0]);
         console.log(response.data[0].Link);
@@ -66,7 +66,7 @@ function Form() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/hardware")
+      .get("https://dreamapi.azurewebsites.net/hardware")
       .then((response) => {
         setAparatos([]);
         response.data.map((hardware) => {
@@ -120,7 +120,7 @@ function Form() {
 
     // Post request with Axios
     axios
-      .post("http://localhost:3000/reservaciones", reserva)
+      .post("https://dreamapi.azurewebsites.net/reservaciones", reserva)
       .then((response) => {
         console.log(response.data);
       })
