@@ -3,8 +3,10 @@ import ReservationReason from "./formComponents/ReservationReason";
 import DeviceList from "./formComponents/deviceList/DeviceList";
 import Comments from "./formComponents/Comments";
 import DatePicker from "./formComponents/datePicker/DatePicker";
+
 import dayjs from "dayjs";
-import { getHardware, getSala, createReservation } from "../../api/apihelper";
+import axios from "axios";
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -14,34 +16,83 @@ import "tailwindcss/tailwind.css";
 import "./styles/Form.css";
 import "./styles/styles.css";
 
+interface Person {
+  name: string;
+  registration: string;
+}
+
+interface Aparato {
+  id: number;
+  nombre: string;
+  cantidad: number;
+}
+
+interface HardwareResponse {
+  HardwareID: number;
+  Nombre: string;
+}
+interface Sala {
+  id: number;
+  nombre: string;
+  link: string; // Asumiendo que 'link' es una propiedad del objeto sala
+}
 function Form() {
   const { id } = useParams();
-  const [sala, setSala] = useState({});
+  const [sala, setSala] = useState<Sala | undefined>(undefined);
+
+  const navigate = useNavigate();
+
+  const goBack = () => navigate(-1);
+
   const [horaSeleccionada, setHoraSeleccionada] = useState("9:00am - 10:00am");
   const [diaSeleccionado, setDiaSeleccionado] = useState(dayjs());
   const [people, setPeople] = useState([{ name: "", registration: "" }]);
   const [razonSeleccionada, setRazonSeleccionada] = useState(
     "Unidad de Formacion",
   );
-  const [aparatos, setAparatos] = useState([]);
+
+  const [aparatos, setAparatos] = useState<Aparato[]>([]);
+
   const [comment, setComment] = useState("");
 
   // GET Sala by id
   useEffect(() => {
-    getSala(id).then((sala) => {
-      setSala(sala[0]);
-    });
+    axios
+      .get(`http://localhost:3000/salas/${id}`)
+      .then((response) => {
+        if (response.data && response.data.length > 0) {
+          const salaData: Sala = {
+            id: response.data[0].id, // Asumiendo que estos campos están presentes en la respuesta
+            nombre: response.data[0].nombre,
+            link: response.data[0].link,
+          };
+          setSala(salaData);
+        } else {
+          console.error("No data received for the room");
+          setSala(undefined);
+        }
+      })
+      .catch((error) => {
+        console.error("Error getting room:", error);
+        setSala(undefined);
+      });
   }, [id]);
 
   // GET Hardware
   useEffect(() => {
-    getHardware().then((hardware) => {
-      setAparatos([]);
-      hardware.map((hardware) => {
-        setAparatos((prev) => [
-          ...prev,
-          { id: hardware.HardwareID, nombre: hardware.Nombre, cantidad: 0 },
-        ]);
+    axios
+      .get("http://localhost:3000/hardware")
+      .then((response) => {
+        const fetchedHardware: HardwareResponse[] = response.data; // Asumiendo que response.data es un array de objetos de tipo HardwareResponse
+        const newAparatos: Aparato[] = fetchedHardware.map((hardware) => ({
+          id: hardware.HardwareID,
+          nombre: hardware.Nombre,
+          cantidad: 0, // inicializamos la cantidad en 0
+        }));
+        setAparatos(newAparatos);
+      })
+      .catch((error) => {
+        console.error("Error getting hardware:", error);
       });
     });
   }, [id]);
@@ -87,7 +138,7 @@ function Form() {
   const enviar = () => {
     const parseHour = (hour) => {
       const [time, period] = hour.split(" ");
-      const [hours] = time.split(":");
+      const [hours] = time.split(":"); //antes estaba [hours, minutes] pero lo borré porque no se usaba
       return period === "pm" ? parseInt(hours) + 12 : parseInt(hours);
     };
 
@@ -120,20 +171,24 @@ function Form() {
 
     console.log(nuevaReserva);
 
-    // POST request with Axios
-    createReservation(nuevaReserva).then((response) => {
-      console.log(response);
-      sendEmail(nuevaReserva);
-    });
+    // Post request with Axios
+    axios
+      .post("http://localhost:3000/reservaciones", reserva)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error posting reservation:", error);
+      });
   };
 
   return (
     <div className="flex justify-center bg-black">
       <div className="form-container my-5 w-fit overflow-auto rounded-xl">
-        <img src={`${sala.Link}.png`} className="h-72 w-full object-cover " />
+        <img src={`${sala?.link}.png`} className="h-72 w-full object-cover" />
         <div className="px-28 py-14 ">
           <h1 className="bh-text-blue ml-4 text-5xl font-bold">
-            {sala.Nombre}
+            {sala?.nombre}
           </h1>
           <DatePicker
             horaSeleccionada={horaSeleccionada}
@@ -169,3 +224,4 @@ function Form() {
 }
 
 export default Form;
+export type { Person, Aparato, Sala };
