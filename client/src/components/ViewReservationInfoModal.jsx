@@ -1,6 +1,7 @@
 import { XIcon } from "@heroicons/react/solid";
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import axios from "../api/axios";
+import { idToSalasMap } from "./interfaces/constants";
 const ViewReservationInfoModal = ({ isOpen, closeModal, reservation }) => {
   const {
     ReservacionID,
@@ -12,17 +13,44 @@ const ViewReservationInfoModal = ({ isOpen, closeModal, reservation }) => {
     ZonaID,
   } = reservation;
 
-  const idToSalasMap = {
-    1: "New Horizons",
-    2: "Graveyard",
-    3: "PCB Factory",
-    4: "Electric Garage",
-    5: "Deep Net",
-    6: "Hack Battlefield",
-    7: "Testing Land",
-    8: "Dimension Forge",
-  };
+  const PERSONAS_URL = (reservacionID) =>
+    `/reservaciones/participantes/${reservacionID}`;
 
+  const HARDWARE_URL = (reservacionID) =>
+    `/reservaciones/hardware/${reservacionID}`;
+
+  const [personas, setPersonas] = useState([]);
+  const [equipo, setEquipo] = useState([]);
+
+  useEffect(() => {
+    const fetchPersonas = async () => {
+      try {
+        const response = await axios.get(PERSONAS_URL(ReservacionID));
+        setPersonas(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchPersonas();
+  }, []);
+
+  useEffect(() => {
+    const fetchEquipo = async () => {
+      try {
+        const response = await axios.get(HARDWARE_URL(ReservacionID));
+        setEquipo(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchEquipo();
+  }, []);
+
+  /*
   const personas = ["A01234567", "A12345678", "A23456789", "A34567890"];
   const equipo = [
     { nombre: "Meta quest", cantidad: 1 },
@@ -30,7 +58,7 @@ const ViewReservationInfoModal = ({ isOpen, closeModal, reservation }) => {
     { nombre: "Mac laptop", cantidad: 10 },
     { nombre: "Impresora 3D", cantidad: 2 },
   ];
-
+*/
   if (!isOpen) {
     return null;
   }
@@ -117,21 +145,33 @@ const ViewReservationInfoModal = ({ isOpen, closeModal, reservation }) => {
             Personas:
           </h4>
           <ul className="space-y-1">
-            {personas.map((persona, index) => (
-              <li key={index} className="rounded bg-gray-100 p-2">
-                {persona}
+            {personas.length === 0 ? (
+              <li className="rounded bg-gray-100 p-2">
+                No hay personas adicionales
               </li>
-            ))}
+            ) : (
+              personas.map((persona, index) => (
+                <li key={index} className="rounded bg-gray-100 p-2">
+                  {persona.Matricula}
+                </li>
+              ))
+            )}
           </ul>
         </div>
         <div className="mt-4">
           <h4 className="mb-2 text-sm font-semibold text-gray-700">Equipo:</h4>
           <ul className="space-y-1">
-            {equipo.map((item, index) => (
-              <li key={index} className="rounded bg-gray-100 p-2">
-                {`${item.nombre} (Cantidad: ${item.cantidad})`}
+            {equipo.length === 0 ? (
+              <li className="rounded bg-gray-100 p-2">
+                No hay equipo necesario
               </li>
-            ))}
+            ) : (
+              equipo.map((item, index) => (
+                <li key={index} className="rounded bg-gray-100 p-2">
+                  {`${item.Nombre} (Cantidad: ${item.Cantidad})`}
+                </li>
+              ))
+            )}
           </ul>
         </div>
       </div>
