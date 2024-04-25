@@ -54,6 +54,9 @@ const NavbarLogout = () => {
             <Link to="/BighornSheep/">Reservaciones</Link>
           </li>
           <li className="mx-6 p-5">
+            <Link to="/BighornSheep/perfil">Perfil</Link>
+          </li>
+          <li className="mx-6 p-5">
             <Link to="/BighornSheep/admin">Administrador</Link>
           </li>
         </ul>
