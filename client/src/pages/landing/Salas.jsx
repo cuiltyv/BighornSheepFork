@@ -1,3 +1,4 @@
+
 import SalaCard from "../../components/SalaCard";
 import { useState, useEffect } from "react";
 import { getSalas } from "../../api/apihelper";
