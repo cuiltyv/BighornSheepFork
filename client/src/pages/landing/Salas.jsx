@@ -1,20 +1,15 @@
+
 import SalaCard from "../../components/SalaCard";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { getSalas } from "../../api/apihelper";
 
 export default function Salas() {
   const [salas, setSalas] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("https://dreamapi.azurewebsites.net/salas")
-      .then(function (res) {
-        console.log(res.data);
-        setSalas(res.data);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    getSalas().then((salas) => {
+      setSalas(salas);
+    });
   }, []);
 
   return (
@@ -27,16 +22,7 @@ export default function Salas() {
       </div>
       <div className="flex flex-wrap justify-between gap-4">
         {salas &&
-          salas.map(
-            (sala: {
-              SalaId: string;
-              Link: string;
-              Nombre: string;
-              Descripcion: string;
-              Lugar: string;
-              Cupo: string;
-            }) => <SalaCard key={sala.SalaId} sala={sala} />,
-          )}
+          salas.map((sala) => <SalaCard key={sala.SalaId} sala={sala} />)}
       </div>
     </div>
   );
