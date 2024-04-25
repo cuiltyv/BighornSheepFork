@@ -46,7 +46,7 @@ const Navbar = () => {
         </ul>
 
         <Link
-          to="/BighornSheep/register"
+          to="/BighornSheep/login"
           className="mr-6 hidden items-center md:flex"
         >
           <div className="ml-4 rounded-full bg-blue px-4 py-2 text-white">
@@ -78,7 +78,7 @@ const Navbar = () => {
             </li>
 
             <li className="my-2 bg-blue p-2 text-white">
-              <Link to="/BighornSheep/register">Iniciar Sesión</Link>
+              <Link to="/BighornSheep/login">Iniciar Sesión</Link>
             </li>
             <li className="my-2 bg-violet p-2 text-white" onClick={handleNav}>
               Cerrar
