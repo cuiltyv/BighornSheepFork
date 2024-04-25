@@ -4,10 +4,10 @@ import DeviceList from "./formComponents/deviceList/DeviceList";
 import Comments from "./formComponents/Comments";
 import DatePicker from "./formComponents/datePicker/DatePicker";
 import dayjs from "dayjs";
-import { getHardware, getSala } from "../../api/apihelper";
+import { getHardware, getSala, createReservation } from "../../api/apihelper";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import "tailwindcss/tailwind.css";
 import "./styles/Form.css";
@@ -18,15 +18,12 @@ function Form() {
   const [sala, setSala] = useState({});
   const [horaSeleccionada, setHoraSeleccionada] = useState("9:00am - 10:00am");
   const [diaSeleccionado, setDiaSeleccionado] = useState(dayjs());
-  const [people, setPeople] = useState([]);
+  const [people, setPeople] = useState([{ name: "", registration: "" }]);
   const [razonSeleccionada, setRazonSeleccionada] = useState(
     "Unidad de Formacion",
   );
   const [aparatos, setAparatos] = useState([]);
   const [comment, setComment] = useState("");
-
-  const navigate = useNavigate();
-  const goBack = () => navigate(-1);
 
   // GET Sala by id
   useEffect(() => {
@@ -50,11 +47,10 @@ function Form() {
     });
   }, [id]);
 
-  /* POST
   const enviar = () => {
-    const parseHour = (hour: string) => {
+    const parseHour = (hour) => {
       const [time, period] = hour.split(" ");
-      const [hours, minutes] = time.split(":");
+      const [hours] = time.split(":");
       return period === "pm" ? parseInt(hours) + 12 : parseInt(hours);
     };
 
@@ -66,42 +62,30 @@ function Form() {
       .minute(0);
 
     const reserva = {
-      Matricula: people[0].registration, // Asumiendo que el primer elemento tiene la matrícula relevante
-      ZonaID: 1, // Asumiendo que ZonaID es estático o lo obtienes de alguna manera
+      Matricula: people[0].registration,
+      ZonaID: 1,
       HoraInicio: fechaInicio.toISOString(),
       HoraFin: fechaFin.toISOString(),
       Proposito: razonSeleccionada,
-      Estado: "Activa", // Asumiendo que necesitas enviar un estado
+      Estado: "Activa",
       Alumnos: people.map((persona) => ({
         Matricula: persona.registration,
-        ReservacionID: undefined, // Esto deberá ser manejado en el servidor
+        ReservacionID: undefined,
       })),
       Hardware: aparatos
         .filter((ap) => ap.cantidad > 0)
         .map((ap) => ({
-          HardwareID: ap.id, // Asumiendo que tienes un identificador único para el hardware
+          HardwareID: ap.id,
           Cantidad: ap.cantidad,
         })),
-      Comentario: comment, // Asumiendo que quieres enviar un comentario
+      Comentario: comment,
     };
 
-    console.log(reserva);
-
-    // Post request with Axios
-    axios
-      .post("http://localhost:3000/reservaciones", reserva)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("Error posting reservation:", error);
-      });
+    // POST request with Axios
+    createReservation(reserva).then((response) => {
+      console.log(response);
+    });
   };
-
-  const cancelar = () => {
-    console.log("Cancelado");
-  };
-  */
 
   return (
     <div className="flex justify-center bg-black">
@@ -125,16 +109,20 @@ function Form() {
           <DeviceList aparatos={aparatos} setAparatos={setAparatos} />
           <Comments comment={comment} setComment={setComment} />
           <div className="mt-10 flex w-full justify-center gap-10">
-            <button className="bh-bg-blue align-center flex justify-center self-center rounded-lg px-4 py-2 font-bold text-white">
-              Enviar
-            </button>
+            <Link to={"/BighornSheep"}>
+              <button
+                onClick={enviar}
+                className="bh-bg-blue align-center flex justify-center self-center rounded-lg px-4 py-2 font-bold text-white"
+              >
+                Enviar
+              </button>
+            </Link>
 
-            <button
-              onClick={goBack}
-              className="bh-border-blue bh-text-blue align-center flex justify-center self-center rounded-lg border-2 px-4 py-2 font-bold"
-            >
-              Cancelar
-            </button>
+            <Link to={"/BighornSheep"}>
+              <button className="bh-border-blue bh-text-blue align-center flex justify-center self-center rounded-lg border-2 px-4 py-2 font-bold">
+                Cancelar
+              </button>
+            </Link>
           </div>
         </div>
       </div>

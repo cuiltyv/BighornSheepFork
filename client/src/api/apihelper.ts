@@ -1,6 +1,7 @@
 import axios from "./axios";
 import { User } from "../components/interfaces/IUser";
 import { Sala } from "../components/interfaces/ISala";
+import { Reserva } from "../components/interfaces/IReserva";
 
 export async function getSalas(): Promise<[]> {
   try {
@@ -26,7 +27,21 @@ export async function getSala(id: string): Promise<Sala | null> {
     }
   } catch (error) {
     console.error(error);
-    return [];
+    return null;
+  }
+}
+
+export async function createReservation(reserva: Reserva): Promise<boolean> {
+  try {
+    const response = await axios.post("reservaciones/", reserva);
+    if (response.status === 200 || response.status === 201) {
+      return true;
+    } else {
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+    }
+  } catch (error) {
+    console.error(error);
+    return false;
   }
 }
 
