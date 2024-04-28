@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import RecentReservations from "./RecentReservations";
+import EditRole from "./EditRole";
 import StatCard from "./StatCard";
 import axios from "axios";
 const Dashboard = () => {
@@ -18,11 +19,8 @@ const Dashboard = () => {
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
-       
       });
-  }, []); 
-
-
+  }, []);
 
   return (
     <div className="min-h-screen bg-darkWhite">
@@ -36,6 +34,7 @@ const Dashboard = () => {
           />
         ))}
       </div>
+      <EditRole />
       <RecentReservations />
     </div>
   );

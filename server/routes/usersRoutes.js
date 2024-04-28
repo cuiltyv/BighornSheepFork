@@ -17,13 +17,13 @@ const { verify } = require("jsonwebtoken");
 */
 
 // server/routes/usersRoutes.js
-router.get('/perfil/:matricula', usersController.getUserProfile);
-router.get('/', usersController.getAllUsers);
-router.get('/:matricula', usersController.getUserByMatricula);
-router.post('/', usersController.createUser);
-router.post('/registro', usersController.registerUser);
-router.put('/:matricula', usersController.updateUser);
-
+router.put("/updaterole", usersController.updateUserRole);
+router.get("/perfil/:matricula", usersController.getUserProfile);
+router.get("/", usersController.getAllUsers);
+router.get("/:matricula", usersController.getUserByMatricula);
+router.post("/", usersController.createUser);
+router.post("/registro", usersController.registerUser);
+router.put("/:matricula", usersController.updateUser);
 
 //router.get("/", verifyJWT, usersController.getAllUsers); Para que se necesite token para acceder
 /*
@@ -34,7 +34,6 @@ router.get(
   usersController.getAllUsers
 );
 */
-
 
 /**
  * @swagger
@@ -49,16 +48,14 @@ router.get(
  *           application/json:
  *             schema:
  *               type: array
- *               
- *                 
+ *
+ *
  *       500:
  *         description: Server error or database connectivity issue.
  *     tags:
  *       - Usuarios
  */
 router.get("/", usersController.getAllUsers);
-
-
 
 /**
  * @swagger
@@ -85,8 +82,6 @@ router.get("/", usersController.getAllUsers);
  *       - Usuarios
  */
 router.get("/:matricula", usersController.getUserByMatricula);
-
-
 
 /**
  * @swagger
@@ -136,8 +131,6 @@ router.get("/:matricula", usersController.getUserByMatricula);
  */
 router.post("/", usersController.createUser);
 
-
-
 /**
  * @swagger
  * /usuarios/registro:
@@ -161,8 +154,6 @@ router.post("/", usersController.createUser);
  *       - Usuarios
  */
 router.post("/registro", usersController.registerUser);
-
-
 
 /**
  * @swagger
