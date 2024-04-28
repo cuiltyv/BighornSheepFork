@@ -43,6 +43,7 @@ const EditRole = () => {
 
     try {
       const response = await axios.put(
+        EDIT_ROLE_URL,
         JSON.stringify({
           Matricula: user,
           Role: role,
@@ -52,7 +53,6 @@ const EditRole = () => {
           withCredentials: true,
         },
       );
-      console.log(response);
     } catch (err) {
       console.error(err);
     }
