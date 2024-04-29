@@ -8,6 +8,7 @@ import { getHardware, getSala, createReservation } from "../../api/apihelper";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import emailjs from "@emailjs/browser";
 
 import "tailwindcss/tailwind.css";
 import "./styles/Form.css";
@@ -28,7 +29,6 @@ function Form() {
   // GET Sala by id
   useEffect(() => {
     getSala(id).then((sala) => {
-      console.log(sala[0]);
       setSala(sala[0]);
     });
   }, [id]);
@@ -36,7 +36,6 @@ function Form() {
   // GET Hardware
   useEffect(() => {
     getHardware().then((hardware) => {
-      console.log(hardware);
       setAparatos([]);
       hardware.map((hardware) => {
         setAparatos((prev) => [
@@ -47,6 +46,44 @@ function Form() {
     });
   }, [id]);
 
+  // Send email
+  const sendEmail = (nuevaReserva) => {
+    console.log(nuevaReserva);
+
+    emailjs
+      .send(
+        "service_c15c1tk",
+        "template_iddq57v",
+        {
+          // Aquí mapeas las propiedades del objeto Reserva a los nombres de los campos en tu plantilla de EmailJS
+          Matricula: nuevaReserva.Matricula,
+          Nombre: nuevaReserva.Alumnos[0].Nombre,
+          NombreSala: sala.Nombre,
+          SalaID: nuevaReserva.ZonaId,
+          HoraInicio: nuevaReserva.HoraInicio,
+          HoraFin: nuevaReserva.HoraFin,
+          Proposito: nuevaReserva.Proposito,
+          Estado: nuevaReserva.Estado,
+          Alumnos: JSON.stringify(nuevaReserva.Alumnos),
+          Hardware: aparatos
+            .filter((ap) => ap.cantidad > 0)
+            .map((ap) => `${ap.nombre}: ${ap.cantidad}`)
+            .join(", "),
+          Comentario: nuevaReserva.Comentario,
+        },
+        "X1RfWmMKzzLOL26XF",
+      )
+      .then(
+        () => {
+          console.log("SUCCESS!");
+        },
+        (error) => {
+          console.log("FAILED...", error);
+        },
+      );
+  };
+
+  // POST Reserva
   const enviar = () => {
     const parseHour = (hour) => {
       const [time, period] = hour.split(" ");
@@ -61,17 +98,17 @@ function Form() {
       .hour(parseHour(horaSeleccionada.split(" - ")[1]))
       .minute(0);
 
-    const reserva = {
-      Matricula: people[0].registration,
-      ZonaID: 1,
+    const nuevaReserva = {
+      ZonaID: sala.SalaId,
       HoraInicio: fechaInicio.toISOString(),
       HoraFin: fechaFin.toISOString(),
       Proposito: razonSeleccionada,
-      Estado: "Activa",
+      Estado: "Pendiente",
       Alumnos: people.map((persona) => ({
         Matricula: persona.registration,
-        ReservacionID: undefined,
+        Nombre: persona.name,
       })),
+      Matricula: people[0].registration,
       Hardware: aparatos
         .filter((ap) => ap.cantidad > 0)
         .map((ap) => ({
@@ -81,9 +118,12 @@ function Form() {
       Comentario: comment,
     };
 
+    console.log(nuevaReserva);
+
     // POST request with Axios
-    createReservation(reserva).then((response) => {
+    createReservation(nuevaReserva).then((response) => {
       console.log(response);
+      sendEmail(nuevaReserva);
     });
   };
 
@@ -109,14 +149,12 @@ function Form() {
           <DeviceList aparatos={aparatos} setAparatos={setAparatos} />
           <Comments comment={comment} setComment={setComment} />
           <div className="mt-10 flex w-full justify-center gap-10">
-            <Link to={"/BighornSheep"}>
-              <button
-                onClick={enviar}
-                className="bh-bg-blue align-center flex justify-center self-center rounded-lg px-4 py-2 font-bold text-white"
-              >
-                Enviar
-              </button>
-            </Link>
+            <button
+              onClick={enviar}
+              className="bh-bg-blue align-center flex justify-center self-center rounded-lg px-4 py-2 font-bold text-white"
+            >
+              Enviar
+            </button>
 
             <Link to={"/BighornSheep"}>
               <button className="bh-border-blue bh-text-blue align-center flex justify-center self-center rounded-lg border-2 px-4 py-2 font-bold">
