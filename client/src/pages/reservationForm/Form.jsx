@@ -25,12 +25,10 @@ function Form() {
   );
   const [aparatos, setAparatos] = useState([]);
   const [comment, setComment] = useState("");
-  const [reserva, setReserva] = useState();
 
   // GET Sala by id
   useEffect(() => {
     getSala(id).then((sala) => {
-      console.log(sala[0]);
       setSala(sala[0]);
     });
   }, [id]);
@@ -38,7 +36,6 @@ function Form() {
   // GET Hardware
   useEffect(() => {
     getHardware().then((hardware) => {
-      console.log(hardware);
       setAparatos([]);
       hardware.map((hardware) => {
         setAparatos((prev) => [
@@ -49,22 +46,30 @@ function Form() {
     });
   }, [id]);
 
-  const sendEmail = () => {
+  // Send email
+  const sendEmail = (nuevaReserva) => {
+    console.log(nuevaReserva);
+
     emailjs
       .send(
         "service_c15c1tk",
         "template_iddq57v",
         {
           // Aquí mapeas las propiedades del objeto Reserva a los nombres de los campos en tu plantilla de EmailJS
-          Matricula: reserva.Matricula,
-          ZonaID: reserva.ZonaID.toString(),
-          HoraInicio: reserva.HoraInicio,
-          HoraFin: reserva.HoraFin,
-          Proposito: reserva.Proposito,
-          Estado: reserva.Estado,
-          Alumnos: JSON.stringify(reserva.Alumnos),
-          Hardware: JSON.stringify(reserva.Hardware),
-          Comentario: reserva.Comentario,
+          Matricula: nuevaReserva.Matricula,
+          Nombre: nuevaReserva.Alumnos[0].Nombre,
+          NombreSala: sala.Nombre,
+          SalaID: nuevaReserva.ZonaId,
+          HoraInicio: nuevaReserva.HoraInicio,
+          HoraFin: nuevaReserva.HoraFin,
+          Proposito: nuevaReserva.Proposito,
+          Estado: nuevaReserva.Estado,
+          Alumnos: JSON.stringify(nuevaReserva.Alumnos),
+          Hardware: aparatos
+            .filter((ap) => ap.cantidad > 0)
+            .map((ap) => `${ap.nombre}: ${ap.cantidad}`)
+            .join(", "),
+          Comentario: nuevaReserva.Comentario,
         },
         "X1RfWmMKzzLOL26XF",
       )
@@ -78,6 +83,7 @@ function Form() {
       );
   };
 
+  // POST Reserva
   const enviar = () => {
     const parseHour = (hour) => {
       const [time, period] = hour.split(" ");
@@ -92,17 +98,17 @@ function Form() {
       .hour(parseHour(horaSeleccionada.split(" - ")[1]))
       .minute(0);
 
-    setReserva({
-      Matricula: people[0].registration,
-      ZonaID: 1,
+    const nuevaReserva = {
+      ZonaID: sala.SalaId,
       HoraInicio: fechaInicio.toISOString(),
       HoraFin: fechaFin.toISOString(),
       Proposito: razonSeleccionada,
       Estado: "Pendiente",
       Alumnos: people.map((persona) => ({
         Matricula: persona.registration,
-        ReservacionID: undefined,
+        Nombre: persona.name,
       })),
+      Matricula: people[0].registration,
       Hardware: aparatos
         .filter((ap) => ap.cantidad > 0)
         .map((ap) => ({
@@ -110,14 +116,15 @@ function Form() {
           Cantidad: ap.cantidad,
         })),
       Comentario: comment,
-    });
+    };
 
-    //POST request with Axios
-    createReservation(reserva).then((response) => {
+    console.log(nuevaReserva);
+
+    // POST request with Axios
+    createReservation(nuevaReserva).then((response) => {
       console.log(response);
+      sendEmail(nuevaReserva);
     });
-
-    sendEmail();
   };
 
   return (
