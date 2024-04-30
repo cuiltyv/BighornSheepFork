@@ -1,4 +1,3 @@
-
 import SalaCard from "../../components/SalaCard";
 import { useState, useEffect } from "react";
 import { getSalas } from "../../api/apihelper";
@@ -13,7 +12,7 @@ export default function Salas() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-6 bg-darkWhite px-32 py-10">
+    <div className="flex flex-col gap-6 bg-darkWhite px-8 py-10 md:px-32">
       <div>
         <h2 className="font-serif text-4xl font-semibold">Reserva en el</h2>
         <h2 className="font-serif text-5xl font-semibold text-blue">

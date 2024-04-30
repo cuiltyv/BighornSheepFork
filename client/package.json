@@ -37,6 +37,7 @@
     "ldrs": "^1.0.1",
     "lucide-react": "^0.368.0",
     "react": "^18.2.0",
+    "react-card-flip": "^1.2.2",
     "react-cookie": "^7.1.4",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
