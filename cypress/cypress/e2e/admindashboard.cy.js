@@ -21,7 +21,10 @@ describe("Probando la funcionalidad del dashboard de admin", () => {
       "have.text",
       "Reservaciones"
     );
-    cy.get(":nth-child(3) > .mb-4").should("have.text", "Confirmadas");
+    cy.get(".sm\\:grid-cols-2 > :nth-child(3) > .mb-4").should(
+      "have.text",
+      "Confirmadas"
+    );
     cy.get(":nth-child(4) > .mb-4").should("have.text", "Eventos");
   });
 
@@ -61,7 +64,7 @@ describe("Probando la funcionalidad del dashboard de admin", () => {
 
   it("Probar el filtro de reservaciones por matricula", () => {
     cy.get("#searchMatricula").type("A444");
-    cy.get(".bg-gray-50 > :nth-child(2)").should("have.text", "A444");
+    cy.get("tbody > :nth-child(1) > :nth-child(2)").should("have.text", "A444");
     cy.get("#searchMatricula").clear();
     cy.get("#searchMatricula").type("A0000000");
     cy.get("tbody > tr").should("not.exist");

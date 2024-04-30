@@ -44,13 +44,7 @@ const RecentReservations = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [isViewing, setIsViewing] = useState(false);
 
-  const estadoOptions = [
-    "Pendiente",
-    "Confirmado",
-    "Cancelado",
-    "Completado",
-    "Activa",
-  ];
+  const estadoOptions = ["Pendiente", "Confirmado", "Cancelado", "Completado"];
   const salaOptions = Object.values(idToSalasMap);
 
   useEffect(() => {
@@ -180,19 +174,17 @@ const RecentReservations = () => {
           />
         </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <DropdownFilter
-            options={salas.map((sala) => sala.Nombre)}
-            selectedOption={selectedRoom}
-            setSelectedOption={setSelectedRoom}
-            showDropdown={showDropdown}
-            setShowDropdown={setShowDropdown}
-            title="Filtrar por Sala"
+          <MultiSelectFilter
+            options={salaOptions}
+            selectedOptions={selectedRooms as Set<string>}
+            setSelectedOptions={setSelectedRooms}
+            title="Filtrar por sala"
           />
           <MultiSelectFilter
             options={estadoOptions}
             selectedOptions={selectedEstados as Set<string>}
             setSelectedOptions={setSelectedEstados}
-            title="Filterar por Estado"
+            title="Filtrar por estado"
           />
         </div>
       </div>
@@ -239,9 +231,8 @@ const RecentReservations = () => {
                           searchMatricula.toLowerCase(),
                         )
                       : true) &&
-                    (selectedRoom !== "Selecciona una sala" &&
-                    selectedRoom !== ""
-                      ? idToSalasMap[res.ZonaID] === selectedRoom
+                    (selectedRooms.size > 0
+                      ? selectedRooms.has(idToSalasMap[res.ZonaID])
                       : true) &&
                     (selectedEstados.size > 0
                       ? selectedEstados.has(res.Estado)

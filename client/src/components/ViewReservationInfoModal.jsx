@@ -27,7 +27,7 @@ const ViewReservationInfoModal = ({ isOpen, closeModal, reservation }) => {
       try {
         const response = await axios.get(PERSONAS_URL(ReservacionID));
         setPersonas(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -41,7 +41,7 @@ const ViewReservationInfoModal = ({ isOpen, closeModal, reservation }) => {
       try {
         const response = await axios.get(HARDWARE_URL(ReservacionID));
         setEquipo(response.data);
-        console.log(response.data);
+        //console.log(response.data);
       } catch (error) {
         console.error(error);
       }
