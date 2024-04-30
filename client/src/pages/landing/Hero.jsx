@@ -1,15 +1,12 @@
 import ButtonFilled from "../../components/ButtonFilled";
 import ButtonEmpty from "../../components/ButtonEmpty";
+import image from "../../assets/hero-image.png";
 
 export default function Hero() {
   return (
     <div className="flex flex-col bg-darkWhite md:flex-row">
       <div className="flex h-[800px] items-center justify-center bg-blue md:w-7/12">
-        <img
-          src="https://cdn.labmanager.com/assets/articleNo/2561/iImg/5457/70f4ae1d-74c7-4263-b2ef-3e3f881838c9-dec17-tech-laboftomorrow-640x360.jpg"
-          alt=""
-          className="my- mx-auto"
-        />
+        <img src={image} alt="" className="mx-auto my-auto h-5/6" />
       </div>
       <div className="flex w-full flex-col gap-6 px-4 py-4 md:w-5/12 md:px-16 md:py-0">
         <h2 className="font-serif text-3xl font-medium md:text-4xl">
