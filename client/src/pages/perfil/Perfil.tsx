@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,17 +10,19 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
-
+  faCheck,
+  faTimes,
+  faInfoCircle,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { User } from "@interfaces";
 import { getUser, updateUser } from "@api_helper";
 import useAuth from "@UserAuth";
+import axios from "../../api/axios";
 
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 export default function TabsDemo() {
   // @ts-expect-error //ignore warning
@@ -28,6 +30,14 @@ export default function TabsDemo() {
   const userID = auth?.userID;
 
   const [user, setUser] = useState<User | null>(null);
+
+  const [pwd, setPwd] = useState("");
+  const [validPwd, setValidPwd] = useState(false);
+  const [pwdFocus, setPwdFocus] = useState(false);
+
+  const [matchPwd, setMatchPwd] = useState("");
+  const [validMatch, setValidMatch] = useState(false);
+  const [matchFocus, setMatchFocus] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -38,20 +48,22 @@ export default function TabsDemo() {
     fetchUser();
   }, [userID]);
 
-  const handleInputChange = (event: { target: { id: string; value: unknown; }; }) => {
+  const handleInputChange = (event: {
+    target: { id: string; value: unknown };
+  }) => {
     const field = event.target.id;
     const value = event.target.value;
-    setUser(previousUser => {
+    setUser((previousUser) => {
       if (previousUser) {
         return { ...previousUser, [field]: value };
       }
       return null;
     });
   };
-  const handleUpdateClick =  () => {
+  const handleUpdateClick = () => {
     if (user) {
       try {
-        console.log("Updated User", user)
+        console.log("Updated User", user);
         // Assuming updateUser is the function to call to your update API
         // You would need to implement this function
         updateUser(user);
@@ -62,9 +74,8 @@ export default function TabsDemo() {
     }
   };
 
-
   return (
-    <div className="flex justify-center w-screen pb-20 h-screen">
+    <div className="flex h-screen w-screen justify-center pb-20">
       <Tabs defaultValue="account" className="w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="account">Cuenta</TabsTrigger>
@@ -74,25 +85,44 @@ export default function TabsDemo() {
           <Card>
             <CardHeader>
               <CardTitle>Bienvenido {user?.nombre ?? "Loading.."}</CardTitle>
-              <CardDescription>Modifica o consulta tu información de perfil aqui</CardDescription>
+              <CardDescription>
+                Modifica o consulta tu información de perfil aqui
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               {/* Replaced static content with dynamic user state content */}
               <div className="space-y-1">
                 <Label htmlFor="nombre">Nombre(s)</Label>
-                <Input onChange={handleInputChange} id="nombre" defaultValue={user?.nombre ?? ""} />
+                <Input
+                  onChange={handleInputChange}
+                  id="nombre"
+                  defaultValue={user?.nombre ?? ""}
+                />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="apellidos">Apellido(s)</Label>
-                <Input onChange={handleInputChange} id="apellidos" defaultValue={user?.apellidos ?? ""} />
+                <Input
+                  onChange={handleInputChange}
+                  id="apellidos"
+                  defaultValue={user?.apellidos ?? ""}
+                />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="matricula">Matricula</Label>
-                <Input onChange={handleInputChange} disabled id="matricula" defaultValue={user?.matricula ?? ""} />
+                <Input
+                  onChange={handleInputChange}
+                  disabled
+                  id="matricula"
+                  defaultValue={user?.matricula ?? ""}
+                />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="carrera">Carrera</Label>
-                <Input onChange={handleInputChange} id="carrera" defaultValue={user?.carrera ?? ""} />
+                <Input
+                  onChange={handleInputChange}
+                  id="carrera"
+                  defaultValue={user?.carrera ?? ""}
+                />
               </div>
             </CardContent>
             <CardFooter>
@@ -105,11 +135,11 @@ export default function TabsDemo() {
             <CardHeader>
               <CardTitle>Contraseña</CardTitle>
               <CardDescription>
-                Cambia tu contraseña aqui. Despues de guardarlo cerraremos tu sesión .
+                Cambia tu contraseña aqui. Despues de guardarlo cerraremos tu
+                sesión.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
-
               <div className="space-y-1">
                 <Label htmlFor="current">Contraseña Actual</Label>
                 <Input id="current" type="password" />
@@ -128,6 +158,3 @@ export default function TabsDemo() {
     </div>
   );
 }
-
-
-

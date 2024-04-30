@@ -109,6 +109,24 @@ const registerUser = async (req, res) => {
   }
 };
 
+//Actualizar rol de usuario
+//Ruta: /usuarios/updaterole (PUT)
+const updateUserRole = async (req, res) => {
+  const { Matricula, Role } = req.body;
+  try {
+    let pool = await sql.connect(config);
+    await pool
+      .request()
+      .input("Matricula", sql.VarChar(10), Matricula)
+      .input("newRole", sql.Int, Role)
+      .execute("sp_UpdateUserRole");
+    res.status(200).send("User role updated successfully");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Error con DB", error: err });
+  }
+};
+
 const loginUser = async (req, res) => {
   const { Matricula, Contrasena } = req.body;
   if (!Matricula || !Contrasena)
@@ -177,7 +195,6 @@ const updateUser = async (req, res) => {
     let pool = await sql.connect(config);
     let request = pool.request();
 
-
     request = request.input("Matricula", sql.VarChar(10), matricula);
 
     if (nombre !== undefined) {
@@ -200,7 +217,6 @@ const updateUser = async (req, res) => {
   }
 };
 
-
 module.exports = {
   getAllUsers,
   getUserByMatricula,
@@ -209,4 +225,5 @@ module.exports = {
   loginUser,
   getUserProfile,
   updateUser,
+  updateUserRole,
 };
