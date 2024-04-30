@@ -1,6 +1,7 @@
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from tools.ReservationRequest import ReservationRequest_format
+from tools.ReservationRequest import ReservationRequest_format, ReservationRequest
 import datetime
+from utils.setup_llm import llm
 
 # Define the custom prompt for the schema
 
@@ -25,7 +26,7 @@ prompt = ChatPromptTemplate.from_template(
 )
 
 
-def json_agent(llm, input_string):
+def json_agent(input_string):
     full_chain = {"text": lambda x: x["text"]} | prompt | llm
     result = full_chain.invoke({"text": input_string})
     return result.content

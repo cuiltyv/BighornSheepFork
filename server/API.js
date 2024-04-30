@@ -6,7 +6,7 @@ const usersRoutes = require("./routes/usersRoutes");
 const reservationsRoutes = require("./routes/reservationsRoutes");
 const roomsRoutes = require("./routes/salasRoutes"); // Make sure this matches the exported name from the file
 const miscRoutes = require("./routes/miscRoutes");
-
+const aiRequestRoutes = require("./routes/aiRequestRoutes");
 const setupSwagger = require("./configs/swagger");
 
 const hardwareRoutes = require("./routes/hardwareRoutes");
@@ -23,14 +23,14 @@ app.use(express.json());
 
 // !Comentar antes de subir a GitHub
 // ?Descomentar para poder probar con localhost en react
-/*
+
 app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
   })
 );
-*/
+
 //middleware for cookies
 app.use(cookieParser());
 
@@ -60,6 +60,7 @@ const requestLogger = (request, response, next) => {
 app.use(requestLogger);
 
 app.use((error, req, res, next) => {
+  console.log("Error handler", req.data);
   console.error(error.stack);
   res.status(500).send("Something broke!");
 });
@@ -73,6 +74,7 @@ setupSwagger(app);
 
 app.use("/usuarios", usersRoutes);
 app.use("/reservaciones", reservationsRoutes);
+app.use("/ai", aiRequestRoutes);
 app.use("/salas", roomsRoutes);
 app.use("/", miscRoutes);
 app.use("/hardware", hardwareRoutes);
