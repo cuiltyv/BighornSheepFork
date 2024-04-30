@@ -3,7 +3,6 @@ import Landing from "./pages/landing/Landing";
 import Home from "./pages/landing/Home";
 import Perfil from "./pages/perfil/Perfil";
 import Login from "./pages/login/Login";
-import Form from "./pages/reservationForm/Form";
 import Dashboard from "./pages/admin/Dashboard";
 import Missing from "./pages/extra/Missing";
 import VideoWall from "./pages/videowall/VideoWall";
@@ -14,6 +13,7 @@ import { Routes, Route } from "react-router-dom";
 
 import WithLayout from "./components/WithLayout";
 import WithLayoutLogout from "./components/WithLayoutLogout";
+import Reservaciones from "./pages/reservaciones/Reservaciones";
 
 const ROLES = {
   User: 1,
@@ -37,7 +37,10 @@ function App() {
             <Route
               element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Admin]} />}
             >
-              <Route path="/BighornSheep/form/:id" element={<Form />} />
+              <Route
+                path="/BighornSheep/reservaciones"
+                element={<Reservaciones />}
+              />
               <Route path="/BighornSheep" element={<Home />} />
               <Route path="/BighornSheep/perfil" element={<Perfil />} />
             </Route>

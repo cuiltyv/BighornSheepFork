@@ -1,5 +1,10 @@
 import ButtonFilled from "./ButtonFilled";
-import { Link } from "react-router-dom";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialogModal";
+import Form from "@/pages/reservationForm/Form";
 
 export default function SalaCard({
   sala,
@@ -28,12 +33,14 @@ export default function SalaCard({
         <h3 className="font-semibold">{sala.Nombre}</h3>
         <p className="text-xs font-medium">{sala.Lugar}</p>
       </div>
-      <Link
-        className=""
-        to={`http://localhost:5173/BighornSheep/form/${sala.SalaId}`}
-      >
-        <ButtonFilled text="Reservar" />
-      </Link>
+      <Dialog>
+        <DialogTrigger>
+          <ButtonFilled text="Reservar" />
+        </DialogTrigger>
+        <DialogContent>
+          <Form id={sala.SalaId} />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
