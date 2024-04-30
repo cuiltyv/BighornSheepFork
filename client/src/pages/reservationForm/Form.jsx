@@ -6,15 +6,13 @@ import DatePicker from "./formComponents/datePicker/DatePicker";
 import dayjs from "dayjs";
 import { getHardware, getSala, createReservation } from "../../api/apihelper";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import "tailwindcss/tailwind.css";
 import "./styles/Form.css";
 import "./styles/styles.css";
 
-function Form() {
-  const { id } = useParams();
+function Form({id}) {
   const [sala, setSala] = useState({});
   const [horaSeleccionada, setHoraSeleccionada] = useState("9:00am - 10:00am");
   const [diaSeleccionado, setDiaSeleccionado] = useState(dayjs());
@@ -88,7 +86,7 @@ function Form() {
   };
 
   return (
-    <div className="flex justify-center bg-black">
+    <div className="flex justify-center w-[80vw] max-w-fit">
       <div className="form-container my-5 w-fit overflow-auto rounded-xl">
         <img src={`${sala.Link}.png`} className="h-72 w-full object-cover " />
         <div className="px-28 py-14 ">
@@ -115,12 +113,6 @@ function Form() {
                 className="bh-bg-blue align-center flex justify-center self-center rounded-lg px-4 py-2 font-bold text-white"
               >
                 Enviar
-              </button>
-            </Link>
-
-            <Link to={"/BighornSheep"}>
-              <button className="bh-border-blue bh-text-blue align-center flex justify-center self-center rounded-lg border-2 px-4 py-2 font-bold">
-                Cancelar
               </button>
             </Link>
           </div>
