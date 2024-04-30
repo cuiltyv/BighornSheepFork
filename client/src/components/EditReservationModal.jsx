@@ -25,6 +25,7 @@ const EditReservationModal = ({
     return null;
   }
 
+  //console.log(formData);
   function toLocalDateTimeString(isoString) {
     const date = new Date(isoString);
     const offset = date.getTimezoneOffset();
@@ -109,7 +110,7 @@ const EditReservationModal = ({
                 <option value="Pendiente">Pendiente</option>
                 <option value="Confirmado">Confirmado</option>
                 <option value="Cancelado">Cancelado</option>
-                <option value="Activa">Completado</option>
+                <option value="Completado">Completado</option>
               </select>
             </div>
             <div className="flex justify-between space-x-2">
