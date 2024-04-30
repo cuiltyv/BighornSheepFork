@@ -6,6 +6,7 @@ import Login from "./pages/login/Login";
 import Form from "./pages/reservationForm/Form";
 import Dashboard from "./pages/admin/Dashboard";
 import Missing from "./pages/extra/Missing";
+import VideoWall from "./pages/videowall/VideoWall";
 import Unauthorized from "./pages/extra/Unauthorized";
 import RequireAuth from "./components/RequireAuth";
 import PersistLogin from "./components/PersistLogin";
@@ -23,9 +24,11 @@ function App() {
   return (
     <div className="bg-darkWhite">
       <Routes>
+        <Route path="/BighornSheep/videowall" element={<VideoWall />} />
         <Route path="/" element={<WithLayout />}>
           <Route path="/BighornSheep/landing" element={<Landing />} />
           <Route path="/BighornSheep/login" element={<Login />} />
+
           <Route path="*" element={<Login />} />
         </Route>
         <Route path="/" element={<WithLayoutLogout />}>

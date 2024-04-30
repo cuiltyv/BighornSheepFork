@@ -21,6 +21,8 @@ import {
   DropdownMenu,
 } from "@/components/ui/dropdown-menu";
 import axios from "../../api/axios";
+import "./EditRole.css";
+import Loading from "../../components/Loading";
 
 const EDIT_ROLE_URL = "usuarios/updaterole";
 
@@ -28,6 +30,7 @@ const EditRole = () => {
   const [user, setUser] = useState("");
   const [role, setRole] = useState("");
   const [namedRole, setNamedRole] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleRoleChange = (selectedRole) => {
     setRole(selectedRole);
@@ -37,6 +40,7 @@ const EditRole = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     let capitalizedStr = user.charAt(0).toUpperCase() + user.slice(1);
     setUser(capitalizedStr);
@@ -55,12 +59,21 @@ const EditRole = () => {
       );
     } catch (err) {
       console.error(err);
+    } finally {
+      setLoading(false); // Set loading to false when request completes (whether success or error)
     }
   };
 
   return (
     <div className="mx-2 mt-4 rounded-lg bg-white p-4 shadow-xl">
       <Dialog>
+        {loading && (
+          <div className="loading-icon-over-tabs">
+            <div className="loading-icon">
+              <Loading />
+            </div>
+          </div>
+        )}
         <DialogTrigger asChild>
           <Button variant="outline">Editar Rol de Usuarios</Button>
         </DialogTrigger>
@@ -84,6 +97,7 @@ const EditRole = () => {
                 value={user}
                 required
                 autoComplete="off"
+                disabled={loading}
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
@@ -95,6 +109,7 @@ const EditRole = () => {
                   <Button
                     className="col-span-3 justify-start"
                     variant="outline"
+                    disabled={loading}
                   >
                     <span className="truncate">
                       {namedRole || "Seleccionar Rol"}
@@ -122,7 +137,9 @@ const EditRole = () => {
             </div>
           </div>
           <DialogFooter>
-            <Button onClick={handleSubmit}>Guardar Cambios</Button>
+            <Button onClick={handleSubmit} disabled={loading}>
+              Guardar Cambios
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
