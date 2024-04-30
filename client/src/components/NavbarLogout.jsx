@@ -51,7 +51,7 @@ const NavbarLogout = () => {
             <Link to="/BighornSheep/">Contacto</Link>
           </li>
           <li className="mx-6 p-5">
-            <Link to="/BighornSheep/">Reservaciones</Link>
+            <Link to="/BighornSheep/reservaciones">Reservaciones</Link>
           </li>
           <li className="mx-6 p-5">
             <Link to="/BighornSheep/perfil">Perfil</Link>

@@ -15,10 +15,10 @@ const Reservaciones = () => {
     };
     fetchUser();
     }, [userID]);
-    
+
   return(
     <div>
-      <h1 className='text-5xl font-bold bh-text-blue'>¡Hola {user?.nombre}!</h1>
+      <h1 className='text-5xl font-bold bh-text-blue mx-10'>¡Hola {user?.nombre}!</h1>
       <ReservationShow user = {user} />
     </div>
 
