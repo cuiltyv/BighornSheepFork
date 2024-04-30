@@ -8,7 +8,6 @@ import dayjs from "dayjs";
 import axios from "axios";
 
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import emailjs from "@emailjs/browser";
 
@@ -16,34 +15,8 @@ import "tailwindcss/tailwind.css";
 import "./styles/Form.css";
 import "./styles/styles.css";
 
-interface Person {
-  name: string;
-  registration: string;
-}
-
-interface Aparato {
-  id: number;
-  nombre: string;
-  cantidad: number;
-}
-
-interface HardwareResponse {
-  HardwareID: number;
-  Nombre: string;
-}
-interface Sala {
-  id: number;
-  nombre: string;
-  link: string; // Asumiendo que 'link' es una propiedad del objeto sala
-}
-function Form() {
-  const { id } = useParams();
-  const [sala, setSala] = useState<Sala | undefined>(undefined);
-
-  const navigate = useNavigate();
-
-  const goBack = () => navigate(-1);
-
+function Form({id}) {
+  const [sala, setSala] = useState({});
   const [horaSeleccionada, setHoraSeleccionada] = useState("9:00am - 10:00am");
   const [diaSeleccionado, setDiaSeleccionado] = useState(dayjs());
   const [people, setPeople] = useState([{ name: "", registration: "" }]);
@@ -183,7 +156,7 @@ function Form() {
   };
 
   return (
-    <div className="flex justify-center bg-black">
+    <div className="flex justify-center w-[80vw] max-w-fit">
       <div className="form-container my-5 w-fit overflow-auto rounded-xl">
         <img src={`${sala?.link}.png`} className="h-72 w-full object-cover" />
         <div className="px-28 py-14 ">
@@ -204,16 +177,12 @@ function Form() {
           <DeviceList aparatos={aparatos} setAparatos={setAparatos} />
           <Comments comment={comment} setComment={setComment} />
           <div className="mt-10 flex w-full justify-center gap-10">
-            <button
-              onClick={enviar}
-              className="bh-bg-blue align-center flex justify-center self-center rounded-lg px-4 py-2 font-bold text-white"
-            >
-              Enviar
-            </button>
-
             <Link to={"/BighornSheep"}>
-              <button className="bh-border-blue bh-text-blue align-center flex justify-center self-center rounded-lg border-2 px-4 py-2 font-bold">
-                Cancelar
+              <button
+                onClick={enviar}
+                className="bh-bg-blue align-center flex justify-center self-center rounded-lg px-4 py-2 font-bold text-white"
+              >
+                Enviar
               </button>
             </Link>
           </div>
