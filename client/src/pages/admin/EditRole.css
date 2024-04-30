@@ -1,0 +1,14 @@
+.loading-icon-over-tabs {
+  position: relative;
+  margin-bottom: 10px; /* Adjust margin as needed */
+}
+
+.loading-icon {
+  position: absolute;
+  top: -335px; /* Move the loading icon 100px down */
+  left: 50%;
+
+  transform: translateX(-50%) scale(0.5); /* Scale the loading icon down to 80% */
+
+  z-index: 999; /* Ensure it appears above other elements */
+}

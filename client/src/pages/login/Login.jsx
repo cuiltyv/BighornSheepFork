@@ -22,6 +22,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Login.css";
 import "./Register.css";
 import axios from "../../api/axios";
+import Loading from "../../components/Loading";
 
 const LOGIN_URL = "usuarios/auth";
 
@@ -55,6 +56,8 @@ const Login = () => {
   const [validMatch, setValidMatch] = useState(false);
   const [matchFocus, setMatchFocus] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
@@ -80,6 +83,7 @@ const Login = () => {
 
   const handleSubmitR = async (e) => {
     e.preventDefault();
+    setLoading(true);
     // if button enabled with JS hack
     const v1 = USER_REGEX.test(userR);
     const v2 = PWD_REGEX.test(pwdR);
@@ -122,6 +126,8 @@ const Login = () => {
         console.error(err);
       }
       errRef.current.focus();
+    } finally {
+      setLoading(false); // Set loading to false when request completes (whether success or error)
     }
   };
 
@@ -164,6 +170,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true when the request starts
 
     let capitalizedStr = user.charAt(0).toUpperCase() + user.slice(1);
     setUser(capitalizedStr);
@@ -198,6 +205,8 @@ const Login = () => {
         setErrMsg("Login Failed");
       }
       errRef.current.focus();
+    } finally {
+      setLoading(false); // Set loading to false when request completes (whether success or error)
     }
   };
 
@@ -205,6 +214,14 @@ const Login = () => {
     <>
       <div className="flex h-screen w-screen justify-center pb-20">
         <Tabs defaultValue="login" className="w-[400px]">
+          {/* Render loading icon over the tabs if loading state is true */}
+          {loading && (
+            <div className="loading-icon-over-tabs">
+              <div className="loading-icon">
+                <Loading />
+              </div>
+            </div>
+          )}
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="login">Login</TabsTrigger>
             <TabsTrigger value="registro">Registro</TabsTrigger>
@@ -233,6 +250,7 @@ const Login = () => {
                     onChange={(e) => setUser(e.target.value)}
                     value={user}
                     required
+                    disabled={loading}
                   />
                 </div>
                 <div className="space-y-1">
@@ -243,11 +261,14 @@ const Login = () => {
                     onChange={(e) => setPwd(e.target.value)}
                     value={pwd}
                     required
+                    disabled={loading}
                   />
                 </div>
               </CardContent>
               <CardFooter>
-                <Button onClick={handleSubmit}>Iniciar Sesión</Button>
+                <Button onClick={handleSubmit} disabled={loading}>
+                  Iniciar Sesión
+                </Button>
               </CardFooter>
             </Card>
           </TabsContent>
@@ -288,6 +309,7 @@ const Login = () => {
                     aria-describedby="uidnote"
                     onFocus={() => setUserFocus(true)}
                     onBlur={() => setUserFocus(false)}
+                    disabled={loading}
                   />
                   <p
                     id="uidnote"
@@ -327,6 +349,7 @@ const Login = () => {
                     aria-describedby="pwdnote"
                     onFocus={() => setPwdFocus(true)}
                     onBlur={() => setPwdFocus(false)}
+                    disabled={loading}
                   />
                   <p
                     id="pwdnote"
@@ -374,6 +397,7 @@ const Login = () => {
                     aria-describedby="confirmnote"
                     onFocus={() => setMatchFocus(true)}
                     onBlur={() => setMatchFocus(false)}
+                    disabled={loading}
                   />
                   <p
                     id="confirmnote"
@@ -389,7 +413,9 @@ const Login = () => {
               <CardFooter>
                 <Button
                   disabled={
-                    !validName || !validPwd || !validMatch ? true : false
+                    loading || !validName || !validPwd || !validMatch
+                      ? true
+                      : false
                   }
                   onClick={handleSubmitR}
                 >
