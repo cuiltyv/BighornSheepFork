@@ -2,7 +2,7 @@ describe("Probando la funcionalidad del dashboard de admin", () => {
   beforeEach(() => {
     cy.visit("http://localhost:5173/BighornSheep/login");
     cy.get("#username").type("A444");
-    cy.get("#password").type("grahhhh!");
+    cy.get("#password").type("Tello123!");
     cy.get(".flex.items-center > .inline-flex").click();
     cy.wait(4000);
     cy.get(".border-b > :nth-child(5) > a").click();
@@ -71,18 +71,29 @@ describe("Probando la funcionalidad del dashboard de admin", () => {
   });
 
   it("Verificar que el dropdown para filtrar por sala exista", () => {
-    cy.get(".relative").should("exist");
-    cy.get(".mb-2\\.5").should("exist");
+    cy.get(".filter-section > .grid > :nth-child(1)").should("exist");
+    cy.get(
+      ':nth-child(1) > [style="max-height: 200px; overflow-y: auto;"] > :nth-child(1) > label'
+    ).should("exist");
   });
 
   it("Probar el filtro de reservaciones por sala", () => {
-    cy.get(".relative").should("exist");
-    cy.get(".mb-2\\.5").should("exist");
-    cy.get(".mb-2\\.5").click();
-    cy.get(".absolute > :nth-child(1)").should("exist");
-    cy.get(".absolute > :nth-child(2)").should("exist");
-    cy.get(".absolute > :nth-child(3)").should("exist");
-    cy.get(".absolute > :nth-child(2)").click();
+    cy.get(".filter-section > .grid > :nth-child(1)").should("exist");
+    cy.get(
+      ':nth-child(1) > [style="max-height: 200px; overflow-y: auto;"] > :nth-child(1) > label'
+    ).should("exist");
+    cy.get(
+      ':nth-child(1) > [style="max-height: 200px; overflow-y: auto;"] > :nth-child(1) > label > input'
+    ).click();
+    cy.get(
+      ':nth-child(1) > [style="max-height: 200px; overflow-y: auto;"] > :nth-child(2) > label > input'
+    ).should("exist");
+    cy.get(
+      ':nth-child(1) > [style="max-height: 200px; overflow-y: auto;"] > :nth-child(3) > label > input'
+    ).should("exist");
+    cy.get(
+      ':nth-child(1) > [style="max-height: 200px; overflow-y: auto;"] > :nth-child(4) > label > input'
+    ).click();
     cy.get("tbody > tr").should("exist");
     cy.get("tbody > :nth-child(1) > :nth-child(7)").should(
       "have.text",
@@ -96,13 +107,22 @@ describe("Probando la funcionalidad del dashboard de admin", () => {
   });
 
   it("Probar el filtro de reservaciones por estado", () => {
-    cy.get(".multi-select-filter").should("exist");
-    cy.get(".multi-select-filter > h3").should("exist");
-    cy.get(":nth-child(2) > label").should("exist");
-    cy.get(":nth-child(3) > label").should("exist");
-    cy.get(":nth-child(4) > label").should("exist");
-    cy.get(":nth-child(2) > label > input").should("exist");
-    cy.get(":nth-child(2) > label > input").click();
+    cy.get(".filter-section > .grid > :nth-child(2)").should("exist");
+    cy.get(
+      ':nth-child(2) > [style="max-height: 200px; overflow-y: auto;"] > :nth-child(1) > label > input'
+    ).should("exist");
+    cy.get(
+      ':nth-child(2) > [style="max-height: 200px; overflow-y: auto;"] > :nth-child(2) > label > input'
+    ).should("exist");
+    cy.get(
+      ':nth-child(2) > [style="max-height: 200px; overflow-y: auto;"] > :nth-child(3) > label > input'
+    ).should("exist");
+    cy.get(
+      ':nth-child(2) > [style="max-height: 200px; overflow-y: auto;"] > :nth-child(4) > label > input'
+    ).should("exist");
+    cy.get(
+      ':nth-child(2) > [style="max-height: 200px; overflow-y: auto;"] > :nth-child(2) > label > input'
+    ).click();
     cy.get("tbody > :nth-child(1) > :nth-child(6)").should(
       "have.text",
       "Confirmado"
@@ -117,7 +137,7 @@ describe("Probando la funcionalidad del dashboard de admin", () => {
 
   it("Probar el boton de cancelar filtros", () => {
     cy.get(
-      '[style="margin-right: 5px; background: red; color: white; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;"]'
+      ':nth-child(1) > [style="text-align: right; margin-top: 10px;"] > [style="margin-right: 5px; background: red; color: white; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;"]'
     ).click();
     cy.get("tbody > tr").should("exist");
   });
@@ -132,10 +152,10 @@ describe("Probando la funcionalidad del dashboard de admin", () => {
 
   it("Verificar que el boton de seleccionar todas exista", () => {
     cy.get(
-      '[style="background: rgb(240, 240, 240); color: rgb(51, 51, 51); padding: 5px 10px; border: 1px solid rgb(221, 221, 221); border-radius: 3px; cursor: pointer; margin-right: 5px;"]'
+      ':nth-child(1) > [style="display: flex; justify-content: space-between; margin-bottom: 10px;"] > [style="background: rgb(240, 240, 240); color: rgb(51, 51, 51); padding: 5px 10px; border: 1px solid rgb(221, 221, 221); border-radius: 3px; cursor: pointer; margin-right: 5px;"]'
     ).should("exist");
     cy.get(
-      '[style="background: rgb(240, 240, 240); color: rgb(51, 51, 51); padding: 5px 10px; border: 1px solid rgb(221, 221, 221); border-radius: 3px; cursor: pointer; margin-right: 5px;"]'
+      ':nth-child(1) > [style="display: flex; justify-content: space-between; margin-bottom: 10px;"] > [style="background: rgb(240, 240, 240); color: rgb(51, 51, 51); padding: 5px 10px; border: 1px solid rgb(221, 221, 221); border-radius: 3px; cursor: pointer; margin-right: 5px;"]'
     ).click();
   });
 
@@ -143,7 +163,7 @@ describe("Probando la funcionalidad del dashboard de admin", () => {
 
   it("Verificar que el boton de limpiar exista", () => {
     cy.get(
-      '[style="background: rgb(240, 240, 240); color: rgb(51, 51, 51); padding: 5px 10px; border: 1px solid rgb(221, 221, 221); border-radius: 3px; cursor: pointer;"]'
+      ':nth-child(1) > [style="display: flex; justify-content: space-between; margin-bottom: 10px;"] > [style="background: rgb(240, 240, 240); color: rgb(51, 51, 51); padding: 5px 10px; border: 1px solid rgb(221, 221, 221); border-radius: 3px; cursor: pointer;"]'
     ).click();
   });
 
@@ -174,6 +194,8 @@ describe("Probando la funcionalidad del dashboard de admin", () => {
   // boton de eliminar resevacion
 
   it("Verificar que el boton de eliminar reservacion exista", () => {
-    cy.get(":nth-child(1) > .flex > .text-red-600 > .hidden").should("exist");
+    cy.get(
+      ':nth-child(2) > [style="text-align: right; margin-top: 10px;"] > [style="margin-right: 5px; background: red; color: white; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;"]'
+    ).should("exist");
   });
 });
