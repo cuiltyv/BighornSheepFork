@@ -16,26 +16,25 @@ function ReservationCard({reservation, sala}){
         try {
           const response = await axios.get(HARDWARE_URL(reservation.ReservacionID));
           setEquipo(response.data);
-          console.log(response.data);
         } catch (error) {
           console.error(error);
         }
       };
   
       fetchEquipo();
-    }, []);
+    });
     return(
         <div className="bg-white overflow-hidden rounded-lg shadow-xl m-6">
-        <img src={`${Link}.png`} alt={`${Nombre} image`} className="w-72" />
+        <img src={`${Link}.png`} alt={`${Nombre} image`} className="w-[350px]" />
         <div className="px-5 py-2">
         <h3 className="text-xl font-bold">{Nombre}</h3>
         <p className="text-xs mb-4">{Lugar}</p>
         <div className="flex">
         <div className="mr-3">
-          <p>Fecha:</p>
-          <p>Hora Inicio:</p>
-          <p>Hora Final:</p>
-          <p>Aparatos:</p>
+          <p className="font-semibold">Fecha</p>
+          <p className="font-semibold">Hora de Inicio</p>
+          <p className="font-semibold">Hora de Termino</p>
+          <p className="font-semibold">Aparatos</p>
         </div>
         <div>
           <p>{fecha}</p>
@@ -43,8 +42,8 @@ function ReservationCard({reservation, sala}){
           <p>{horaF}</p>
           <ul className="space-y-1">
             {equipo.length === 0 ? (
-              <li className="rounded bg-gray-100 p-2">
-                No hay equipo necesario
+              <li className="">
+                No Solicitó Equipo
               </li>
             ) : (
               equipo.map((item, index) => (

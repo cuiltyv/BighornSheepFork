@@ -19,7 +19,9 @@ const Reservaciones = () => {
   return(
     <div>
       <h1 className='text-5xl font-bold bh-text-blue mx-10'>¡Hola {user?.nombre}!</h1>
-      <ReservationShow user = {user} />
+      <ReservationShow user = {user} estado="Confirmado" />
+      <ReservationShow user = {user} estado="Pendiente" />
+      <ReservationShow user = {user} estado="Completado" />
     </div>
 
 );

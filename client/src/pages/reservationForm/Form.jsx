@@ -23,7 +23,7 @@ function Form({id}) {
   );
   const [aparatos, setAparatos] = useState([]);
   const [comment, setComment] = useState("");
-
+  
   // GET Sala by id
   useEffect(() => {
     getSala(id).then((sala) => {
@@ -80,7 +80,6 @@ function Form({id}) {
         },
       );
   };
-
   // POST Reserva
   const enviar = () => {
     const parseHour = (hour) => {
