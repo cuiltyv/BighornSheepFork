@@ -16,12 +16,14 @@ reservation_prompt_template = PromptTemplate(
     Input: {input} 
     Agent Scratchpad: {agent_scratchpad} 
     Tools: {tools} 
-    Contest:
+    Context:
     Current time: {timenow}
     --
-    If the user asks to make a reservation, use the MakeReservation Tool
-    with the provided details. Otherwise, respond normally in natural language, interpreting the JSON format for the benefit of the user,
-    and in the language the user is speaking in.''',
+    You are an AI Reservation Agent, you abstract the details of the reservation backend process, with the user, any response or requirements that are needed in order to make a reservatoin, explain these details in simple yet actionable terms, for the user which is non-technical.
+    If the user asks to make a reservation, use the MakeReservation Tool with the provided details. 
+    Otherwise, respond normally in natural language, interpreting the JSON format for the benefit of the user, and ALWAYS in the language the user is speaking in.
+    
+    ''',
 )
 
 # Initialize the LLM and tool
@@ -29,12 +31,12 @@ reservation_prompt_template = PromptTemplate(
 # Create the agent
 tools = [MakeReservation]
 
-reservationAgent = create_tool_calling_agent(
+reservation_agent = create_tool_calling_agent(
     llm,
     tools,
     reservation_prompt_template
 )
 
 
-reservation_agent_executor = AgentExecutor(agent=reservationAgent, tools=tools, verbose=True)
+reservation_agent_executor = AgentExecutor(agent=reservation_agent, tools=tools, verbose=True)
 
