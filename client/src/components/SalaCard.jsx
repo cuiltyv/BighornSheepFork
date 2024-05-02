@@ -1,7 +1,12 @@
 import ButtonFilled from "./ButtonFilled";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import ReactCardFlip from "react-card-flip";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialogModal";
+import Form from "@/pages/reservationForm/Form";
 
 export default function SalaCard({ sala }) {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -31,12 +36,14 @@ export default function SalaCard({ sala }) {
             <h3 className="font-semibold">{sala.Nombre}</h3>
             <p className="text-xs font-medium">{sala.Lugar}</p>
           </div>
-          <Link
-            className=""
-            to={`http://localhost:5173/BighornSheep/form/${sala.SalaId}`}
-          >
-            <ButtonFilled text="Reservar" />
-          </Link>
+          <Dialog>
+            <DialogTrigger>
+              <ButtonFilled text="Reservar" />
+            </DialogTrigger>
+            <DialogContent>
+              <Form id={sala.SalaId} />
+            </DialogContent>
+          </Dialog>
         </div>
 
         <div className="flex min-h-96 max-w-64 flex-col gap-2 rounded bg-white p-3 shadow-lg">

@@ -3,10 +3,8 @@ import ReservationReason from "./formComponents/ReservationReason";
 import DeviceList from "./formComponents/deviceList/DeviceList";
 import Comments from "./formComponents/Comments";
 import DatePicker from "./formComponents/datePicker/DatePicker";
-
 import dayjs from "dayjs";
-import axios from "axios";
-
+import { getHardware, getSala, createReservation } from "../../api/apihelper";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import emailjs from "@emailjs/browser";
@@ -23,49 +21,25 @@ function Form({id}) {
   const [razonSeleccionada, setRazonSeleccionada] = useState(
     "Unidad de Formacion",
   );
-
-  const [aparatos, setAparatos] = useState<Aparato[]>([]);
-
+  const [aparatos, setAparatos] = useState([]);
   const [comment, setComment] = useState("");
-
+  
   // GET Sala by id
   useEffect(() => {
-    axios
-      .get(`http://localhost:3000/salas/${id}`)
-      .then((response) => {
-        if (response.data && response.data.length > 0) {
-          const salaData: Sala = {
-            id: response.data[0].id, // Asumiendo que estos campos están presentes en la respuesta
-            nombre: response.data[0].nombre,
-            link: response.data[0].link,
-          };
-          setSala(salaData);
-        } else {
-          console.error("No data received for the room");
-          setSala(undefined);
-        }
-      })
-      .catch((error) => {
-        console.error("Error getting room:", error);
-        setSala(undefined);
-      });
+    getSala(id).then((sala) => {
+      setSala(sala[0]);
+    });
   }, [id]);
 
   // GET Hardware
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/hardware")
-      .then((response) => {
-        const fetchedHardware: HardwareResponse[] = response.data; // Asumiendo que response.data es un array de objetos de tipo HardwareResponse
-        const newAparatos: Aparato[] = fetchedHardware.map((hardware) => ({
-          id: hardware.HardwareID,
-          nombre: hardware.Nombre,
-          cantidad: 0, // inicializamos la cantidad en 0
-        }));
-        setAparatos(newAparatos);
-      })
-      .catch((error) => {
-        console.error("Error getting hardware:", error);
+    getHardware().then((hardware) => {
+      setAparatos([]);
+      hardware.map((hardware) => {
+        setAparatos((prev) => [
+          ...prev,
+          { id: hardware.HardwareID, nombre: hardware.Nombre, cantidad: 0 },
+        ]);
       });
     });
   }, [id]);
@@ -106,12 +80,11 @@ function Form({id}) {
         },
       );
   };
-
   // POST Reserva
   const enviar = () => {
     const parseHour = (hour) => {
       const [time, period] = hour.split(" ");
-      const [hours] = time.split(":"); //antes estaba [hours, minutes] pero lo borré porque no se usaba
+      const [hours] = time.split(":");
       return period === "pm" ? parseInt(hours) + 12 : parseInt(hours);
     };
 
@@ -144,24 +117,20 @@ function Form({id}) {
 
     console.log(nuevaReserva);
 
-    // Post request with Axios
-    axios
-      .post("http://localhost:3000/reservaciones", reserva)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("Error posting reservation:", error);
-      });
+    // POST request with Axios
+    createReservation(nuevaReserva).then((response) => {
+      console.log(response);
+      sendEmail(nuevaReserva);
+    });
   };
 
   return (
     <div className="flex justify-center w-[80vw] max-w-fit">
       <div className="form-container my-5 w-fit overflow-auto rounded-xl">
-        <img src={`${sala?.link}.png`} className="h-72 w-full object-cover" />
+        <img src={`${sala.Link}.png`} className="h-72 w-full object-cover " />
         <div className="px-28 py-14 ">
           <h1 className="bh-text-blue ml-4 text-5xl font-bold">
-            {sala?.nombre}
+            {sala.Nombre}
           </h1>
           <DatePicker
             horaSeleccionada={horaSeleccionada}
@@ -193,4 +162,3 @@ function Form({id}) {
 }
 
 export default Form;
-export type { Person, Aparato, Sala };

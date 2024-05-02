@@ -7,7 +7,7 @@ import { getSalas } from "../api/apihelper";
 const RESERVACIONES_URL = '/reservaciones';
 
 
-const ReservationShow = ({user}) => {
+const ReservationShow = ({user, estado}) => {
     const [reservedRooms, setReservedRooms] = useState([]);
     const [isDataLoading, setIsDataLoading] = useState(true);
     const [salas, setSalas] = useState([]);
@@ -36,18 +36,28 @@ const ReservationShow = ({user}) => {
         setSalas(salas);
       });
     }, []);
-  
+    const solicitados = reservedRooms.filter(
+        (reservation) => reservation.Estado === estado
+      );
     return (
       <div className="mx-2 mt-4 p-4">
-        <h2 className='mx-5 text-2xl font-semibold'>Revisa tus reservaciones actuales</h2>
+        <h2 className='mx-5 text-2xl font-semibold'>Revisa tus reservaciones con estado: {estado}</h2>
         {isDataLoading ? (
           <div>Loading...</div>
         ) : (
-          <ul className='flex flex-wrap'>
-            {reservedRooms.map((reservation, index) => (
-              <ReservationCard key={index} reservation={reservation} sala={salas.find(sala => sala?.SalaId === reservation.ZonaID)} />
-            ))}
-          </ul>
+            <div className="flex flex-wrap">
+            
+              
+              {solicitados.map((reservation, index) => (
+                <ReservationCard
+                  key={index}
+                  reservation={reservation}
+                  sala={salas.find((sala) => sala?.SalaId === reservation.ZonaID)}
+                />
+              ))}
+              
+            </div>
+        
         )}
       </div>
     );
