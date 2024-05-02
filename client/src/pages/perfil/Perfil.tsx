@@ -11,18 +11,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  faCheck,
-  faTimes,
-  faInfoCircle,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { User } from "@interfaces";
 import { getUser, updateUser } from "@api_helper";
 import useAuth from "@UserAuth";
-import axios from "../../api/axios";
-
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 export default function TabsDemo() {
   // @ts-expect-error //ignore warning
@@ -30,14 +21,6 @@ export default function TabsDemo() {
   const userID = auth?.userID;
 
   const [user, setUser] = useState<User | null>(null);
-
-  const [pwd, setPwd] = useState("");
-  const [validPwd, setValidPwd] = useState(false);
-  const [pwdFocus, setPwdFocus] = useState(false);
-
-  const [matchPwd, setMatchPwd] = useState("");
-  const [validMatch, setValidMatch] = useState(false);
-  const [matchFocus, setMatchFocus] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
