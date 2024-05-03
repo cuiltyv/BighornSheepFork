@@ -127,9 +127,9 @@ function Form({id}) {
   return (
     <div className="flex justify-center w-[80vw] max-w-fit">
       <div className="form-container my-5 w-fit overflow-auto rounded-xl">
-        <img src={`${sala.Link}.png`} className="h-72 w-full object-cover " />
+        <img src={`${sala.Link}.png`} className="h-72 w-full object-cover " data-cy="imagen-sala"/>
         <div className="px-28 py-14 ">
-          <h1 className="bh-text-blue ml-4 text-5xl font-bold">
+          <h1 className="bh-text-blue ml-4 text-5xl font-bold" data-cy="nombre-sala">
             {sala.Nombre}
           </h1>
           <DatePicker
@@ -150,6 +150,7 @@ function Form({id}) {
               <button
                 onClick={enviar}
                 className="bh-bg-blue align-center flex justify-center self-center rounded-lg px-4 py-2 font-bold text-white"
+                data-cy="enviar-button"
               >
                 Enviar
               </button>

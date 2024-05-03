@@ -42,6 +42,7 @@ export default function PeopleSelect({ people, setPeople }) {
             value={person.registration}
             onChange={(e) => handleRegistrationChange(e.target.value, index)}
             className="mr-2 w-40 rounded border border-gray-300 p-2 drop-shadow-lg"
+            data-cy="matricula-input"
           />
           <input
             type="text"
@@ -49,6 +50,7 @@ export default function PeopleSelect({ people, setPeople }) {
             value={person.name}
             onChange={(e) => handleNameChange(e.target.value, index)}
             className="mr-2 w-80 rounded border border-gray-300 p-2 drop-shadow-lg"
+            data-cy="nombre-input"
           />
 
           {index === people.length - 1 && (
