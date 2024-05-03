@@ -42,10 +42,11 @@ const Calendar: React.FC<CalendarioProps> = ({ onDiaSeleccionadoChange }) => {
             </p>
           </div>
           <GrFormNext
-            className="h-10 w-10 cursor-pointer rounded-full bg-white"
+            className="h-10 w-10 cursor-pointer rounded-full bg-white "
             onClick={() => {
               setToday(today.month(today.month() + 1));
             }}
+            data-cy="next-form-button"
           />
         </div>
       </div>
@@ -82,6 +83,7 @@ const Calendar: React.FC<CalendarioProps> = ({ onDiaSeleccionadoChange }) => {
                       handleDateClick(date);
                     }
                   }}
+                  data-cy="day-button"
                 >
                   {date.date()}
                 </h1>

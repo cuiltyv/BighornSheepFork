@@ -25,6 +25,7 @@ export default function Device({ nombre, cantidad, setCantidad }) {
       <button
         onClick={incrementarCantidad}
         className="flex h-8 w-8 items-center justify-center rounded-full border-2 bg-blue font-bold text-white"
+        data-cy="add-device"
       >
         +
       </button>

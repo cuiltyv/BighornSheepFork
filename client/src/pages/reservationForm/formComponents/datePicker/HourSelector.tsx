@@ -41,9 +41,10 @@ const HourSelector: React.FC<HourSelectorProps> = ({
           className="hour-selector"
           onChange={onChangeSelecction}
           value={horaSeleccionada}
+          data-cy="hour-selector"
         >
           {horas.map((hora, index) => (
-            <option key={index} value={hora}>
+            <option key={index} value={hora} data-cy="hour-option">
               {hora}
             </option>
           ))}
