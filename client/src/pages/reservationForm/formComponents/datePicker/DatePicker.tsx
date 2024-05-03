@@ -38,7 +38,7 @@ function DatePicker(props: DatePickerProps) {
   return (
     <div>
       <h2 className="mx-5 mt-10 text-2xl font-bold">Fecha</h2>
-      <div className="flex gap-20">
+      <div className="flex flex-wrap gap-20">
         <Calendar onDiaSeleccionadoChange={handleDiaSeleccionadoChange} />
         <div>
           <HourSelector

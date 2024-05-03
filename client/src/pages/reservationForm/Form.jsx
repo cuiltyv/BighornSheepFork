@@ -125,7 +125,7 @@ function Form({id}) {
   };
 
   return (
-    <div className="flex justify-center w-[80vw] max-w-fit">
+    <div className="flex justify-center w-[70vw] max-w-fit">
       <div className="form-container my-5 w-fit overflow-auto rounded-xl">
         <img src={`${sala.Link}.png`} className="h-72 w-full object-cover " data-cy="imagen-sala"/>
         <div className="px-28 py-14 ">
