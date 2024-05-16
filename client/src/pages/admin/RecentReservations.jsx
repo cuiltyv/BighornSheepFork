@@ -11,28 +11,18 @@ import Loading from "../../components/Loading";
 import MultiSelectFilter from "../../components/MultiSelectFilter";
 import DropdownFilter from "../../components/DropdownFilter";
 import { idToSalasMap } from "../../components/interfaces/constants";
-interface Reservation {
-  ReservacionID: number;
-  Matricula: string;
-  HoraInicio: string;
-  HoraFin: string;
-  Proposito: string;
-  Estado: string;
-  ZonaID: number;
-  isDeleted: boolean;
-}
 
 // PENDIENTE: DECIDIR QUE HACER CON LAS RESERVACIONES QUE SALEN EN PENDIENTE
 
 const RESERVACIONES_URL = "/reservaciones";
-const DELETE_RESERVACION_URL = (reservacionID: number) =>
+const DELETE_RESERVACION_URL = (reservacionID) =>
   `/reservaciones/set-deleted/${reservacionID}`;
-const UPDATE_RESERVACION_URL = (reservacionID: number) =>
+const UPDATE_RESERVACION_URL = (reservacionID) =>
   `/reservaciones/${reservacionID}`;
 const SALAS_URL = "/salas";
 
 const RecentReservations = () => {
-  const [reservations, setReservations] = useState<Reservation[]>([]);
+  const [reservations, setReservations] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [currentReservation, setCurrentReservation] = useState(null);
   const [isDataLoading, setIsDataLoading] = useState(true);
@@ -78,7 +68,7 @@ const RecentReservations = () => {
   }, []);
 
   // Ordenar las reservaciones por el campo especificado, en descendente o ascendente
-  const sortReservations = (field: string) => {
+  const sortReservations = (field) => {
     setSortField((prevField) => {
       const newOrder =
         prevField === field && sortOrder === "ASC" ? "DESC" : "ASC";
@@ -96,22 +86,18 @@ const RecentReservations = () => {
     });
   };
 
-  const handleView = (reservacionID: number) => {
+  const handleView = (reservacionID) => {
     setCurrentReservation(
-      reservations.find(
-        (res: Reservation) => res.ReservacionID === reservacionID,
-      ),
+      reservations.find((res) => res.ReservacionID === reservacionID),
     );
     setIsViewing(true);
     setShowDropdown(false);
     console.log("Viewing reservation with ID:", reservacionID);
   };
 
-  const handleEdit = (reservacionID: number) => {
+  const handleEdit = (reservacionID) => {
     setCurrentReservation(
-      reservations.find(
-        (res: Reservation) => res.ReservacionID === reservacionID,
-      ),
+      reservations.find((res) => res.ReservacionID === reservacionID),
     );
     setIsEditing(true);
     setShowDropdown(false);
@@ -123,7 +109,7 @@ const RecentReservations = () => {
     setCurrentReservation(null);
   };
 
-  const updateReservation = async (updatedData: Reservation) => {
+  const updateReservation = async (updatedData) => {
     try {
       console.log("Updating reservation:", updatedData);
       const response = await axios.put(
@@ -132,7 +118,7 @@ const RecentReservations = () => {
       );
 
       setReservations(
-        reservations.map((res: Reservation) =>
+        reservations.map((res) =>
           res.ReservacionID === updatedData.ReservacionID
             ? { ...res, ...updatedData }
             : res,
@@ -149,7 +135,7 @@ const RecentReservations = () => {
   // ESTO ES PORQUE LOS IDS DE RESERVACIONES SON LLAVES FORANEAS EN OTRAS TABLAS Y NO SE PUEDEN ELIMINAR
   // A MENOS QUE SE ELIMINEN TODAS LAS REFERENCIAS A ESA RESERVACION COMO UNA CASCADA
   // pero no hize esto porque la informacion de reservaciones previas puede ser importante
-  const handleDelete = async (reservacionID: number) => {
+  const handleDelete = async (reservacionID) => {
     const confirmDelete = window.confirm(
       "¿Seguro que quieres marcar esta reservacion como eliminada?",
     );
@@ -160,9 +146,7 @@ const RecentReservations = () => {
 
         console.log(response.data);
         setReservations(
-          reservations.filter(
-            (res: Reservation) => res.ReservacionID !== reservacionID,
-          ),
+          reservations.filter((res) => res.ReservacionID !== reservacionID),
         );
         alert("Reservacion marcada como eliminada");
       } catch (error) {
@@ -197,13 +181,13 @@ const RecentReservations = () => {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <MultiSelectFilter
             options={salaOptions}
-            selectedOptions={selectedRooms as Set<string>}
+            selectedOptions={selectedRooms}
             setSelectedOptions={setSelectedRooms}
             title="Filtrar por sala"
           />
           <MultiSelectFilter
             options={estadoOptions}
-            selectedOptions={selectedEstados as Set<string>}
+            selectedOptions={selectedEstados}
             setSelectedOptions={setSelectedEstados}
             title="Filtrar por estado"
           />
@@ -271,7 +255,7 @@ const RecentReservations = () => {
                       ? selectedEstados.has(res.Estado)
                       : true),
                 )
-                .map((res: Reservation, index: number) => (
+                .map((res, index) => (
                   <tr
                     key={res.ReservacionID}
                     className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
