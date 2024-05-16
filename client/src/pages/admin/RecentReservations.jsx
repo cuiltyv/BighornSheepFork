@@ -244,7 +244,7 @@ const RecentReservations = () => {
                 .filter(
                   (res) =>
                     (searchMatricula
-                      ? res.Matricula.toLowerCase().includes(
+                      ? res.Matricula?.toLowerCase().includes(
                           searchMatricula.toLowerCase(),
                         )
                       : true) &&
