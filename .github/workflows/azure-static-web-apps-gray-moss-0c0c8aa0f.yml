@@ -26,14 +26,12 @@ jobs:
           node-version: '14'
 
       - name: Install dependencies
-        run: |
-          cd client
-          npm install
+        run: npm install
+        working-directory: client
 
       - name: Build the app
-        run: |
-          cd client
-          npm run build
+        run: npm run build
+        working-directory: client
 
       - name: Build And Deploy
         id: builddeploy
@@ -42,8 +40,8 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GRAY_MOSS_0C0C8AA0F }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "/client" # App source code path
-          api_location: "api" # Api source code path - optional
+          app_location: "client" # App source code path
+          api_location: "" # Api source code path - optional
           output_location: "client/dist" # Built app content directory
 
   close_pull_request_job:
