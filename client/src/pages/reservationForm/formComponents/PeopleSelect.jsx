@@ -12,6 +12,7 @@ export default function PeopleSelect({ people, setPeople }) {
   };
 
   const handleNameChange = (value, index) => {
+    if (index === 0) return;
     const updatedPeople = [...people];
     updatedPeople[index].name = value;
     setPeople(updatedPeople);
@@ -26,6 +27,7 @@ export default function PeopleSelect({ people, setPeople }) {
   };
 
   const handleRegistrationChange = (value, index) => {
+    if (index === 0) return;
     const updatedPeople = [...people];
     updatedPeople[index].registration = value;
     setPeople(updatedPeople);
