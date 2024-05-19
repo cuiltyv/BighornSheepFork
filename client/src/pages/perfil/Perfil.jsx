@@ -17,7 +17,6 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { User } from "@interfaces";
 import { getUser, updateUser } from "@api_helper";
 import useAuth from "@UserAuth";
 import axios from "../../api/axios";
@@ -29,7 +28,7 @@ export default function TabsDemo() {
   const { auth } = useAuth();
   const userID = auth?.userID;
 
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState(null);
 
   const [pwd, setPwd] = useState("");
   const [validPwd, setValidPwd] = useState(false);
@@ -48,9 +47,7 @@ export default function TabsDemo() {
     fetchUser();
   }, [userID]);
 
-  const handleInputChange = (event: {
-    target: { id: string; value: unknown };
-  }) => {
+  const handleInputChange = (event) => {
     const field = event.target.id;
     const value = event.target.value;
     setUser((previousUser) => {
