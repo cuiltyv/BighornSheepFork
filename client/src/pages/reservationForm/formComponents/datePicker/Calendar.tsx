@@ -17,7 +17,7 @@ const Calendar: React.FC<CalendarioProps> = ({ onDiaSeleccionadoChange }) => {
   const currentDate = dayjs();
   const [today, setToday] = useState(currentDate);
   const [selectedDate, setSelectedDate] = useState(currentDate);
-
+  const todayMonth = currentDate.month();
   const handleDateClick = (date: Dayjs) => {
     setSelectedDate(date);
     onDiaSeleccionadoChange(date);
@@ -30,7 +30,8 @@ const Calendar: React.FC<CalendarioProps> = ({ onDiaSeleccionadoChange }) => {
           <GrFormPrevious
             className="h-10 w-10 cursor-pointer  rounded-full bg-white"
             onClick={() => {
-              setToday(today.month(today.month() - 1));
+              if (today.month() > todayMonth)
+                setToday(today.month(today.month() - 1));
             }}
           />
           <div className="flex">
@@ -44,7 +45,8 @@ const Calendar: React.FC<CalendarioProps> = ({ onDiaSeleccionadoChange }) => {
           <GrFormNext
             className="h-10 w-10 cursor-pointer rounded-full bg-white "
             onClick={() => {
-              setToday(today.month(today.month() + 1));
+              if (today.month() < todayMonth + 2)
+                setToday(today.month(today.month() + 1));
             }}
             data-cy="next-form-button"
           />
@@ -80,7 +82,9 @@ const Calendar: React.FC<CalendarioProps> = ({ onDiaSeleccionadoChange }) => {
                   )}
                   onClick={() => {
                     {
-                      handleDateClick(date);
+                      if (date > currentDate) {
+                        handleDateClick(date);
+                      }
                     }
                   }}
                   data-cy="day-button"
