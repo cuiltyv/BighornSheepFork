@@ -91,6 +91,9 @@ const NavbarLogout = () => {
             <li className="my-2 p-2">
               <Link to="/BighornSheep/reservaciones">Reservaciones</Link>
             </li>
+            <li className="my-2 p-2">
+            <Link to="/BighornSheep/admin">Administrador</Link>
+          </li>
             <li className="my-2 bg-blue p-2 text-white" onClick={signOut}>
               Logout
             </li>
