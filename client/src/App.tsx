@@ -14,7 +14,7 @@ import { Routes, Route } from "react-router-dom";
 import WithLayout from "./components/WithLayout";
 import WithLayoutLogout from "./components/WithLayoutLogout";
 import Reservaciones from "./pages/reservaciones/Reservaciones";
-
+import EventManager from "./pages/admin/EventManager";
 const ROLES = {
   User: 1,
   Admin: 2,
@@ -55,6 +55,8 @@ function App() {
               element={<Unauthorized />}
             />
           </Route>
+
+          <Route path="/BighornSheep/eventmanager" element={<EventManager />} />
 
           {/* Ruta si no hay match */}
           <Route path="*" element={<Missing />} />
