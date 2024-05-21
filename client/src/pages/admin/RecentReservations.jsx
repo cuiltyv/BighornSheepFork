@@ -10,6 +10,7 @@ import ViewReservationInfoModal from "@/components/ViewReservationInfoModal";
 import Loading from "../../components/Loading";
 import MultiSelectFilter from "../../components/MultiSelectFilter";
 import DropdownFilter from "../../components/DropdownFilter";
+import Sidebar from "./Sidebar";
 import { idToSalasMap } from "../../components/interfaces/constants";
 
 // PENDIENTE: DECIDIR QUE HACER CON LAS RESERVACIONES QUE SALEN EN PENDIENTE
@@ -158,6 +159,7 @@ const RecentReservations = () => {
 
   return (
     <div className="mx-2 mt-4 rounded-lg bg-white p-4 shadow-xl">
+      <Sidebar />
       <h2 className="mb-6 text-2xl font-bold text-gray-700">
         Todas las reservaciones
       </h2>
