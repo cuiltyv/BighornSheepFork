@@ -55,7 +55,7 @@ const ReservationShow = ({user, estado}) => {
         {isDataLoading ? (
           <div>Loading...</div>
         ) : (
-          <div className="scroll-container h-fit">
+          <div className="scroll-container h-fit relative">
             {solicitados.map((reservation, index) => (
               <ReservationCard
                 key={index}
