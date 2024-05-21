@@ -53,7 +53,7 @@ const horaF = new Date(HoraFin).toLocaleTimeString('en-US', { hour: 'numeric', m
   
   return (
     <div className="bg-white overflow-hidden rounded-lg shadow-lg m-6 snap-center max-w-fit scroll-item inline-block">
-      {reservacion.Estado !== "Completado" ? (
+      {Estado !== "Completado" ? (
       <AlertDialog>
       <AlertDialogTrigger asChild>
         <button className="absolute ml-[19rem] mt-4 w-8 h-8 rounded-md bg-red-600 text-white">X</button>
