@@ -68,7 +68,6 @@ function Form({id}) {
   // Send email
   const sendEmail = (nuevaReserva) => {
     console.log(nuevaReserva);
-
     emailjs
       .send(
         "service_c15c1tk",
