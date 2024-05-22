@@ -12,6 +12,7 @@ export default function PeopleSelect({ people, setPeople }) {
   };
 
   const handleNameChange = (value, index) => {
+    if (index === 0) return;
     const updatedPeople = [...people];
     updatedPeople[index].name = value;
     setPeople(updatedPeople);
@@ -26,6 +27,7 @@ export default function PeopleSelect({ people, setPeople }) {
   };
 
   const handleRegistrationChange = (value, index) => {
+    if (index === 0) return;
     const updatedPeople = [...people];
     updatedPeople[index].registration = value;
     setPeople(updatedPeople);
@@ -43,6 +45,8 @@ export default function PeopleSelect({ people, setPeople }) {
             onChange={(e) => handleRegistrationChange(e.target.value, index)}
             className="mr-2 w-40 rounded border border-gray-300 p-2 drop-shadow-lg"
             data-cy="matricula-input"
+            readOnly={index === 0} 
+          
           />
           <input
             type="text"
@@ -51,6 +55,7 @@ export default function PeopleSelect({ people, setPeople }) {
             onChange={(e) => handleNameChange(e.target.value, index)}
             className="mr-2 w-80 rounded border border-gray-300 p-2 drop-shadow-lg"
             data-cy="nombre-input"
+            readOnly={index === 0} 
           />
 
           {index === people.length - 1 && (
