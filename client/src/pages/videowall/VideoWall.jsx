@@ -131,11 +131,11 @@ const VideoWall = () => {
     <div className="w-3840px relative flex h-screen bg-darkWhite">
       <div className="border-blue-500 flex h-full w-1/4 flex-col border">
         <div className="h-1/2 flex-col">
-          <div className="flex items-center justify-between border-b border-black px-4 py-2">
+          <div className="flex items-center justify-between  px-4 py-2">
             <span>DREAM LAB</span>
             <span>{currentTime}</span>
           </div>
-          <div className="flex items-center justify-center border-b border-black">
+          <div className="flex items-center justify-center  py-14">
             <Carousel opts={{ align: "start" }} className="w-4/5">
               <CarouselContent>
                 {images.map((image, index) => (
@@ -168,14 +168,8 @@ const VideoWall = () => {
               <thead className="bg-gray-50">
                 <tr>
                   <th
-                    onClick={() => sortReservations("ReservacionID")}
-                    className="cursor-pointer px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider text-gray-600 hover:bg-gray-100 hover:shadow"
-                  >
-                    ID
-                  </th>
-                  <th
                     onClick={() => sortReservations("Matricula")}
-                    className="cursor-pointer px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider text-gray-600 hover:bg-gray-100 hover:shadow"
+                    className="cursor-pointer py-3 pl-6 text-left text-sm font-semibold uppercase tracking-wider text-gray-600 hover:bg-gray-100 hover:shadow"
                   >
                     Matricula
                   </th>
@@ -191,10 +185,16 @@ const VideoWall = () => {
                   >
                     Hora Fin
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider text-gray-600">
+                  <th
+                    className="cursor-pointer px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider text-gray-600 hover:bg-gray-100 hover:shadow"
+                    onClick={() => sortReservations("Proposito")}
+                  >
                     Proposito
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider text-gray-600">
+                  <th
+                    className="cursor-pointer px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider text-gray-600 hover:bg-gray-100 hover:shadow"
+                    onClick={() => sortReservations("Estado")}
+                  >
                     Estado
                   </th>
                 </tr>
@@ -213,9 +213,6 @@ const VideoWall = () => {
                     key={res.ReservacionID}
                     className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
                   >
-                    <td className="font-large whitespace-nowrap px-6 py-4 text-sm text-gray-900">
-                      {res.ReservacionID}
-                    </td>
                     <td className="font-large whitespace-nowrap px-6 py-4 text-sm">
                       {res.Matricula}
                     </td>
