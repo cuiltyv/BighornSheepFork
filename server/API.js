@@ -71,7 +71,7 @@ sql
     } else if (pool.connected) {
       console.log("Connected to database.");
     }
-    scheduleTask();s
+    scheduleTask();
     return pool;
   })
   .catch((err) => {
