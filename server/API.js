@@ -30,8 +30,6 @@ mongoose
   });
 
 app.use(express.json());
-
-// Middleware para cookies
 app.use(cookieParser());
 
 // Logger de solicitudes
@@ -62,7 +60,7 @@ app.use("/", miscRoutes);
 app.use("/hardware", hardwareRoutes);
 app.use("/refresh", require("./routes/refreshRoutes"));
 app.use("/logout", require("./routes/logoutRoutes"));
-app.use("/api/videos", videoRouter); // Actualizado para incluir /api
+app.use("/api/videos", videoRouter);
 
 // Conexión a la base de datos SQL Server
 sql
@@ -73,6 +71,7 @@ sql
     } else if (pool.connected) {
       console.log("Connected to database.");
     }
+    scheduleTask();s
     return pool;
   })
   .catch((err) => {
