@@ -13,7 +13,9 @@ const hardwareRoutes = require("./routes/hardwareRoutes");
 
 const verifyJWT = require("./middleware/verifyJWT");
 const cookieParser = require("cookie-parser");
+
 const { setup } = require("swagger-ui-express");
+const { scheduleTask } = require("./controllers/schedulerController");
 
 const app = express();
 
@@ -88,6 +90,9 @@ sql
       console.log("Connected to database.");
       connected = true;
     }
+
+    //Comenzar con las tareas que se ejecutan cada 24 horas
+    scheduleTask();
 
     return pool;
   })
