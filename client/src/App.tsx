@@ -28,7 +28,7 @@ function App() {
         <Route path="/" element={<WithLayout />}>
           <Route path="/BighornSheep/landing" element={<Landing />} />
           <Route path="/BighornSheep/login" element={<Login />} />
-
+          <Route path="/" element={<Landing />} />
           <Route path="*" element={<Login />} />
         </Route>
         <Route path="/" element={<WithLayoutLogout />}>

@@ -11,7 +11,9 @@ const setupSwagger = require("./configs/swagger");
 const hardwareRoutes = require("./routes/hardwareRoutes");
 const videoRouter = require('./controllers/videosController');
 const cookieParser = require("cookie-parser");
+
 const { setup } = require("swagger-ui-express");
+const { scheduleTask } = require("./controllers/schedulerController");
 
 const app = express();
 
@@ -71,7 +73,11 @@ sql
     } else if (pool.connected) {
       console.log("Connected to database.");
     }
-    scheduleTask();s
+
+
+    //Comenzar con las tareas que se ejecutan cada 24 horas
+    scheduleTask();
+
     return pool;
   })
   .catch((err) => {
