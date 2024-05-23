@@ -76,8 +76,8 @@ sql
 
 
     //Comenzar con las tareas que se ejecutan cada 24 horas
-    scheduleTask();
 
+    scheduleTask();
     return pool;
   })
   .catch((err) => {
