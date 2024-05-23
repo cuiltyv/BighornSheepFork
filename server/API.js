@@ -1,54 +1,40 @@
 const express = require("express");
 const cors = require("cors");
 const sql = require("mssql");
+const mongoose = require("mongoose");
 const config = require("./configs/config");
 const usersRoutes = require("./routes/usersRoutes");
 const reservationsRoutes = require("./routes/reservationsRoutes");
-const roomsRoutes = require("./routes/salasRoutes"); // Make sure this matches the exported name from the file
+const roomsRoutes = require("./routes/salasRoutes");
 const miscRoutes = require("./routes/miscRoutes");
-
 const setupSwagger = require("./configs/swagger");
-
 const hardwareRoutes = require("./routes/hardwareRoutes");
-
-const verifyJWT = require("./middleware/verifyJWT");
+const videoRouter = require('./controllers/videosController');
 const cookieParser = require("cookie-parser");
 const { setup } = require("swagger-ui-express");
 
 const app = express();
 
-// app.use(cors());
-//redeploy api
+// Conexión a MongoDB
+const mongoUrl = process.env.MONGODB_URI;
+mongoose.set("strictQuery", false);
+console.log("connecting to", mongoUrl);
+
+mongoose
+  .connect(mongoUrl)
+  .then(() => {
+    console.log("connected to MongoDB");
+  })
+  .catch((error) => {
+    console.log("error connecting to MongoDB:", error.message);
+  });
+
 app.use(express.json());
 
-// !Comentar antes de subir a GitHub
-// ?Descomentar para poder probar con localhost en react
-/*
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  })
-);
-*/
-//middleware for cookies
+// Middleware para cookies
 app.use(cookieParser());
 
-/*
-app.use((req, res, next) => {
-  // Set the 'Access-Control-Allow-Origin' header to the value of the 'Origin' header in the incoming request
-  res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
-  // Allow other required headers
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  // Allow the necessary HTTP methods
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  // Indicate that credentials (e.g., cookies) should be included in the request
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  // Proceed to the next middleware
-  next();
-});
-*/
-
+// Logger de solicitudes
 const requestLogger = (request, response, next) => {
   console.log("Method:", request.method);
   console.log("Path:  ", request.path);
@@ -59,18 +45,16 @@ const requestLogger = (request, response, next) => {
 
 app.use(requestLogger);
 
+// Manejo de errores
 app.use((error, req, res, next) => {
   console.error(error.stack);
   res.status(500).send("Something broke!");
 });
-/*
-app.use((req, res, next) => {
-  res.status(404).send('404: Page not found');
-});
-*/
 
+// Configurar Swagger
 setupSwagger(app);
 
+// Rutas
 app.use("/usuarios", usersRoutes);
 app.use("/reservaciones", reservationsRoutes);
 app.use("/salas", roomsRoutes);
@@ -78,7 +62,9 @@ app.use("/", miscRoutes);
 app.use("/hardware", hardwareRoutes);
 app.use("/refresh", require("./routes/refreshRoutes"));
 app.use("/logout", require("./routes/logoutRoutes"));
+app.use("/api/videos", videoRouter); // Actualizado para incluir /api
 
+// Conexión a la base de datos SQL Server
 sql
   .connect(config)
   .then((pool) => {
@@ -86,14 +72,11 @@ sql
       console.log("Conecting to database");
     } else if (pool.connected) {
       console.log("Connected to database.");
-      connected = true;
     }
-
     return pool;
   })
   .catch((err) => {
     console.error("Database connection failed:", err);
-    connected = false;
   });
 
 const PORT = process.env.PORT || 3000;
