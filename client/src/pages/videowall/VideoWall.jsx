@@ -10,6 +10,7 @@ import {
 import image1 from "../../assets/fotonoticiareto.png";
 import qrCodeImage from "../../assets/qrDreamlab.png"; // Import your QR code image here
 import axios from "../../api/axios";
+import Autoplay from "embla-carousel-autoplay";
 
 const RESERVACIONES_URL = "/reservaciones";
 
@@ -24,6 +25,9 @@ const VideoWall = () => {
   );
   const scrollRef = useRef(null);
   const [showQRCode, setShowQRCode] = useState(false); // Add state for QR code visibility
+  const plugin = React.useRef(
+    Autoplay({ delay: 7500, stopOnInteraction: true }),
+  );
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -64,6 +68,16 @@ const VideoWall = () => {
 
       return field;
     });
+  };
+
+  const handleMouseEnter = () => {
+    console.log("Mouse entered, stopping autoplay");
+    plugin.current.stop();
+  };
+
+  const handleMouseLeave = () => {
+    console.log("Mouse left, resetting autoplay");
+    plugin.current.play();
   };
 
   useEffect(() => {
@@ -132,11 +146,19 @@ const VideoWall = () => {
       <div className="border-blue-500 flex h-full w-1/4 flex-col border">
         <div className="h-1/2 flex-col">
           <div className="flex items-center justify-between  px-4 py-2">
-            <span>DREAM LAB</span>
-            <span>{currentTime}</span>
+            <span className="text-2xl font-bold text-violet">DREAM LAB</span>
+            <span className="text-2xl font-bold text-violet">
+              {currentTime}
+            </span>
           </div>
           <div className="flex items-center justify-center  py-14">
-            <Carousel opts={{ align: "start" }} className="w-4/5">
+            <Carousel
+              plugins={[plugin.current]}
+              opts={{ align: "start" }}
+              className="w-4/5"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
               <CarouselContent>
                 {images.map((image, index) => (
                   <CarouselItem
@@ -163,13 +185,13 @@ const VideoWall = () => {
           </div>
         </div>
         <div className="flex h-1/2 flex-col ">
-          <div className="">
+          <div className=" px-6 py-3">
             <table className="min-w-full divide-y divide-gray-200 ">
-              <thead className="bg-gray-50">
+              <thead className="bg-gray-50 ">
                 <tr>
                   <th
                     onClick={() => sortReservations("Matricula")}
-                    className="cursor-pointer py-3 pl-6 text-left text-sm font-semibold uppercase tracking-wider text-gray-600 hover:bg-gray-100 hover:shadow"
+                    className="cursor-pointer rounded-l py-3 pl-6 text-left text-sm font-semibold uppercase tracking-wider text-gray-600 hover:bg-gray-100 hover:shadow"
                   >
                     Matricula
                   </th>
@@ -192,7 +214,7 @@ const VideoWall = () => {
                     Proposito
                   </th>
                   <th
-                    className="cursor-pointer px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider text-gray-600 hover:bg-gray-100 hover:shadow"
+                    className="cursor-pointer rounded-r px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider text-gray-600 hover:bg-gray-100 hover:shadow"
                     onClick={() => sortReservations("Estado")}
                   >
                     Estado
@@ -202,7 +224,7 @@ const VideoWall = () => {
             </table>
           </div>
           <div
-            className="flex-grow overflow-y-scroll "
+            className="mb-4 flex-grow overflow-y-scroll px-6 py-6"
             ref={scrollRef}
             style={{ scrollBehavior: "smooth" }}
           >
