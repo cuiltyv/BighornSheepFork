@@ -9,9 +9,9 @@ const roomsRoutes = require("./routes/salasRoutes");
 const miscRoutes = require("./routes/miscRoutes");
 const setupSwagger = require("./configs/swagger");
 const hardwareRoutes = require("./routes/hardwareRoutes");
-const videoRouter = require('./controllers/videosController');
+const videoRouter = require("./controllers/videosController");
 const cookieParser = require("cookie-parser");
-
+const bodyParser = require("body-parser");
 const { setup } = require("swagger-ui-express");
 const { scheduleTask } = require("./controllers/schedulerController");
 
@@ -32,7 +32,35 @@ mongoose
   });
 
 app.use(express.json());
+app.use(bodyParser.json());
+
+// !Comentar antes de subir a GitHub
+// ?Descomentar para poder probar con localhost en react
+/*
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+*/
+//middleware for cookies
 app.use(cookieParser());
+
+/*
+app.use((req, res, next) => {
+  // Set the 'Access-Control-Allow-Origin' header to the value of the 'Origin' header in the incoming request
+  res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
+  // Allow other required headers
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  // Allow the necessary HTTP methods
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  // Indicate that credentials (e.g., cookies) should be included in the request
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  // Proceed to the next middleware
+  next();
+});
+*/
 
 // Logger de solicitudes
 const requestLogger = (request, response, next) => {
@@ -73,7 +101,6 @@ sql
     } else if (pool.connected) {
       console.log("Connected to database.");
     }
-
 
     //Comenzar con las tareas que se ejecutan cada 24 horas
 

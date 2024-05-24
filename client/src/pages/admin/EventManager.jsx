@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -14,7 +14,60 @@ import {
 } from "@mui/material";
 import { Add, Delete, DragHandle } from "@mui/icons-material";
 import YouTube from "react-youtube";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  useSortable,
+  arrayMove,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import axios from "../../api/axios";
+
+const SortableItem = ({ id, video, handleDelete }) => {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  return (
+    <ListItem
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      secondaryAction={
+        <IconButton
+          edge="end"
+          aria-label="delete"
+          onClick={() => handleDelete(id)}
+        >
+          <Delete />
+        </IconButton>
+      }
+    >
+      <ListItemIcon>
+        <DragHandle />
+      </ListItemIcon>
+      <ListItemIcon>
+        <YouTube
+          videoId={video.content.link.split("v=")[1]}
+          opts={{ width: "100px", height: "60px" }}
+        />
+      </ListItemIcon>
+      <ListItemText primary={video.content.link} />
+    </ListItem>
+  );
+};
 
 const EventManager = () => {
   const [events, setEvents] = useState([]);
@@ -27,6 +80,26 @@ const EventManager = () => {
   });
   const [newVideo, setNewVideo] = useState("");
 
+  useEffect(() => {
+    // Sacar kis vudeis
+    axios
+      .get("/api/videos")
+      .then((response) => {
+        if (Array.isArray(response.data)) {
+          const videosWithId = response.data.map((video) => ({
+            ...video,
+            _id: video.id,
+          }));
+          setVideos(videosWithId);
+        } else {
+          console.error("No es un arreglo", response.data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching videos:", error);
+      });
+  }, []);
+
   const handleAddEvent = () => {
     setEvents([...events, { ...newEvent }]);
     setNewEvent({ name: "", date: "", place: "", image: "" });
@@ -34,8 +107,21 @@ const EventManager = () => {
 
   const handleAddVideo = () => {
     const videoId = new URL(newVideo).searchParams.get("v");
-    setVideos([...videos, { link: newVideo, id: videoId }]);
-    setNewVideo("");
+    const videoData = { link: newVideo };
+
+    axios
+      .post("/api/videos", { content: videoData })
+      .then((response) => {
+        const newVideoData = {
+          ...response.data,
+          _id: response.data.id,
+        };
+        setVideos([...videos, newVideoData]);
+        setNewVideo("");
+      })
+      .catch((error) => {
+        console.error("Error adding video:", error);
+      });
   };
 
   const handleDeleteEvent = (index) => {
@@ -43,17 +129,59 @@ const EventManager = () => {
     setEvents(updatedEvents);
   };
 
-  const handleDeleteVideo = (index) => {
-    const updatedVideos = videos.filter((_, i) => i !== index);
-    setVideos(updatedVideos);
+  const handleDeleteVideo = (id) => {
+    const videoToDelete = videos.find((video) => video._id === id);
+    //console.log("Video to delete:", videoToDelete);
+
+    if (videoToDelete && videoToDelete._id) {
+      axios
+        .delete(`/api/videos/${videoToDelete._id}`)
+        .then(() => {
+          const updatedVideos = videos.filter((video) => video._id !== id);
+          setVideos(updatedVideos);
+        })
+        .catch((error) => {
+          console.error("Error eliminando video:", error);
+        });
+    } else {
+      console.error("Invalid video data", videoToDelete);
+    }
   };
 
-  const onDragEnd = (result) => {
-    if (!result.destination) return;
-    const reorderedVideos = Array.from(videos);
-    const [movedVideo] = reorderedVideos.splice(result.source.index, 1);
-    reorderedVideos.splice(result.destination.index, 0, movedVideo);
-    setVideos(reorderedVideos);
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 10,
+      },
+    }),
+  );
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (active.id !== over.id) {
+      setVideos((videos) => {
+        const oldIndex = videos.findIndex((video) => video._id === active.id);
+        const newIndex = videos.findIndex((video) => video._id === over.id);
+
+        const reorderedVideos = arrayMove(videos, oldIndex, newIndex);
+
+        reorderedVideos.forEach((video, index) => {
+          video.order = index;
+        });
+
+        axios
+          .put("/api/videos/order", { reorderedVideos })
+          .then((response) => {
+            console.log("Order updated:", response.data);
+          })
+          .catch((error) => {
+            console.error("Error updating video order:", error);
+          });
+
+        return reorderedVideos;
+      });
+    }
   };
 
   return (
@@ -62,7 +190,7 @@ const EventManager = () => {
         Event Manager
       </Typography>
 
-      {/* Agregar eventos */}
+      {/* Agregar evento */}
       <Box mb={4}>
         <Typography variant="h6" gutterBottom>
           Add Event
@@ -118,7 +246,7 @@ const EventManager = () => {
         </Button>
       </Box>
 
-      {/* Lista de eventos */}
+      {/* Eventos */}
       <Box mb={4}>
         <Typography variant="h6" gutterBottom>
           Events
@@ -149,7 +277,7 @@ const EventManager = () => {
         </List>
       </Box>
 
-      {/* Agregar videos */}
+      {/* Agregar video */}
       <Box mb={4}>
         <Typography variant="h6" gutterBottom>
           Add Video
@@ -178,50 +306,27 @@ const EventManager = () => {
         <Typography variant="h6" gutterBottom>
           Videos
         </Typography>
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="videos">
-            {(provided) => (
-              <List {...provided.droppableProps} ref={provided.innerRef}>
-                {videos.map((video, index) => (
-                  <Draggable
-                    key={video.id}
-                    draggableId={video.id}
-                    index={index}
-                  >
-                    {(provided) => (
-                      <ListItem
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        secondaryAction={
-                          <IconButton
-                            edge="end"
-                            aria-label="delete"
-                            onClick={() => handleDeleteVideo(index)}
-                          >
-                            <Delete />
-                          </IconButton>
-                        }
-                      >
-                        <ListItemIcon>
-                          <DragHandle />
-                        </ListItemIcon>
-                        <ListItemIcon>
-                          <YouTube
-                            videoId={video.id}
-                            opts={{ width: "100px", height: "60px" }}
-                          />
-                        </ListItemIcon>
-                        <ListItemText primary={video.link} />
-                      </ListItem>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </List>
-            )}
-          </Droppable>
-        </DragDropContext>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext
+            items={videos.map((video) => video._id)}
+            strategy={verticalListSortingStrategy}
+          >
+            <List>
+              {videos.map((video) => (
+                <SortableItem
+                  key={video._id}
+                  id={video._id}
+                  video={video}
+                  handleDelete={handleDeleteVideo}
+                />
+              ))}
+            </List>
+          </SortableContext>
+        </DndContext>
       </Box>
     </Box>
   );

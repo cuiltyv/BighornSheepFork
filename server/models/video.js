@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-mongoose.set("strictQuery", false);  // Configuración opcional para consultas estrictas
+mongoose.set("strictQuery", false); // Configuración opcional para consultas estrictas
 const url = process.env.MONGODB_URI; // URL de conexión obtenida de las variables de entorno
 console.log("connecting to", url);
 
@@ -14,8 +14,12 @@ mongoose
 
 const videoSchema = new mongoose.Schema({
   content: {
-    link: String // Define un campo 'link' dentro de 'content' de tipo String
-  }
+    link: String, // Define un campo 'link' dentro de 'content' de tipo String
+  },
+  order: {
+    type: Number,
+    required: true,
+  },
 });
 
 videoSchema.set("toJSON", {
