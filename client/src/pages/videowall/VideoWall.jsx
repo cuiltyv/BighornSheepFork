@@ -28,6 +28,26 @@ const VideoWall = () => {
   const plugin = React.useRef(
     Autoplay({ delay: 7500, stopOnInteraction: true }),
   );
+  const [videoSrc, setVideoSrc] = useState("");
+
+  useEffect(() => {
+    const fetchVideo = async () => {
+      try {
+        const response = await axios.get("/api/videos/most-recent");
+        const vid = response.data.content.link;
+        const videoId = vid.split("v=")[1]; // Extract the video ID from the URL
+        setVideoSrc(
+          `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}`,
+        );
+      } catch (error) {
+        console.error("Error fetching video:", error);
+        setVideoSrc(
+          "https://www.youtube.com/embed/xXiSN8Tftjg?autoplay=1&mute=1&loop=1&playlist=xXiSN8Tftjg",
+        );
+      }
+    };
+    fetchVideo();
+  }, []);
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -260,18 +280,11 @@ const VideoWall = () => {
       <div className="relative h-full w-3/4">
         <div className="absolute left-0 top-0 h-full w-full">
           <iframe
-            src="https://www.youtube.com/embed/0FfhgYz5dUA?autoplay=1&mute=1&loop=1&playlist=0FfhgYz5dUA"
+            src={videoSrc}
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             className="h-full w-full"
           ></iframe>
         </div>
-        <div
-          className="absolute left-0 top-0 h-full"
-          style={{
-            width: "10%",
-            background: "linear-gradient(to left, transparent, #F0F0F0)",
-          }}
-        ></div>
       </div>
       <button onClick={handleButtonClick} className="qr-button">
         Reserva
