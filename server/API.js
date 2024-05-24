@@ -11,7 +11,7 @@ const setupSwagger = require("./configs/swagger");
 const hardwareRoutes = require("./routes/hardwareRoutes");
 const videoRouter = require("./controllers/videosController");
 const cookieParser = require("cookie-parser");
-const bodyParser = require("body-parser");
+
 const { setup } = require("swagger-ui-express");
 const { scheduleTask } = require("./controllers/schedulerController");
 
@@ -32,7 +32,7 @@ mongoose
   });
 
 app.use(express.json());
-app.use(bodyParser.json());
+
 
 // !Comentar antes de subir a GitHub
 // ?Descomentar para poder probar con localhost en react
