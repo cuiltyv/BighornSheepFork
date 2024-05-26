@@ -11,8 +11,9 @@ import image1 from "../../assets/fotonoticiareto.png";
 import qrCodeImage from "../../assets/qrDreamlab.png"; // Import your QR code image here
 import axios from "../../api/axios";
 import Autoplay from "embla-carousel-autoplay";
+import { parse, format } from "date-fns"; // Import date-fns
 
-const RESERVACIONES_URL = "/reservaciones";
+const RESERVACIONES_URL = "/reservaciones/upcoming";
 
 const VideoWall = () => {
   const images = [image1, image1, image1, image1, image1];
@@ -26,7 +27,7 @@ const VideoWall = () => {
   const scrollRef = useRef(null);
   const [showQRCode, setShowQRCode] = useState(false); // Add state for QR code visibility
   const plugin = React.useRef(
-    Autoplay({ delay: 7500, stopOnInteraction: true }),
+    Autoplay({ delay: 2000, stopOnInteraction: true }),
   );
   const [videoSrc, setVideoSrc] = useState("");
 
@@ -100,65 +101,20 @@ const VideoWall = () => {
     plugin.current.play();
   };
 
-  useEffect(() => {
-    const scrollContainer = scrollRef.current;
-    let scrollInterval;
-    let isScrollingDown = true;
-
-    const startAutoScroll = () => {
-      scrollInterval = setInterval(() => {
-        if (scrollContainer) {
-          if (isScrollingDown) {
-            if (
-              scrollContainer.scrollTop + scrollContainer.clientHeight >=
-              scrollContainer.scrollHeight
-            ) {
-              scrollContainer.scrollTo({ top: 0, behavior: "smooth" });
-              isScrollingDown = false;
-            } else {
-              scrollContainer.scrollBy({ top: 1, behavior: "smooth" });
-            }
-          } else {
-            if (scrollContainer.scrollTop === 0) {
-              scrollContainer.scrollTo({
-                top: scrollContainer.scrollHeight,
-                behavior: "smooth",
-              });
-              isScrollingDown = true;
-            } else {
-              scrollContainer.scrollBy({ top: -1, behavior: "smooth" });
-            }
-          }
-        }
-      }, 50);
-    };
-
-    if (scrollContainer) {
-      scrollContainer.addEventListener("mouseover", () =>
-        clearInterval(scrollInterval),
-      );
-      scrollContainer.addEventListener("mouseleave", startAutoScroll);
-
-      startAutoScroll();
-    }
-
-    return () => {
-      if (scrollContainer) {
-        scrollContainer.removeEventListener("mouseover", () =>
-          clearInterval(scrollInterval),
-        );
-        scrollContainer.removeEventListener("mouseleave", startAutoScroll);
-      }
-      clearInterval(scrollInterval);
-    };
-  }, []);
-
   const handleButtonClick = () => {
     setShowQRCode(!showQRCode);
   };
 
   const handleClosePopup = () => {
     setShowQRCode(false);
+  };
+
+  const formatTimeRange = (start, end) => {
+    const startTime = parse(start, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx", new Date());
+    const endTime = parse(end, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx", new Date());
+    const formattedStartTime = format(startTime, "h:mm");
+    const formattedEndTime = format(endTime, "h:mm");
+    return `${formattedStartTime} - ${formattedEndTime}`;
   };
 
   return (
@@ -174,7 +130,7 @@ const VideoWall = () => {
           <div className="flex items-center justify-center  py-14">
             <Carousel
               plugins={[plugin.current]}
-              opts={{ align: "start" }}
+              opts={{ align: "start", loop: true }}
               className="w-4/5"
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
@@ -204,77 +160,37 @@ const VideoWall = () => {
             </Carousel>
           </div>
         </div>
-        <div className="flex h-1/2 flex-col ">
-          <div className=" px-6 py-3">
-            <table className="min-w-full divide-y divide-gray-200 ">
-              <thead className="bg-gray-50 ">
-                <tr>
-                  <th
-                    onClick={() => sortReservations("Matricula")}
-                    className="cursor-pointer rounded-l py-3 pl-6 text-left text-sm font-semibold uppercase tracking-wider text-gray-600 hover:bg-gray-100 hover:shadow"
-                  >
-                    Matricula
-                  </th>
-                  <th
-                    onClick={() => sortReservations("HoraInicio")}
-                    className="cursor-pointer px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider text-gray-600 hover:bg-gray-100 hover:shadow"
-                  >
-                    Hora Inicio
-                  </th>
-                  <th
-                    className="cursor-pointer px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider text-gray-600 hover:bg-gray-100 hover:shadow"
-                    onClick={() => sortReservations("HoraFin")}
-                  >
-                    Hora Fin
-                  </th>
-                  <th
-                    className="cursor-pointer px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider text-gray-600 hover:bg-gray-100 hover:shadow"
-                    onClick={() => sortReservations("Proposito")}
-                  >
-                    Proposito
-                  </th>
-                  <th
-                    className="cursor-pointer rounded-r px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider text-gray-600 hover:bg-gray-100 hover:shadow"
-                    onClick={() => sortReservations("Estado")}
-                  >
-                    Estado
-                  </th>
-                </tr>
-              </thead>
-            </table>
-          </div>
-          <div
-            className="mb-4 flex-grow overflow-y-scroll px-6 py-6"
-            ref={scrollRef}
-            style={{ scrollBehavior: "smooth" }}
+        <div className="flex  h-1/2 flex-col items-center justify-center">
+          <Carousel
+            opts={{ align: "start", loop: true }}
+            orientation="vertical"
+            className="w-full max-w-xs"
           >
-            <table className="min-w-full divide-y divide-gray-200">
-              <tbody>
-                {reservations.map((res, index) => (
-                  <tr
-                    key={res.ReservacionID}
-                    className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
-                  >
-                    <td className="font-large whitespace-nowrap px-6 py-4 text-sm">
-                      {res.Matricula}
-                    </td>
-                    <td className="font-large whitespace-nowrap px-6 py-4 text-sm">
-                      {new Date(res.HoraInicio).toLocaleString()}
-                    </td>
-                    <td className="font-large whitespace-nowrap px-6 py-4 text-sm">
-                      {new Date(res.HoraFin).toLocaleString()}
-                    </td>
-                    <td className="font-large whitespace-nowrap px-6 py-4 text-sm">
-                      {res.Proposito}
-                    </td>
-                    <td className="font-large whitespace-nowrap px-6 py-4 text-sm">
-                      {res.Estado}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+            <CarouselContent className="-mt-1 h-[380px]">
+              {reservations.map((reservation, index) => (
+                <CarouselItem
+                  key={reservation.ReservacionID}
+                  className="md:basis-1/4 lg:basis-1/4"
+                >
+                  <div className="p-1">
+                    <Card>
+                      <CardContent className="flex flex-col items-start justify-center p-2">
+                        <p className="font-large text-sm">
+                          {reservation.Matricula}
+                        </p>
+                        <p className="font-large text-sm">
+                          {formatTimeRange(
+                            reservation.HoraInicio,
+                            reservation.HoraFin,
+                          )}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
         </div>
       </div>
       <div className="relative h-full w-3/4">
