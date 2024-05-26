@@ -15,6 +15,9 @@ import WithLayout from "./components/WithLayout";
 import WithLayoutLogout from "./components/WithLayoutLogout";
 import Reservaciones from "./pages/reservaciones/Reservaciones";
 import EventManager from "./pages/admin/EventManager";
+import VideoManager from "./pages/admin/VideoManager";
+import UserManagement from "./pages/admin/UserManagement";
+import AdminStats from "./pages/admin/AdminStats";
 const ROLES = {
   User: 1,
   Admin: 2,
@@ -57,7 +60,12 @@ function App() {
           </Route>
 
           <Route path="/BighornSheep/eventmanager" element={<EventManager />} />
-
+          <Route path="/BighornSheep/videomanager" element={<VideoManager />} />
+          <Route
+            path="/BighornSheep/usermanagement"
+            element={<UserManagement />}
+          />
+          <Route path="/BighornSheep/adminstats" element={<AdminStats />} />
           {/* Ruta si no hay match */}
           <Route path="*" element={<Missing />} />
         </Route>

@@ -23,8 +23,8 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
         color: colors.grey[100],
         fontSize: "18px",
         padding: "15px 20px",
-        whiteSpace: "normal", // Allow text to wrap
-        lineHeight: "1.5", // Improve line height for readability
+        whiteSpace: "normal",
+        lineHeight: "1.5",
       }}
       onClick={() => setSelected(title)}
       icon={<span style={{ fontSize: "24px" }}>{icon}</span>}
@@ -129,7 +129,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  {user?.nombre ?? "Cargando..."}
+                  {user?.nombre ?? "Admin"}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
                   Dashboard de Administrador
@@ -141,7 +141,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
               title="Dashboard"
-              to="/"
+              to="/BighornSheep/admin"
               icon={<HomeOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -152,18 +152,18 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Eventos
+              Videowall
             </Typography>
             <Item
-              title="Ver Eventos"
-              to="/view-events"
+              title="Manejar Eventos"
+              to="/BighornSheep/eventmanager"
               icon={<EventNoteOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Manejar Eventos"
-              to="/BighornSheep/eventmanager"
+              title="Manejar Videos"
+              to="/BighornSheep/videomanager"
               icon={<AddBoxOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -178,7 +178,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             </Typography>
             <Item
               title="Gestión de Usuarios"
-              to="/user-management"
+              to="/BighornSheep/usermanagement"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -193,7 +193,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             </Typography>
             <Item
               title="Estadísticas"
-              to="/statistics"
+              to="/BighornSheep/adminstats"
               icon={<BarChartOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
