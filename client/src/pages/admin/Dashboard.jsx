@@ -15,7 +15,7 @@ const Dashboard = () => {
     { icon: "👥", count: 0, label: "Eventos" },
   ]);
 
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     axios

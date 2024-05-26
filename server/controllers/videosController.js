@@ -12,6 +12,7 @@ videosRouter.get("/", async (request, response) => {
   }
 });
 
+// Ruta para obtener el video más reciente
 videosRouter.get("/most-recent", async (request, response) => {
   try {
     const mostRecentVideo = await Video.findOne({}).sort({ order: 1 });

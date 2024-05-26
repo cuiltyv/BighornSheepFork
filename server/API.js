@@ -9,7 +9,9 @@ const roomsRoutes = require("./routes/salasRoutes");
 const miscRoutes = require("./routes/miscRoutes");
 const setupSwagger = require("./configs/swagger");
 const hardwareRoutes = require("./routes/hardwareRoutes");
+const eventsRoutes = require("./routes/eventsRoutes");
 const videoRouter = require("./controllers/videosController");
+const statsRoutes = require("./routes/statsRoutes");
 const cookieParser = require("cookie-parser");
 
 const { setup } = require("swagger-ui-express");
@@ -46,7 +48,6 @@ app.use(
 */
 //middleware for cookies
 app.use(cookieParser());
-
 /*
 app.use((req, res, next) => {
   // Set the 'Access-Control-Allow-Origin' header to the value of the 'Origin' header in the incoming request
@@ -61,7 +62,6 @@ app.use((req, res, next) => {
   next();
 });
 */
-
 // Logger de solicitudes
 const requestLogger = (request, response, next) => {
   console.log("Method:", request.method);
@@ -91,6 +91,8 @@ app.use("/hardware", hardwareRoutes);
 app.use("/refresh", require("./routes/refreshRoutes"));
 app.use("/logout", require("./routes/logoutRoutes"));
 app.use("/api/videos", videoRouter);
+app.use("/api/events", eventsRoutes);
+app.use("/api/statistics", statsRoutes);
 
 // Conexión a la base de datos SQL Server
 sql
