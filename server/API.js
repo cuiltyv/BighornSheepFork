@@ -13,11 +13,12 @@ const eventsRoutes = require("./routes/eventsRoutes");
 const videoRouter = require("./controllers/videosController");
 const statsRoutes = require("./routes/statsRoutes");
 const cookieParser = require("cookie-parser");
+
 const { setup } = require("swagger-ui-express");
 const { scheduleTask } = require("./controllers/schedulerController");
 
 const app = express();
-
+//
 // Conexión a MongoDB
 const mongoUrl = process.env.MONGODB_URI;
 mongoose.set("strictQuery", false);
@@ -33,6 +34,7 @@ mongoose
   });
 
 app.use(express.json());
+
 
 // !Comentar antes de subir a GitHub
 // ?Descomentar para poder probar con localhost en react
