@@ -1,8 +1,8 @@
-import SalaCard from "../../components/SalaCard";
+import SalaCard from "./SalaCard";
 import { useState, useEffect } from "react";
 import { getSalas } from "../../api/apihelper";
 
-export default function Salas() {
+export default function Salas({ setIsOpen, setId }) {
   const [salas, setSalas] = useState([]);
 
   useEffect(() => {
@@ -21,7 +21,14 @@ export default function Salas() {
       </div>
       <div className="flex flex-wrap justify-center md:justify-between gap-4">
         {salas &&
-          salas.map((sala) => <SalaCard key={sala.SalaId} sala={sala} />)}
+          salas.map((sala) => (
+            <SalaCard
+              key={sala.SalaId}
+              sala={sala}
+              setIsOpen={setIsOpen}
+              setId={setId}
+            />
+          ))}
       </div>
     </div>
   );
