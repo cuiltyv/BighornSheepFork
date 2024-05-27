@@ -11,7 +11,7 @@ require("dotenv").config();
 const getAllUsers = async (req, res) => {
   try {
     let pool = await sql.connect(config);
-    let result = await pool.request().execute("sp_GetAllUsuarios");
+    let result = await pool.request().execute("sp_GetUsuarios");
     res.json(result.recordset);
   } catch (err) {
     console.error(err);
@@ -48,7 +48,7 @@ const getUserByMatricula = async (req, res) => {
     let result = await pool
       .request()
       .input("Matricula", sql.VarChar(10), matricula)
-      .execute("sp_GetUsuarioByMatricula");
+      .execute("sp_GetUsuarioPorMatricula");
     if (result.recordset.length > 0) {
       res.json(result.recordset[0]);
     } else {
@@ -189,31 +189,46 @@ const loginUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { matricula, nombre, apellidos, carrera, semestre } = req.body;
+  const {
+    Matricula,
+    Nombre,
+    Apellidos,
+    Carrera,
+    Semestre,
+    PuntosPersonales,
+    Role,
+  } = req.body;
 
   try {
     let pool = await sql.connect(config);
     let request = pool.request();
 
-    request = request.input("Matricula", sql.VarChar(10), matricula);
+    request = request.input("Matricula", sql.VarChar(10), Matricula);
 
-    if (nombre !== undefined) {
-      request = request.input("Nombre", sql.NVarChar(50), nombre);
+    if (Nombre !== undefined) {
+      request = request.input("Nombre", sql.NVarChar(50), Nombre);
     }
-    if (apellidos !== undefined) {
-      request = request.input("Apellidos", sql.NVarChar(50), apellidos);
+    if (Apellidos !== undefined) {
+      request = request.input("Apellidos", sql.NVarChar(50), Apellidos);
     }
-    if (carrera !== undefined) {
-      request = request.input("Carrera", sql.NVarChar(50), carrera);
+    if (Carrera !== undefined) {
+      request = request.input("Carrera", sql.NVarChar(50), Carrera);
     }
-    if (semestre !== undefined) {
-      request = request.input("Semestre", sql.Int, semestre);
+    if (Semestre !== undefined) {
+      request = request.input("Semestre", sql.Int, Semestre);
     }
+    if (PuntosPersonales !== undefined) {
+      request = request.input("PuntosPersonales", sql.Int, PuntosPersonales);
+    }
+    if (Role !== undefined) {
+      request = request.input("Role", sql.Int, Role);
+    }
+
     await request.execute("sp_UpdateUsuario");
     res.status(201).send("User updated successfully");
   } catch (err) {
     console.error(err);
-    res.status(500).send({ message: "Error con DB", error: err });
+    res.status(500).send({ message: "Error with database", error: err });
   }
 };
 

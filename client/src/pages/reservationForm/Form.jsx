@@ -8,6 +8,8 @@ import { getHardware, getSala, createReservation } from "../../api/apihelper";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import emailjs from "@emailjs/browser";
+import { getUser } from "@api_helper";
+import useAuth from '@UserAuth';
 
 import "tailwindcss/tailwind.css";
 import "./styles/Form.css";
@@ -17,13 +19,32 @@ function Form({id}) {
   const [sala, setSala] = useState({});
   const [horaSeleccionada, setHoraSeleccionada] = useState("9:00am - 10:00am");
   const [diaSeleccionado, setDiaSeleccionado] = useState(dayjs());
-  const [people, setPeople] = useState([{ name: "", registration: "" }]);
+  const [people, setPeople] = useState([]);
   const [razonSeleccionada, setRazonSeleccionada] = useState(
     "Unidad de Formacion",
   );
   const [aparatos, setAparatos] = useState([]);
   const [comment, setComment] = useState("");
-  
+  const { auth } = useAuth();
+  const userID = auth?.userID;
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (!userID) return;
+      const result = await getUser(userID);
+      setUser(result);
+    };
+    fetchUser();
+    }, [userID]);
+    
+    useEffect(() => {
+      if (user) {
+        const nombreCompleto = `${user.nombre} ${user.apellidos}`;
+        setPeople([{ name: nombreCompleto, registration: user.matricula }]);
+      }
+    }, [user]);
+    
   // GET Sala by id
   useEffect(() => {
     getSala(id).then((sala) => {
@@ -47,7 +68,6 @@ function Form({id}) {
   // Send email
   const sendEmail = (nuevaReserva) => {
     console.log(nuevaReserva);
-
     emailjs
       .send(
         "service_c15c1tk",
