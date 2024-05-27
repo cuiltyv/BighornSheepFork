@@ -51,6 +51,19 @@ function App() {
             {/* Ruta solo para admin */}
             <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
               <Route path="/BighornSheep/admin" element={<Dashboard />} />
+              <Route
+                path="/BighornSheep/eventmanager"
+                element={<EventManager />}
+              />
+              <Route
+                path="/BighornSheep/videomanager"
+                element={<VideoManager />}
+              />
+              <Route
+                path="/BighornSheep/usermanagement"
+                element={<UserManagement />}
+              />
+              <Route path="/BighornSheep/adminstats" element={<AdminStats />} />
             </Route>
 
             <Route
@@ -59,13 +72,6 @@ function App() {
             />
           </Route>
 
-          <Route path="/BighornSheep/eventmanager" element={<EventManager />} />
-          <Route path="/BighornSheep/videomanager" element={<VideoManager />} />
-          <Route
-            path="/BighornSheep/usermanagement"
-            element={<UserManagement />}
-          />
-          <Route path="/BighornSheep/adminstats" element={<AdminStats />} />
           {/* Ruta si no hay match */}
           <Route path="*" element={<Missing />} />
         </Route>

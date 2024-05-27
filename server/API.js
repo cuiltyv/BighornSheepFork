@@ -13,6 +13,8 @@ const eventsRoutes = require("./routes/eventsRoutes");
 const videoRouter = require("./controllers/videosController");
 const statsRoutes = require("./routes/statsRoutes");
 const cookieParser = require("cookie-parser");
+const userRoutes = require("./routes/userRoutes");
+const achievementsRoutes = require("./routes/achievementsRoutes");
 const { setup } = require("swagger-ui-express");
 const { scheduleTask } = require("./controllers/schedulerController");
 
@@ -91,6 +93,8 @@ app.use("/logout", require("./routes/logoutRoutes"));
 app.use("/api/videos", videoRouter);
 app.use("/api/events", eventsRoutes);
 app.use("/api/statistics", statsRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/achievements", achievementsRoutes);
 
 // Conexión a la base de datos SQL Server
 sql
