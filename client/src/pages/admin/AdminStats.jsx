@@ -80,19 +80,16 @@ const AdminStats = () => {
     return <Typography>Loading...</Typography>;
   }
 
-  // Map ZonaID to their respective names
   const popularRooms = stats.popularRooms.map((room) => ({
     ...room,
     name: idToSalasMap[room.ZonaID],
   }));
 
-  // Map Role to their respective names
   const userTypeBreakdown = stats.userTypeBreakdown.map((user) => ({
     ...user,
     name: roleToNameMap[user.Role],
   }));
 
-  // Map Estado to their respective names
   const estadoOptions = {
     Pendiente: "Pendiente",
     Confirmado: "Confirmado",
@@ -105,14 +102,12 @@ const AdminStats = () => {
     name: estadoOptions[status.Estado] || status.Estado,
   }));
 
-  // Format hours for AM/PM
   const formatHour = (hour) => {
     const ampm = hour < 12 ? "AM" : "PM";
     const formattedHour = hour % 12 || 12;
     return `${formattedHour} ${ampm}`;
   };
 
-  // Format month and year for Monthly Reservations Trend
   const formatMonthYear = (data) => {
     return data.map((item) => ({
       ...item,
@@ -269,7 +264,7 @@ const AdminStats = () => {
           <Grid item xs={12}>
             <Paper>
               <Typography variant="h6" className="p-4">
-                Reservations by Time of Day
+                Reservaciones por Hora del Día
               </Typography>
               <ResponsiveContainer width="100%" height={400}>
                 <BarChart
