@@ -58,7 +58,7 @@ const horaF = new Date(HoraFin).toLocaleTimeString('en-US', { hour: 'numeric', m
   };
   
   return (
-    <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
+    <ReactCardFlip cardZIndex = "1" isFlipped={isFlipped} flipDirection="horizontal" className="z-10">
       <div className="bg-white overflow-hidden rounded-lg shadow-lg m-5 snap-center w-[300px] md:w-[350px] h-[92%] inline-block">
         <div className="relative">
           {Estado !== "Completado" ? (
@@ -80,7 +80,7 @@ const horaF = new Date(HoraFin).toLocaleTimeString('en-US', { hour: 'numeric', m
               </AlertDialogContent>
             </AlertDialog>
           ) : null}
-          <img src={`${Link}.png`} alt={`${Nombre} image`} className="w-full" />
+          <img src={`${Link}.png`} alt={`${Nombre} image`} className="w-full h-80" />
         </div>
         <div className="px-5 py-4">
           <h3 className="text-xl font-bold">{Nombre}</h3>
