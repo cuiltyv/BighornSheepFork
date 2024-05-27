@@ -55,6 +55,7 @@ const VideoWall = () => {
       try {
         const response = await axios.get(RESERVACIONES_URL);
         setReservations(response.data);
+        console.log("Reservations:", reservations[0]);
         setIsDataLoading(false);
       } catch (error) {
         console.error("Error fetching reservations:", error);
@@ -72,24 +73,6 @@ const VideoWall = () => {
 
     return () => clearInterval(interval);
   }, []);
-
-  const sortReservations = (field) => {
-    setSortField((prevField) => {
-      const newOrder =
-        prevField === field && sortOrder === "ASC" ? "DESC" : "ASC";
-      setSortOrder(newOrder);
-
-      setReservations((prevReservations) => {
-        return [...prevReservations].sort((a, b) => {
-          if (a[field] < b[field]) return newOrder === "ASC" ? -1 : 1;
-          if (a[field] > b[field]) return newOrder === "ASC" ? 1 : -1;
-          return 0;
-        });
-      });
-
-      return field;
-    });
-  };
 
   const handleMouseEnter = () => {
     console.log("Mouse entered, stopping autoplay");
@@ -164,7 +147,7 @@ const VideoWall = () => {
           <Carousel
             opts={{ align: "start", loop: true }}
             orientation="vertical"
-            className="w-full max-w-xs"
+            className="w-full max-w-[750px]"
           >
             <CarouselContent className="-mt-1 h-[380px]">
               {reservations.map((reservation, index) => (
