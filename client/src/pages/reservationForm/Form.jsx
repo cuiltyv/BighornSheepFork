@@ -8,6 +8,8 @@ import { getHardware, getSala, createReservation } from "../../api/apihelper";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import emailjs from "@emailjs/browser";
+import { getUser } from "@api_helper";
+import useAuth from '@UserAuth';
 
 import "tailwindcss/tailwind.css";
 import "./styles/Form.css";
@@ -17,13 +19,32 @@ function Form({id}) {
   const [sala, setSala] = useState({});
   const [horaSeleccionada, setHoraSeleccionada] = useState("9:00am - 10:00am");
   const [diaSeleccionado, setDiaSeleccionado] = useState(dayjs());
-  const [people, setPeople] = useState([{ name: "", registration: "" }]);
+  const [people, setPeople] = useState([]);
   const [razonSeleccionada, setRazonSeleccionada] = useState(
     "Unidad de Formacion",
   );
   const [aparatos, setAparatos] = useState([]);
   const [comment, setComment] = useState("");
-  
+  const { auth } = useAuth();
+  const userID = auth?.userID;
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (!userID) return;
+      const result = await getUser(userID);
+      setUser(result);
+    };
+    fetchUser();
+    }, [userID]);
+    
+    useEffect(() => {
+      if (user) {
+        const nombreCompleto = `${user.nombre} ${user.apellidos}`;
+        setPeople([{ name: nombreCompleto, registration: user.matricula }]);
+      }
+    }, [user]);
+    
   // GET Sala by id
   useEffect(() => {
     getSala(id).then((sala) => {
@@ -47,7 +68,6 @@ function Form({id}) {
   // Send email
   const sendEmail = (nuevaReserva) => {
     console.log(nuevaReserva);
-
     emailjs
       .send(
         "service_c15c1tk",
@@ -125,11 +145,11 @@ function Form({id}) {
   };
 
   return (
-    <div className="flex justify-center w-[80vw] max-w-fit">
+    <div className="flex justify-center w-[70vw] max-w-fit">
       <div className="form-container my-5 w-fit overflow-auto rounded-xl">
-        <img src={`${sala.Link}.png`} className="h-72 w-full object-cover " />
+        <img src={`${sala.Link}.png`} className="h-72 w-full object-cover " data-cy="imagen-sala"/>
         <div className="px-28 py-14 ">
-          <h1 className="bh-text-blue ml-4 text-5xl font-bold">
+          <h1 className="bh-text-blue ml-4 text-5xl font-bold" data-cy="nombre-sala">
             {sala.Nombre}
           </h1>
           <DatePicker
@@ -150,6 +170,7 @@ function Form({id}) {
               <button
                 onClick={enviar}
                 className="bh-bg-blue align-center flex justify-center self-center rounded-lg px-4 py-2 font-bold text-white"
+                data-cy="enviar-button"
               >
                 Enviar
               </button>

@@ -2,3 +2,7 @@
   height: 50%;
   border: 1px solid black;
 }
+
+.parent-container {
+  height: 100vh;
+}

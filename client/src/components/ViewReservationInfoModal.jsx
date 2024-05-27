@@ -2,6 +2,7 @@ import { XIcon } from "@heroicons/react/solid";
 import React, { useState, useEffect } from "react";
 import axios from "../api/axios";
 import { idToSalasMap } from "./interfaces/constants";
+
 const ViewReservationInfoModal = ({ isOpen, closeModal, reservation }) => {
   const {
     ReservacionID,
@@ -27,38 +28,27 @@ const ViewReservationInfoModal = ({ isOpen, closeModal, reservation }) => {
       try {
         const response = await axios.get(PERSONAS_URL(ReservacionID));
         setPersonas(response.data);
-        // console.log(response.data);
       } catch (error) {
         console.error(error);
       }
     };
 
     fetchPersonas();
-  }, []);
+  }, [ReservacionID]);
 
   useEffect(() => {
     const fetchEquipo = async () => {
       try {
         const response = await axios.get(HARDWARE_URL(ReservacionID));
         setEquipo(response.data);
-        //console.log(response.data);
       } catch (error) {
         console.error(error);
       }
     };
 
     fetchEquipo();
-  }, []);
+  }, [ReservacionID]);
 
-  /*
-  const personas = ["A01234567", "A12345678", "A23456789", "A34567890"];
-  const equipo = [
-    { nombre: "Meta quest", cantidad: 1 },
-    { nombre: "Windows laptop", cantidad: 2 },
-    { nombre: "Mac laptop", cantidad: 10 },
-    { nombre: "Impresora 3D", cantidad: 2 },
-  ];
-*/
   if (!isOpen) {
     return null;
   }
@@ -71,8 +61,12 @@ const ViewReservationInfoModal = ({ isOpen, closeModal, reservation }) => {
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4 ${!isOpen && "hidden"}`}
+      onClick={closeModal}
     >
-      <div className="w-full max-w-4xl rounded-lg bg-white p-6">
+      <div
+        className="w-full max-w-4xl rounded-lg bg-white p-6"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-lg font-medium leading-6 text-gray-900">
             Información de la Reservación
@@ -173,6 +167,14 @@ const ViewReservationInfoModal = ({ isOpen, closeModal, reservation }) => {
               ))
             )}
           </ul>
+        </div>
+        <div className="mt-6 flex justify-center">
+          <button
+            onClick={closeModal}
+            className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+          >
+            Cerrar
+          </button>
         </div>
       </div>
     </div>

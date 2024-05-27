@@ -37,8 +37,14 @@ const EditReservationModal = ({
   const horaFinLocal = toLocalDateTimeString(formData.HoraFin);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
-      <div className="w-full max-w-2xl overflow-hidden rounded-lg bg-white">
+    <div
+      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4"
+      onClick={closeModal}
+    >
+      <div
+        className="w-full max-w-2xl overflow-hidden rounded-lg bg-white"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="p-5">
           <h3 className="text-lg font-medium leading-6 text-gray-900">
             Editar Reservacion
@@ -119,11 +125,11 @@ const EditReservationModal = ({
                 onClick={closeModal}
                 className="rounded bg-red-500 px-4 py-2 font-medium text-white hover:bg-red-700"
               >
-                Cancel
+                Cancelar
               </button>
               <button
                 type="submit"
-                className="hover:bg-blue-700 text-green rounded bg-green-500 px-4 py-2 font-medium"
+                className="rounded bg-green-500 px-4 py-2 font-medium text-white hover:bg-green-700"
               >
                 Actualizar
               </button>

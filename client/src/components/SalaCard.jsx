@@ -46,7 +46,7 @@ export default function SalaCard({ sala }) {
           </Dialog>
         </div>
 
-        <div className="flex min-h-96 max-w-64 flex-col gap-2 rounded bg-white p-3 shadow-lg">
+        <div className="flex min-h-96 max-w-64 min-w-64 flex-col gap-2 rounded bg-white p-3 shadow-lg">
           <h3 className="text-lg font-bold text-blue">Detalles de la Sala</h3>
           <p className="text-sm">{sala.Descripcion}</p>{" "}
         </div>

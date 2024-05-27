@@ -28,6 +28,34 @@ const getUpcomingReservations = async (req, res) => {
   }
 };
 
+const getFullUpcomingReservations = async (req, res) => {
+  try {
+    let pool = await sql.connect(config);
+    let result = await pool
+      .request()
+      .execute("sp_GetFullUpcomingReservaciones");
+    res.json(result.recordset);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Error con DB", error: err });
+  }
+};
+
+const getFullUpcomingReservationsPorMatricula = async (req, res) => {
+  const { Matricula } = req.params;
+  try {
+    let pool = await sql.connect(config);
+    let result = await pool
+      .request()
+      .input("Matricula", sql.VarChar, Matricula)
+      .execute("sp_GetFullUpcomingReservacionesPorMatricula");
+    res.json(result.recordset);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Error con DB", error: err });
+  }
+};
+
 // Ruta: /reservaciones/participantes/:id
 // Participantes por ID de reservacion
 const getParticipantesByReservacionId = async (req, res) => {
@@ -236,4 +264,6 @@ module.exports = {
   deleteReservation,
   getReservationStats,
   setReservacionDeleted,
+  getFullUpcomingReservations,
+  getFullUpcomingReservationsPorMatricula,
 };

@@ -1,0 +1,10 @@
+
+### Create a new video
+POST http://localhost:3001/api/videos
+Content-Type: application/json
+
+{
+  "content": {
+    "link": "https://www.youtube.com/watch?v=SaRizZyJ1vQ"
+  }
+}
