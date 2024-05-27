@@ -6,7 +6,6 @@ import Comments from "./formComponents/Comments";
 import dayjs from "dayjs";
 import { getSala, createReservation } from "../../api/apihelper";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import emailjs from "@emailjs/browser";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { getUser } from "@api_helper";
