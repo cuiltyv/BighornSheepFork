@@ -9,7 +9,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import emailjs from "@emailjs/browser";
 import { Dialog, DialogPanel } from "@headlessui/react";
-
+import { getUser } from "@api_helper";
+import useAuth from "@UserAuth";
 import "./styles/Form.css";
 import "./styles/styles.css";
 
@@ -33,6 +34,25 @@ function Form({ id, isOpen, setIsOpen }) {
 
   const [aparatos, setAparatos] = useState([]);
   const [comment, setComment] = useState("");
+  const { auth } = useAuth();
+  const userID = auth?.userID;
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (!userID) return;
+      const result = await getUser(userID);
+      setUser(result);
+    };
+    fetchUser();
+  }, [userID]);
+
+  useEffect(() => {
+    if (user) {
+      const nombreCompleto = `${user.nombre} ${user.apellidos}`;
+      setPeople([{ name: nombreCompleto, registration: user.matricula }]);
+    }
+  }, [user]);
 
   // GET Sala by id
   useEffect(() => {
@@ -44,7 +64,6 @@ function Form({ id, isOpen, setIsOpen }) {
   // Send email
   const sendEmail = (nuevaReserva) => {
     console.log(nuevaReserva);
-
     emailjs
       .send(
         "service_c15c1tk",
