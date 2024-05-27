@@ -1,14 +1,8 @@
 import ButtonFilled from "../../components/ButtonFilled";
 import { useState } from "react";
 import ReactCardFlip from "react-card-flip";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialogModal";
-import Form from "@/pages/reservationForm/Form";
 
-export default function SalaCard({ sala }) {
+export default function SalaCard({ sala, setIsOpen, setId }) {
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleFlip = () => {
@@ -36,14 +30,15 @@ export default function SalaCard({ sala }) {
             <h3 className="font-semibold">{sala.Nombre}</h3>
             <p className="text-xs font-medium">{sala.Lugar}</p>
           </div>
-          <Dialog>
-            <DialogTrigger>
-              <ButtonFilled text="Reservar" />
-            </DialogTrigger>
-            <DialogContent>
-              <Form id={sala.SalaId} />
-            </DialogContent>
-          </Dialog>
+          <ButtonFilled
+            text="Reservar"
+            onClick={() => {
+              setIsOpen(true);
+              setId(sala.SalaId);
+              console.log(sala);
+              console.log(sala.SalaId);
+            }}
+          />
         </div>
 
         <div className="flex min-h-96 max-w-64 flex-col gap-2 rounded bg-white p-3 shadow-lg">

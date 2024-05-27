@@ -8,11 +8,12 @@ import { getSala, createReservation } from "../../api/apihelper";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import emailjs from "@emailjs/browser";
+import { Dialog, DialogPanel } from "@headlessui/react";
 
 import "./styles/Form.css";
 import "./styles/styles.css";
 
-function Form({ id }) {
+function Form({ id, isOpen, setIsOpen }) {
   const [sala, setSala] = useState({});
 
   const [horaInicio, setHoraInicio] = useState("9:00am - 10:00am");
@@ -119,63 +120,86 @@ function Form({ id }) {
   };
 
   return (
-    <div className="flex w-[70vw] max-w-fit justify-center">
-      <div className="form-container w-fit overflow-auto rounded-xl">
-        <img
-          src={`${sala.Link}.png`}
-          className="h-72 w-full object-cover "
-          data-cy="imagen-sala"
-        />
-        <div className="px-28 py-14">
-          <h1
-            className="bh-text-blue mb-6 text-5xl font-bold"
-            data-cy="nombre-sala"
-          >
-            {sala.Nombre}
-          </h1>
+    <>
+      {isOpen && (
+        <Dialog
+          open={isOpen}
+          onClose={() => setIsOpen(false)}
+          className="relative z-50"
+        >
+          <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
 
-          <DatePicker
-            horaInicio={horaInicio}
-            setHoraInicio={setHoraInicio}
-            minutoInicio={minutoInicio}
-            setMinutoInicio={setMinutoInicio}
-            periodoInicio={periodoInicio}
-            setPeriodoInicio={setPeriodoInicio}
-            horaFinal={horaFinal}
-            setHoraFinal={setHoraFinal}
-            minutoFinal={minutoFinal}
-            setMinutoFinal={setMinutoFinal}
-            periodoFinal={periodoFinal}
-            setPeriodoFinal={setPeriodoFinal}
-            diaSeleccionado={diaSeleccionado}
-            setDiaSeleccionado={setDiaSeleccionado}
-          />
+          <div className="fixed inset-0 w-screen overflow-y-auto p-4">
+            <div className="flex min-h-full items-center justify-center">
+              <DialogPanel className="max-w-full space-y-4 rounded-md bg-white lg:max-w-5xl">
+                <img
+                  src={`${sala.Link}.png`}
+                  className="h-72 w-full object-cover"
+                  data-cy="imagen-sala"
+                />
+                <div className="px-28 py-14">
+                  <h1
+                    className="bh-text-blue mb-6 text-5xl font-bold"
+                    data-cy="nombre-sala"
+                  >
+                    {sala.Nombre}
+                  </h1>
 
-          <PeopleSelect people={people} setPeople={setPeople} />
+                  <DatePicker
+                    horaInicio={horaInicio}
+                    setHoraInicio={setHoraInicio}
+                    minutoInicio={minutoInicio}
+                    setMinutoInicio={setMinutoInicio}
+                    periodoInicio={periodoInicio}
+                    setPeriodoInicio={setPeriodoInicio}
+                    horaFinal={horaFinal}
+                    setHoraFinal={setHoraFinal}
+                    minutoFinal={minutoFinal}
+                    setMinutoFinal={setMinutoFinal}
+                    periodoFinal={periodoFinal}
+                    setPeriodoFinal={setPeriodoFinal}
+                    diaSeleccionado={diaSeleccionado}
+                    setDiaSeleccionado={setDiaSeleccionado}
+                  />
 
-          <ReservationReason
-            razonSeleccionada={razonSeleccionada}
-            setRazonSeleccionada={setRazonSeleccionada}
-          />
+                  <PeopleSelect people={people} setPeople={setPeople} />
 
-          <DeviceList id={id} aparatos={aparatos} setAparatos={setAparatos} />
+                  <ReservationReason
+                    razonSeleccionada={razonSeleccionada}
+                    setRazonSeleccionada={setRazonSeleccionada}
+                  />
 
-          <Comments comment={comment} setComment={setComment} />
+                  <DeviceList
+                    id={id}
+                    aparatos={aparatos}
+                    setAparatos={setAparatos}
+                  />
 
-          <div className="mt-10 flex w-full justify-center gap-10">
-            <Link to={"/BighornSheep"}>
-              <button
-                onClick={enviar}
-                className="bh-bg-blue align-center flex justify-center self-center rounded-lg px-4 py-2 font-bold text-white"
-                data-cy="enviar-button"
-              >
-                Registrar reserva
-              </button>
-            </Link>
+                  <Comments comment={comment} setComment={setComment} />
+
+                  <div className="mt-10 flex w-full justify-center gap-10">
+                    <button
+                      onClick={() => setIsOpen(false)}
+                      className="align-center flex justify-center self-center rounded-lg border border-blue px-4 py-2 font-bold text-blue"
+                      data-cy="enviar-button"
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      onClick={enviar}
+                      className="bh-bg-blue align-center flex justify-center self-center rounded-lg px-4 py-2 font-bold text-white"
+                      data-cy="enviar-button"
+                    >
+                      Registrar reserva
+                    </button>
+                  </div>
+                </div>
+              </DialogPanel>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </Dialog>
+      )}
+    </>
   );
 }
 
