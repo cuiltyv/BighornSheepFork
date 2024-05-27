@@ -8,3 +8,9 @@ export const idToSalasMap = {
   7: "Testing Land",
   8: "Dimension Forge",
 };
+
+export const roleToNameMap = {
+  1: "Estudiante",
+  2: "Admin",
+  3: "Profesor",
+};
