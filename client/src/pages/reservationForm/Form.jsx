@@ -1,46 +1,42 @@
+import DatePicker from "./formComponents/datePicker/DatePicker";
 import PeopleSelect from "./formComponents/PeopleSelect";
 import ReservationReason from "./formComponents/ReservationReason";
 import DeviceList from "./formComponents/deviceList/DeviceList";
 import Comments from "./formComponents/Comments";
-import DatePicker from "./formComponents/datePicker/DatePicker";
 import dayjs from "dayjs";
-import { getHardware, getSala, createReservation } from "../../api/apihelper";
+import { getSala, createReservation } from "../../api/apihelper";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import emailjs from "@emailjs/browser";
 
-import "tailwindcss/tailwind.css";
 import "./styles/Form.css";
 import "./styles/styles.css";
 
-function Form({id}) {
+function Form({ id }) {
   const [sala, setSala] = useState({});
-  const [horaSeleccionada, setHoraSeleccionada] = useState("9:00am - 10:00am");
+
+  const [horaInicio, setHoraInicio] = useState("9:00am - 10:00am");
+  const [minutoInicio, setMinutoInicio] = useState(0);
+  const [periodoInicio, setPeriodoInicio] = useState("am");
+
+  const [horaFinal, setHoraFinal] = useState("10:00am - 11:00am");
+  const [minutoFinal, setMinutoFinal] = useState(0);
+  const [periodoFinal, setPeriodoFinal] = useState("am");
+
   const [diaSeleccionado, setDiaSeleccionado] = useState(dayjs());
+
   const [people, setPeople] = useState([{ name: "", registration: "" }]);
   const [razonSeleccionada, setRazonSeleccionada] = useState(
     "Unidad de Formacion",
   );
+
   const [aparatos, setAparatos] = useState([]);
   const [comment, setComment] = useState("");
-  
+
   // GET Sala by id
   useEffect(() => {
     getSala(id).then((sala) => {
       setSala(sala[0]);
-    });
-  }, [id]);
-
-  // GET Hardware
-  useEffect(() => {
-    getHardware().then((hardware) => {
-      setAparatos([]);
-      hardware.map((hardware) => {
-        setAparatos((prev) => [
-          ...prev,
-          { id: hardware.HardwareID, nombre: hardware.Nombre, cantidad: 0 },
-        ]);
-      });
     });
   }, [id]);
 
@@ -80,20 +76,18 @@ function Form({id}) {
         },
       );
   };
+
   // POST Reserva
   const enviar = () => {
-    const parseHour = (hour) => {
-      const [time, period] = hour.split(" ");
-      const [hours] = time.split(":");
-      return period === "pm" ? parseInt(hours) + 12 : parseInt(hours);
-    };
-
     const fechaInicio = dayjs(diaSeleccionado)
-      .hour(parseHour(horaSeleccionada.split(" - ")[0]))
-      .minute(0);
+      .hour(parseInt(horaInicio.split(":")[0]))
+      .minute(minutoInicio)
+      .second(0);
+
     const fechaFin = dayjs(diaSeleccionado)
-      .hour(parseHour(horaSeleccionada.split(" - ")[1]))
-      .minute(0);
+      .hour(parseInt(horaFinal.split(":")[0]))
+      .minute(minutoFinal)
+      .second(0);
 
     const nuevaReserva = {
       ZonaID: sala.SalaId,
@@ -125,26 +119,49 @@ function Form({id}) {
   };
 
   return (
-    <div className="flex justify-center w-[70vw] max-w-fit">
-      <div className="form-container my-5 w-fit overflow-auto rounded-xl">
-        <img src={`${sala.Link}.png`} className="h-72 w-full object-cover " data-cy="imagen-sala"/>
-        <div className="px-28 py-14 ">
-          <h1 className="bh-text-blue ml-4 text-5xl font-bold" data-cy="nombre-sala">
+    <div className="flex w-[70vw] max-w-fit justify-center">
+      <div className="form-container w-fit overflow-auto rounded-xl">
+        <img
+          src={`${sala.Link}.png`}
+          className="h-72 w-full object-cover "
+          data-cy="imagen-sala"
+        />
+        <div className="px-28 py-14">
+          <h1
+            className="bh-text-blue mb-6 text-5xl font-bold"
+            data-cy="nombre-sala"
+          >
             {sala.Nombre}
           </h1>
+
           <DatePicker
-            horaSeleccionada={horaSeleccionada}
-            setHoraSeleccionada={setHoraSeleccionada}
+            horaInicio={horaInicio}
+            setHoraInicio={setHoraInicio}
+            minutoInicio={minutoInicio}
+            setMinutoInicio={setMinutoInicio}
+            periodoInicio={periodoInicio}
+            setPeriodoInicio={setPeriodoInicio}
+            horaFinal={horaFinal}
+            setHoraFinal={setHoraFinal}
+            minutoFinal={minutoFinal}
+            setMinutoFinal={setMinutoFinal}
+            periodoFinal={periodoFinal}
+            setPeriodoFinal={setPeriodoFinal}
             diaSeleccionado={diaSeleccionado}
             setDiaSeleccionado={setDiaSeleccionado}
           />
+
           <PeopleSelect people={people} setPeople={setPeople} />
+
           <ReservationReason
             razonSeleccionada={razonSeleccionada}
             setRazonSeleccionada={setRazonSeleccionada}
           />
-          <DeviceList aparatos={aparatos} setAparatos={setAparatos} />
+
+          <DeviceList id={id} aparatos={aparatos} setAparatos={setAparatos} />
+
           <Comments comment={comment} setComment={setComment} />
+
           <div className="mt-10 flex w-full justify-center gap-10">
             <Link to={"/BighornSheep"}>
               <button
@@ -152,7 +169,7 @@ function Form({id}) {
                 className="bh-bg-blue align-center flex justify-center self-center rounded-lg px-4 py-2 font-bold text-white"
                 data-cy="enviar-button"
               >
-                Enviar
+                Registrar reserva
               </button>
             </Link>
           </div>
