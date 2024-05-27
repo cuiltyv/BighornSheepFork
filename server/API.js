@@ -18,6 +18,8 @@ const achievementsRoutes = require("./routes/achievementsRoutes");
 const { setup } = require("swagger-ui-express");
 const { scheduleTask } = require("./controllers/schedulerController");
 
+//
+
 const app = express();
 //
 // Conexión a MongoDB
