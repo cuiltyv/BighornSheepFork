@@ -7,7 +7,7 @@ const RequireAuth = ({ allowedRoles }) => {
 
   // Check if the user's role is included in the allowedRoles array
   const isRoleAllowed = allowedRoles.includes(auth?.roles);
-
+  
   return isRoleAllowed ? (
     <Outlet />
   ) : auth?.user ? (
