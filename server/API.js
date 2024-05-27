@@ -19,7 +19,7 @@ const { setup } = require("swagger-ui-express");
 const { scheduleTask } = require("./controllers/schedulerController");
 
 const app = express();
-
+//
 // Conexión a MongoDB
 const mongoUrl = process.env.MONGODB_URI;
 mongoose.set("strictQuery", false);
