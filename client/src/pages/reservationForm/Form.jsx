@@ -128,12 +128,11 @@ function Form({ id, isOpen, setIsOpen }) {
       Comentario: comment,
     };
 
-    console.log(nuevaReserva);
-
     // POST request with Axios
     createReservation(nuevaReserva).then((response) => {
       console.log(response);
       sendEmail(nuevaReserva);
+      setIsOpen(false);
     });
   };
 
@@ -149,7 +148,7 @@ function Form({ id, isOpen, setIsOpen }) {
 
           <div className="fixed inset-0 w-screen overflow-y-auto p-4">
             <div className="flex min-h-full items-center justify-center">
-              <DialogPanel className="max-w-full space-y-4 rounded-md bg-white lg:max-w-5xl">
+              <DialogPanel className="max-w-full space-y-4 rounded-md bg-darkWhite lg:max-w-5xl">
                 <img
                   src={`${sala.Link}.png`}
                   className="h-72 w-full object-cover"

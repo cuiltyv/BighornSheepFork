@@ -4,6 +4,7 @@ import Salas from "./Salas";
 import Form from "./../reservationForm/Form";
 import { useState } from "react";
 import Contacto from "../../components/Contacto";
+import { Element } from "react-scroll";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,7 +14,9 @@ export default function Home() {
     <div>
       <Hero />
       <Caracteristicas />
-      <Salas setIsOpen={setIsOpen} setId={setId} />
+      <Element name="salas" className="element">
+        <Salas setIsOpen={setIsOpen} setId={setId} />
+      </Element>
       {isOpen && <Form id={id} isOpen={isOpen} setIsOpen={setIsOpen} />}
       <Contacto />
     </div>

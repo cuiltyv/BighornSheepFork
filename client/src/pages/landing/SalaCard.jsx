@@ -10,9 +10,9 @@ export default function SalaCard({ sala, setIsOpen, setId }) {
   };
 
   return (
-    <div onClick={handleFlip} className="cursor-pointer">
+    <div onClick={handleFlip} className="w-full max-w-64 cursor-pointer">
       <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
-        <div className="flex min-h-96 max-w-64 flex-col justify-between gap-2 rounded bg-white p-3 shadow-lg">
+        <div className="flex min-h-96 flex-col justify-between gap-2 rounded bg-white p-3 shadow-lg">
           <img
             src={`${sala.Link}.png`}
             alt={sala.Nombre}
