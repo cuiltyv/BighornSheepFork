@@ -18,11 +18,9 @@ function Form({ id, isOpen, setIsOpen }) {
 
   const [horaInicio, setHoraInicio] = useState("9:00am - 10:00am");
   const [minutoInicio, setMinutoInicio] = useState(0);
-  const [periodoInicio, setPeriodoInicio] = useState("am");
 
   const [horaFinal, setHoraFinal] = useState("10:00am - 11:00am");
   const [minutoFinal, setMinutoFinal] = useState(0);
-  const [periodoFinal, setPeriodoFinal] = useState("am");
 
   const [diaSeleccionado, setDiaSeleccionado] = useState(dayjs());
 
@@ -167,14 +165,10 @@ function Form({ id, isOpen, setIsOpen }) {
                     setHoraInicio={setHoraInicio}
                     minutoInicio={minutoInicio}
                     setMinutoInicio={setMinutoInicio}
-                    periodoInicio={periodoInicio}
-                    setPeriodoInicio={setPeriodoInicio}
                     horaFinal={horaFinal}
                     setHoraFinal={setHoraFinal}
                     minutoFinal={minutoFinal}
                     setMinutoFinal={setMinutoFinal}
-                    periodoFinal={periodoFinal}
-                    setPeriodoFinal={setPeriodoFinal}
                     diaSeleccionado={diaSeleccionado}
                     setDiaSeleccionado={setDiaSeleccionado}
                   />

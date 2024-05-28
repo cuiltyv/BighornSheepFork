@@ -3,44 +3,33 @@ import { useState } from "react";
 const HoraFinal = ({ onHoraFinalSeleccionadaChange }) => {
   const [hour, setHour] = useState("8");
   const [minute, setMinute] = useState("00");
-  const [period, setPeriod] = useState("AM");
   const [error, setError] = useState("");
 
   const handleHourChange = (e) => {
+    validateTime(e.target.value, minute);
     setHour(e.target.value);
-    validateTime(e.target.value, minute, period);
   };
 
   const handleMinuteChange = (e) => {
+    validateTime(hour, e.target.value);
     setMinute(e.target.value);
-    validateTime(hour, e.target.value, period);
   };
 
-  const handlePeriodChange = (e) => {
-    setPeriod(e.target.value);
-    validateTime(hour, minute, e.target.value);
-  };
-
-  const validateTime = (hour, minute, period) => {
+  const validateTime = (hour, minute) => {
     const hourInt = parseInt(hour);
     const minuteInt = parseInt(minute);
     console.log(hourInt);
 
-    if (
-      (period === "AM" && hourInt === 12) ||
-      (period === "AM" && hourInt < 8) ||
-      (period === "PM" && hourInt > 9 && hourInt !== 12) ||
-      (period === "PM" && hourInt === 9 && minuteInt !== 0)
-    ) {
+    if (hourInt < 8 || hourInt > 21 || (hourInt === 20 && minuteInt === "00")) {
       setError("Por favor selecciona una hora entre las 7 AM and 9 PM.");
     } else {
       setError("");
-      updateTime(hour, minute, period);
+      updateTime(hour, minute);
     }
   };
 
-  const updateTime = (hour, minute, period) => {
-    onHoraFinalSeleccionadaChange(hour, minute, period);
+  const updateTime = (hour, minute) => {
+    onHoraFinalSeleccionadaChange(hour, minute);
   };
 
   return (
@@ -69,14 +58,6 @@ const HoraFinal = ({ onHoraFinalSeleccionadaChange }) => {
               {m}
             </option>
           ))}
-        </select>
-        <select
-          className="rounded-md bg-white p-2.5 text-lg text-gray-900  placeholder:text-lg"
-          value={period}
-          onChange={handlePeriodChange}
-        >
-          <option value="AM">AM</option>
-          <option value="PM">PM</option>
         </select>
       </div>
       {error && <p className="mt-2 w-56 text-xs text-red-500">{error}</p>}

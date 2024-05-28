@@ -1,23 +1,27 @@
 import Calendar from "./Calendar.jsx";
 import HoraInicio from "./HoraInicio.jsx";
 import HoraFinal from "./HoraFinal.jsx";
+import { useState } from "react";
 
 function DatePicker(props) {
-  const onHoraInicioSeleccionadaChange = (hora, minute, period) => {
+  const onHoraInicioSeleccionadaChange = (hora, minute) => {
     props.setHoraInicio(hora);
     props.setMinutoInicio(minute);
-    props.setPeriodoInicio(period);
   };
 
-  const onHoraFinalSeleccionadaChange = (hora, minute, period) => {
+  const onHoraFinalSeleccionadaChange = (hora, minute) => {
     props.setHoraFinal(hora);
     props.setMinutoFinal(minute);
-    props.setPeriodoFinal(period);
+
+    if (props.horaFinal <= props.horaInicio)
+      setError("Escoge una hora válida.");
   };
 
   const handleDiaSeleccionadoChange = (dia) => {
     props.setDiaSeleccionado(dia);
   };
+
+  const [error, setError] = useState("");
 
   return (
     <div>
@@ -30,6 +34,7 @@ function DatePicker(props) {
           <HoraFinal
             onHoraFinalSeleccionadaChange={onHoraFinalSeleccionadaChange}
           />
+          {error && <p className="mt-2 w-56 text-xs text-red-500">{error}</p>}
         </div>
       </div>
     </div>
