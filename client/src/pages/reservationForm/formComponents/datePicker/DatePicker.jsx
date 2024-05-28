@@ -21,8 +21,16 @@ function DatePicker(props) {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    //console.log(typeof props.horaInicio, typeof props.horaFinal);
     console.log("inicio: ", props.horaInicio, "final: ", props.horaFinal);
-
+    /*
+    console.log(
+      "inicio: ",
+      props.horaInicio.constructor.name,
+      "final: ",
+      props.horaFinal.constructor.name,
+    );
+*/
     if (props.horaFinal <= props.horaInicio)
       setError("Escoge una hora válida.");
     else setError("");

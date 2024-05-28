@@ -97,12 +97,14 @@ function Form({ id, isOpen, setIsOpen }) {
   // POST Reserva
   const enviar = () => {
     const fechaInicio = dayjs(diaSeleccionado)
-      .hour(parseInt(horaInicio.split(":")[0]))
+      //CAMBIO TELLO: La hora de inicio ya es el numero antes del : , no se necesita hacer split, igual con la hora fin
+      .hour(parseInt(horaInicio))
       .minute(minutoInicio)
       .second(0);
+    //console.log(fechaInicio.toISOString());
 
     const fechaFin = dayjs(diaSeleccionado)
-      .hour(parseInt(horaFinal.split(":")[0]))
+      .hour(parseInt(horaFinal))
       .minute(minutoFinal)
       .second(0);
 
