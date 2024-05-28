@@ -14,7 +14,7 @@ export default function Device({ nombre, cantidad, setCantidad }) {
 
   return (
     <div className="flex items-center">
-      <div className="mr-4 w-28 text-sm font-semibold">{nombre}</div>
+      <div className="w-28 text-sm font-semibold">{nombre}</div>
       <button
         onClick={decrementarCantidad}
         className="flex h-8 w-8 items-center justify-center rounded-full border-2 bg-blue font-bold text-white"

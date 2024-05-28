@@ -1,7 +1,6 @@
 import React from "react";
 import { GrAdd, GrSubtract } from "react-icons/gr";
 
-import "tailwindcss/tailwind.css";
 import "../styles/styles.css";
 
 export default function PeopleSelect({ people, setPeople }) {
@@ -34,26 +33,29 @@ export default function PeopleSelect({ people, setPeople }) {
   };
 
   return (
-    <div className="mx-4 my-10">
-      <h2 className="mb-5 text-2xl font-bold">Personas adicionales</h2>
+    <div className="mt-10">
+      <h2 className="mb-2 text-xl font-bold">
+        Personas adicionales reservación
+      </h2>
       {people.map((person, index) => (
-        <div key={index} className="w- mb-2 flex items-center">
+        <div key={index} className="mb-2 flex items-center">
           <input
             type="text"
             placeholder="Matrícula"
             value={person.registration}
             onChange={(e) => handleRegistrationChange(e.target.value, index)}
-            className="mr-2 w-40 rounded border border-gray-300 p-2 drop-shadow-lg"
+            className="mr-2 w-60 rounded-md bg-white placeholder-black shadow-[0_5px_20px_-5px_rgba(0,0,0,0.3)] placeholder:text-xl"
             data-cy="matricula-input"
             readOnly={index === 0} 
           
           />
+
           <input
             type="text"
             placeholder="Nombre"
             value={person.name}
             onChange={(e) => handleNameChange(e.target.value, index)}
-            className="mr-2 w-80 rounded border border-gray-300 p-2 drop-shadow-lg"
+            className="mr-2 w-full rounded-md bg-white placeholder-black shadow-[0_5px_20px_-5px_rgba(0,0,0,0.3)] placeholder:text-xl"
             data-cy="nombre-input"
             readOnly={index === 0} 
           />
