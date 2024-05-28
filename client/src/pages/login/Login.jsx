@@ -190,11 +190,11 @@ const Login = () => {
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
 
-      setAuth({ user, pwd, roles, accessToken });
+      setAuth({ user, pwd, roles, accessToken, userID: user });
       setUser("");
       setPwd("");
       navigate(from, { replace: true });
-      window.location.reload();
+      //window.location.reload();
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");

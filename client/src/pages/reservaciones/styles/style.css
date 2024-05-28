@@ -1,3 +1,29 @@
 .bh-text-blue{
     color: #549CAD;
   }
+
+.scroll-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: auto;
+}
+
+.scroll-container::-webkit-scrollbar {
+  width: 16px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background-color: #e4e4e4;
+  border-radius: 100px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background-color: #549CAD;
+  border-radius: 100px;
+}
+
+.scroll-item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}

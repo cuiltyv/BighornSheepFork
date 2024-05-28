@@ -80,6 +80,16 @@ router.get("/", reservationsController.getAllReservations);
  */
 router.get("/upcoming", reservationsController.getUpcomingReservations);
 
+router.get(
+  "/full-upcoming",
+  reservationsController.getFullUpcomingReservations
+);
+
+router.get(
+  "/full-upcoming/:Matricula",
+  reservationsController.getFullUpcomingReservationsPorMatricula
+);
+
 /**
  * @swagger
  * /reservaciones/participantes/{id}:

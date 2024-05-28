@@ -1,23 +1,39 @@
 const express = require("express");
 const cors = require("cors");
 const sql = require("mssql");
+const mongoose = require("mongoose");
 const config = require("./configs/config");
 const usersRoutes = require("./routes/usersRoutes");
 const reservationsRoutes = require("./routes/reservationsRoutes");
-const roomsRoutes = require("./routes/salasRoutes"); // Make sure this matches the exported name from the file
+const roomsRoutes = require("./routes/salasRoutes");
 const miscRoutes = require("./routes/miscRoutes");
 const aiRequestRoutes = require("./routes/aiRequestRoutes");
 const setupSwagger = require("./configs/swagger");
-
 const hardwareRoutes = require("./routes/hardwareRoutes");
-
-const verifyJWT = require("./middleware/verifyJWT");
+const eventsRoutes = require("./routes/eventsRoutes");
+const videoRouter = require("./controllers/videosController");
+const statsRoutes = require("./routes/statsRoutes");
 const cookieParser = require("cookie-parser");
+const userRoutes = require("./routes/userRoutes");
+const achievementsRoutes = require("./routes/achievementsRoutes");
 const { setup } = require("swagger-ui-express");
+const { scheduleTask } = require("./controllers/schedulerController");
 
 const app = express();
+//
+// Conexión a MongoDB
+const mongoUrl = process.env.MONGODB_URI;
+mongoose.set("strictQuery", false);
+console.log("connecting to", mongoUrl);
 
-// app.use(cors());
+mongoose
+  .connect(mongoUrl)
+  .then(() => {
+    console.log("connected to MongoDB");
+  })
+  .catch((error) => {
+    console.log("error connecting to MongoDB:", error.message);
+  });
 
 app.use(express.json());
 
@@ -33,7 +49,6 @@ app.use(
 
 //middleware for cookies
 app.use(cookieParser());
-
 /*
 app.use((req, res, next) => {
   // Set the 'Access-Control-Allow-Origin' header to the value of the 'Origin' header in the incoming request
@@ -48,7 +63,7 @@ app.use((req, res, next) => {
   next();
 });
 */
-
+// Logger de solicitudes
 const requestLogger = (request, response, next) => {
   console.log("Method:", request.method);
   console.log("Path:  ", request.path);
@@ -59,19 +74,17 @@ const requestLogger = (request, response, next) => {
 
 app.use(requestLogger);
 
+// Manejo de errores
 app.use((error, req, res, next) => {
   console.log("Error handler", req.data);
   console.error(error.stack);
   res.status(500).send("Something broke!");
 });
-/*
-app.use((req, res, next) => {
-  res.status(404).send('404: Page not found');
-});
-*/
 
+// Configurar Swagger
 setupSwagger(app);
 
+// Rutas
 app.use("/usuarios", usersRoutes);
 app.use("/reservaciones", reservationsRoutes);
 app.use("/ai", aiRequestRoutes);
@@ -80,7 +93,13 @@ app.use("/", miscRoutes);
 app.use("/hardware", hardwareRoutes);
 app.use("/refresh", require("./routes/refreshRoutes"));
 app.use("/logout", require("./routes/logoutRoutes"));
+app.use("/api/videos", videoRouter);
+app.use("/api/events", eventsRoutes);
+app.use("/api/statistics", statsRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/achievements", achievementsRoutes);
 
+// Conexión a la base de datos SQL Server
 sql
   .connect(config)
   .then((pool) => {
@@ -88,14 +107,15 @@ sql
       console.log("Conecting to database");
     } else if (pool.connected) {
       console.log("Connected to database.");
-      connected = true;
     }
 
+    //Comenzar con las tareas que se ejecutan cada 24 horas
+
+    scheduleTask();
     return pool;
   })
   .catch((err) => {
     console.error("Database connection failed:", err);
-    connected = false;
   });
 
 const PORT = process.env.PORT || 3000;
