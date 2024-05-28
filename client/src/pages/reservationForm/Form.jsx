@@ -16,10 +16,10 @@ import "./styles/styles.css";
 function Form({ id, isOpen, setIsOpen }) {
   const [sala, setSala] = useState({});
 
-  const [horaInicio, setHoraInicio] = useState("9:00am - 10:00am");
+  const [horaInicio, setHoraInicio] = useState(7);
   const [minutoInicio, setMinutoInicio] = useState(0);
 
-  const [horaFinal, setHoraFinal] = useState("10:00am - 11:00am");
+  const [horaFinal, setHoraFinal] = useState(8);
   const [minutoFinal, setMinutoFinal] = useState(0);
 
   const [diaSeleccionado, setDiaSeleccionado] = useState(dayjs());

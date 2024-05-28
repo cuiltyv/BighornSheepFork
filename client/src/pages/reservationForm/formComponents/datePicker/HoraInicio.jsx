@@ -18,7 +18,6 @@ const HoraInicio = ({ onHoraInicioSeleccionadaChange }) => {
   const validateTime = (hour, minute) => {
     const hourInt = parseInt(hour);
     const minuteInt = parseInt(minute);
-    console.log(hourInt);
 
     if (
       hourInt < 7 ||
@@ -45,7 +44,7 @@ const HoraInicio = ({ onHoraInicioSeleccionadaChange }) => {
           value={hour}
           onChange={handleHourChange}
         >
-          {Array.from({ length: 12 }, (_, i) => i + 1).map((h) => (
+          {Array.from({ length: 24 }, (_, i) => i + 1).map((h) => (
             <option key={h} value={h}>
               {h}
             </option>
