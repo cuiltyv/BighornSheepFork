@@ -63,7 +63,7 @@ const HoraInicio = ({ onHoraInicioSeleccionadaChange }) => {
           ))}
         </select>
       </div>
-      {error && <p className="mt-2 w-56 text-xs text-red-500">{error}</p>}
+      {error && <p className="mt-2 w-40 text-xs text-red-500">{error}</p>}
     </div>
   );
 };
