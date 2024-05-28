@@ -11,9 +11,9 @@ const ReservationShow = ({ user, estado }) => {
   const [isDataLoading, setIsDataLoading] = useState(true);
   const [salas, setSalas] = useState([]);
   const estados = {
-    "Pendiente": "pendientes",
-    "Completado": "completadas",
-    "Confirmado": "confirmadas",
+    Pendiente: "pendientes",
+    Completado: "completadas",
+    Confirmado: "confirmadas",
   };
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const ReservationShow = ({ user, estado }) => {
       try {
         const response = await axios.get(RESERVACIONES_URL);
         const userReservations = response.data.filter(
-          (res) => res.Matricula === user?.matricula
+          (res) => res.Matricula === user?.matricula,
         );
         setReservedRooms(userReservations);
       } catch (error) {
@@ -48,7 +48,7 @@ const ReservationShow = ({ user, estado }) => {
   }, []);
 
   const solicitados = reservedRooms.filter(
-    (reservation) => reservation.Estado === estado
+    (reservation) => reservation.Estado === estado,
   );
 
   return (
@@ -69,13 +69,15 @@ const ReservationShow = ({ user, estado }) => {
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center bg-white overflow-hidden rounded-lg shadow-lg m-5 snap-center w-[300px] md:w-[350px] h-[564px]">
+        <div className="m-5 flex h-[564px] w-[300px] snap-center flex-col items-center justify-center overflow-hidden rounded-lg bg-white shadow-lg md:w-[350px]">
           <img
-            src="../../src/assets/notFound.png"
-            className="w-52 mt-[-100px] mb-5"
+            src="https://i.imgur.com/bH1hSRB.png"
+            className="mb-5 mt-[-100px] w-52"
             alt="No reservations found"
           />
-          <b className="text-center">No cuentas con reservaciones {estados[estado]}</b>
+          <b className="text-center">
+            No cuentas con reservaciones {estados[estado]}
+          </b>
         </div>
       )}
     </div>
