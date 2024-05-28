@@ -19,7 +19,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     axios
-      .get("https://dreamapi.azurewebsites.net/reservaciones/stats")
+      .get("https://dreamapi2.azurewebsites.net/reservaciones/stats")
       .then((response) => {
         setStats(response.data.iconStats);
       })
