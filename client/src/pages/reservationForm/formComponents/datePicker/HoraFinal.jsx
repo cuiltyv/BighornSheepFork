@@ -18,9 +18,8 @@ const HoraFinal = ({ onHoraFinalSeleccionadaChange }) => {
   const validateTime = (hour, minute) => {
     const hourInt = parseInt(hour);
     const minuteInt = parseInt(minute);
-    console.log(hourInt);
 
-    if (hourInt < 8 || hourInt > 21 || (hourInt === 20 && minuteInt === "00")) {
+    if (hourInt < 8 || hourInt > 21 || (hourInt === 21 && minuteInt !== 0)) {
       setError("Por favor selecciona una hora entre las 7 AM and 9 PM.");
     } else {
       setError("");

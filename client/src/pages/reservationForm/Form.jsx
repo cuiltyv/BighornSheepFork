@@ -98,15 +98,18 @@ function Form({ id, isOpen, setIsOpen }) {
   const enviar = () => {
     const fechaInicio = dayjs(diaSeleccionado)
       //CAMBIO TELLO: La hora de inicio ya es el numero antes del : , no se necesita hacer split, igual con la hora fin
-      .hour(parseInt(horaInicio))
+      .hour(horaInicio)
       .minute(minutoInicio)
       .second(0);
-    //console.log(fechaInicio.toISOString());
+
+    const formattedInicio = fechaInicio.format("DD/MM/YYYY HH:mm");
 
     const fechaFin = dayjs(diaSeleccionado)
       .hour(parseInt(horaFinal))
       .minute(minutoFinal)
       .second(0);
+
+    const formattedFinal = fechaFin.format("DD/MM/YYYY HH:mm");
 
     const nuevaReserva = {
       ZonaID: sala.SalaId,
@@ -128,10 +131,16 @@ function Form({ id, isOpen, setIsOpen }) {
       Comentario: comment,
     };
 
+    const emailObject = {
+      ...nuevaReserva,
+      HoraInicio: formattedInicio,
+      HoraFin: formattedFinal,
+    };
+
     // POST request with Axios
     createReservation(nuevaReserva).then((response) => {
       console.log(response);
-      sendEmail(nuevaReserva);
+      sendEmail(emailObject);
       setIsOpen(false);
     });
   };
