@@ -142,6 +142,7 @@ function Form({ id, isOpen, setIsOpen }) {
       console.log(response);
       sendEmail(emailObject);
       setIsOpen(false);
+      window.alert("Reserva creada exitosamente");
     });
   };
 
