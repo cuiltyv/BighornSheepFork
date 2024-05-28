@@ -11,6 +11,7 @@ import image1 from "../../assets/fotonoticiareto.png";
 import qrCodeImage from "../../assets/qrDreamlab.png"; // Import your QR code image here
 import axios from "../../api/axios";
 import Autoplay from "embla-carousel-autoplay";
+import AutoScroll from "embla-carousel-auto-scroll";
 import { parse, format } from "date-fns"; // Import date-fns
 
 const RESERVACIONES_URL = "/reservaciones/full-upcoming";
@@ -21,17 +22,19 @@ const VideoWall = () => {
   const [events, setEvents] = useState([]);
   const [reservations, setReservations] = useState([]);
   const [isDataLoading, setIsDataLoading] = useState(true);
-  const [sortField, setSortField] = useState("ReservacionID");
-  const [sortOrder, setSortOrder] = useState("ASC");
+
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString(),
   );
-  const scrollRef = useRef(null);
   const [showQRCode, setShowQRCode] = useState(false); // Add state for QR code visibility
   const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: true }),
+    Autoplay({ delay: 4000, stopOnInteraction: false }),
   );
   const [videoSrc, setVideoSrc] = useState("");
+
+  const plugin2 = React.useRef(
+    Autoplay({ stopOnInteraction: false, delay: 2000 }),
+  );
 
   useEffect(() => {
     const fetchVideo = async () => {
@@ -97,16 +100,6 @@ const VideoWall = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleMouseEnter = () => {
-    console.log("Mouse entered, stopping autoplay");
-    plugin.current.stop();
-  };
-
-  const handleMouseLeave = () => {
-    console.log("Mouse left, resetting autoplay");
-    plugin.current.play();
-  };
-
   const formatTimeRange = (start, end) => {
     const startTime = parse(start, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx", new Date());
     const endTime = parse(end, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx", new Date());
@@ -130,8 +123,6 @@ const VideoWall = () => {
               plugins={[plugin.current]}
               opts={{ align: "start", loop: true }}
               className="w-4/5"
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
             >
               <CarouselContent>
                 {events.map((event, index) => (
@@ -174,6 +165,7 @@ const VideoWall = () => {
             <h2 className="mb-2 text-lg font-bold">Reservaciones Activas</h2>
             <Carousel
               opts={{ align: "start", loop: true }}
+              plugins={[plugin2.current]}
               orientation="vertical"
               className="w-full max-w-[380px]"
             >
@@ -222,7 +214,7 @@ const VideoWall = () => {
           <iframe
             src={videoSrc}
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            className="h-full w-full"
+            className="pointer-events-none h-full w-full"
           ></iframe>
         </div>
       </div>

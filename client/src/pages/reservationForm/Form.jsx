@@ -18,11 +18,9 @@ function Form({ id, isOpen, setIsOpen }) {
 
   const [horaInicio, setHoraInicio] = useState("9:00am - 10:00am");
   const [minutoInicio, setMinutoInicio] = useState(0);
-  const [periodoInicio, setPeriodoInicio] = useState("am");
 
   const [horaFinal, setHoraFinal] = useState("10:00am - 11:00am");
   const [minutoFinal, setMinutoFinal] = useState(0);
-  const [periodoFinal, setPeriodoFinal] = useState("am");
 
   const [diaSeleccionado, setDiaSeleccionado] = useState(dayjs());
 
@@ -128,12 +126,11 @@ function Form({ id, isOpen, setIsOpen }) {
       Comentario: comment,
     };
 
-    console.log(nuevaReserva);
-
     // POST request with Axios
     createReservation(nuevaReserva).then((response) => {
       console.log(response);
       sendEmail(nuevaReserva);
+      setIsOpen(false);
     });
   };
 
@@ -149,7 +146,7 @@ function Form({ id, isOpen, setIsOpen }) {
 
           <div className="fixed inset-0 w-screen overflow-y-auto p-4">
             <div className="flex min-h-full items-center justify-center">
-              <DialogPanel className="max-w-full space-y-4 rounded-md bg-white lg:max-w-5xl">
+              <DialogPanel className="max-w-full space-y-4 rounded-md bg-darkWhite lg:max-w-5xl">
                 <img
                   src={`${sala.Link}.png`}
                   className="h-72 w-full object-cover"
@@ -168,14 +165,10 @@ function Form({ id, isOpen, setIsOpen }) {
                     setHoraInicio={setHoraInicio}
                     minutoInicio={minutoInicio}
                     setMinutoInicio={setMinutoInicio}
-                    periodoInicio={periodoInicio}
-                    setPeriodoInicio={setPeriodoInicio}
                     horaFinal={horaFinal}
                     setHoraFinal={setHoraFinal}
                     minutoFinal={minutoFinal}
                     setMinutoFinal={setMinutoFinal}
-                    periodoFinal={periodoFinal}
-                    setPeriodoFinal={setPeriodoFinal}
                     diaSeleccionado={diaSeleccionado}
                     setDiaSeleccionado={setDiaSeleccionado}
                   />
