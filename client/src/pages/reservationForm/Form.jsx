@@ -16,10 +16,10 @@ import "./styles/styles.css";
 function Form({ id, isOpen, setIsOpen }) {
   const [sala, setSala] = useState({});
 
-  const [horaInicio, setHoraInicio] = useState("9:00am - 10:00am");
+  const [horaInicio, setHoraInicio] = useState(7);
   const [minutoInicio, setMinutoInicio] = useState(0);
 
-  const [horaFinal, setHoraFinal] = useState("10:00am - 11:00am");
+  const [horaFinal, setHoraFinal] = useState(8);
   const [minutoFinal, setMinutoFinal] = useState(0);
 
   const [diaSeleccionado, setDiaSeleccionado] = useState(dayjs());
@@ -97,12 +97,14 @@ function Form({ id, isOpen, setIsOpen }) {
   // POST Reserva
   const enviar = () => {
     const fechaInicio = dayjs(diaSeleccionado)
-      .hour(parseInt(horaInicio.split(":")[0]))
+      //CAMBIO TELLO: La hora de inicio ya es el numero antes del : , no se necesita hacer split, igual con la hora fin
+      .hour(parseInt(horaInicio))
       .minute(minutoInicio)
       .second(0);
+    //console.log(fechaInicio.toISOString());
 
     const fechaFin = dayjs(diaSeleccionado)
-      .hour(parseInt(horaFinal.split(":")[0]))
+      .hour(parseInt(horaFinal))
       .minute(minutoFinal)
       .second(0);
 
