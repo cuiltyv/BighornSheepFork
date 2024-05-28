@@ -19,8 +19,8 @@ function ReservationCard({ reservacion, sala }) {
   const DELETE_RESERVACION_URL = (reservacionID) =>
     `/reservaciones/set-deleted/${reservacionID}`;
   const fecha = new Date(HoraInicio).toLocaleDateString();
-  const horaI = new Date(HoraInicio).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-const horaF = new Date(HoraFin).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+  const horaI = new Date(HoraInicio).toLocaleTimeString();
+const horaF = new Date(HoraFin).toLocaleTimeString();
 
 
   const [equipo, setEquipo] = useState([]);
