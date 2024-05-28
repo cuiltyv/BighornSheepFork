@@ -41,7 +41,7 @@ const HoraFinal = ({ onHoraFinalSeleccionadaChange }) => {
           value={hour}
           onChange={handleHourChange}
         >
-          {Array.from({ length: 12 }, (_, i) => i + 1).map((h) => (
+          {Array.from({ length: 24 }, (_, i) => i + 1).map((h) => (
             <option key={h} value={h}>
               {h}
             </option>
