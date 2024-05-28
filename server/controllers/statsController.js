@@ -15,6 +15,7 @@ const getAdminStats = async (req, res) => {
       monthlyTrend: result.recordsets[5],
       userEngagement: result.recordsets[6],
       activeUsers: result.recordsets[7][0].activeUsers,
+      hardwareUsage: result.recordsets[8],
     });
   } catch (err) {
     console.error(err);
