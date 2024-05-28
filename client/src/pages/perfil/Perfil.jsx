@@ -41,7 +41,25 @@ import {
 import axios from "../../api/axios";
 import TabPanel from "../../components/TabPanel";
 import useAuth from "@UserAuth";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip as ChartJSTooltip,
+  Legend,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
 
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  ChartJSTooltip,
+  Legend,
+);
 const getProgressColor = (progress) => {
   if (progress >= 0.8) return "success";
   if (progress >= 0.4) return "warning";
@@ -58,6 +76,13 @@ const getTopHardwareStyle = (index) => {
 const getHeartColor = (index) => {
   if (index < 3) return "red";
   return "inherit";
+};
+
+const calculatePercentile = (points, allPoints) => {
+  const sortedPoints = [...allPoints].sort((a, b) => a - b);
+  const rank = sortedPoints.indexOf(points) + 1;
+  const percentile = ((sortedPoints.length - rank) / sortedPoints.length) * 100;
+  return percentile.toFixed(2);
 };
 
 export default function UserProfile() {
@@ -77,6 +102,8 @@ export default function UserProfile() {
   const [openModal, setOpenModal] = useState(false);
   const [bioEdit, setBioEdit] = useState(false);
   const [newBio, setNewBio] = useState("");
+  const [personalPointsData, setPersonalPointsData] = useState([]);
+  const [userPoints, setUserPoints] = useState(0);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -107,6 +134,21 @@ export default function UserProfile() {
       setAchievements(result.data);
     };
 
+    const fetchPersonalPointsData = async () => {
+      try {
+        const result = await axios.get(
+          "/api/achievements/personal-points-distribution",
+        );
+        const pointsData = result.data.map((item) => item.PuntosPersonales);
+        setPersonalPointsData(pointsData);
+        if (user) {
+          setUserPoints(user.PuntosPersonales);
+        }
+      } catch (error) {
+        console.error("Error fetching personal points distribution:", error);
+      }
+    };
+
     const fetchFavoriteHardware = async () => {
       if (!userID) return;
       const result = await axios.get(`/api/user/favorite-hardware/${userID}`);
@@ -134,7 +176,14 @@ export default function UserProfile() {
     fetchFavoriteHardware();
     fetchHardwareReservations();
     fetchTotalHours();
+    fetchPersonalPointsData();
   }, [userID]);
+
+  useEffect(() => {
+    if (user) {
+      setUserPoints(user.PuntosPersonales);
+    }
+  }, [user]);
 
   const handleInputChange = (event) => {
     const { id, value } = event.target;
@@ -192,6 +241,30 @@ export default function UserProfile() {
   if (loading) {
     return <CircularProgress />;
   }
+
+  const userIndex = personalPointsData.indexOf(userPoints);
+
+  const data = {
+    labels: personalPointsData.map((_, index) => index + 1),
+    datasets: [
+      {
+        label: "Personal Points Distribution",
+        data: personalPointsData,
+        backgroundColor: personalPointsData.map((_, index) =>
+          index === userIndex ? "orange" : "rgba(75, 192, 192, 0.6)",
+        ),
+      },
+    ],
+  };
+
+  const userPercentile = calculatePercentile(userPoints, personalPointsData);
+
+  const options = {
+    scales: {
+      x: { display: false },
+      y: { display: true },
+    },
+  };
 
   return (
     <Box className="flex flex-col items-center px-4 py-10">
@@ -473,6 +546,16 @@ export default function UserProfile() {
                       </Typography>
                     </Grid>
                   </Grid>
+                  <Box className="mt-6 w-full max-w-6xl p-4">
+                    <Typography variant="h6" className="mb-2">
+                      Distribución de Puntos Personales
+                    </Typography>
+                    <Bar data={data} options={options} />
+                    <Typography variant="body2" align="center">
+                      Tus puntos: {user?.PuntosPersonales || 0} (Top{" "}
+                      {userPercentile}%)
+                    </Typography>
+                  </Box>
                 </Grid>
               </Grid>
             </CardContent>
@@ -502,18 +585,28 @@ export default function UserProfile() {
           <Card>
             <CardHeader title="Actividad Reciente" />
             <CardContent>
-              <List>
+              <Grid container spacing={2}>
                 {activities.map((activity, index) => (
-                  <ListItem key={index}>
-                    <ListItemText
-                      primary={activity.ActivityType}
-                      secondary={`${activity.Details} - ${new Date(
-                        activity.ActivityDate,
-                      ).toLocaleString()}`}
-                    />
-                  </ListItem>
+                  <Grid item xs={12} sm={6} key={index}>
+                    <Box
+                      border={1}
+                      borderColor="grey.300"
+                      borderRadius="4px"
+                      padding="8px"
+                      marginBottom="8px"
+                    >
+                      <ListItem>
+                        <ListItemText
+                          primary={activity.ActivityType}
+                          secondary={`${activity.Details} - ${new Date(
+                            activity.ActivityDate,
+                          ).toLocaleString()}`}
+                        />
+                      </ListItem>
+                    </Box>
+                  </Grid>
                 ))}
-              </List>
+              </Grid>
             </CardContent>
           </Card>
         </TabPanel>
@@ -522,16 +615,27 @@ export default function UserProfile() {
           <Card>
             <CardHeader title="Amigos" />
             <CardContent>
-              <List>
+              <Grid container spacing={2}>
                 {friends.map((friend, index) => (
-                  <ListItem key={index}>
-                    <Person />
-                    <ListItemText
-                      primary={`${friend.Nombre} ${friend.Apellidos}`}
-                    />
-                  </ListItem>
+                  <Grid item xs={12} sm={6} md={4} key={index}>
+                    <Box
+                      border={1}
+                      borderColor="grey.300"
+                      borderRadius="4px"
+                      padding="8px"
+                      display="flex"
+                      alignItems="center"
+                      marginBottom="8px"
+                    >
+                      <Person />
+                      <ListItemText
+                        primary={`${friend.Nombre} ${friend.Apellidos}`}
+                        style={{ marginLeft: "8px" }}
+                      />
+                    </Box>
+                  </Grid>
                 ))}
-              </List>
+              </Grid>
             </CardContent>
           </Card>
         </TabPanel>

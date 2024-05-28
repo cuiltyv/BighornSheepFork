@@ -195,7 +195,7 @@ const VideoManager = () => {
         {/* Agregar Video */}
         <Box className="mb-4">
           <Typography variant="h6" gutterBottom>
-            Agregar Video
+            Agregar Video - Resolución recomendada: 2880 x 1080
           </Typography>
           <TextField
             fullWidth
