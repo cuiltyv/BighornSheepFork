@@ -44,7 +44,7 @@ export default function PeopleSelect({ people, setPeople }) {
             placeholder="Matrícula"
             value={person.registration}
             onChange={(e) => handleRegistrationChange(e.target.value, index)}
-            className={`mr-2 w-60 rounded-md bg-white placeholder-black shadow-[0_5px_20px_-5px_rgba(0,0,0,0.3)] placeholder:text-xl ${index === 0 ? "text-gray-400" : "text-black"}`}
+            className={`text-black w-72 mr-2 ${index === 0 ? "bg-transparent" : " bg-white rounded-md  placeholder-black shadow-[0_5px_20px_-5px_rgba(0,0,0,0.3)] placeholder:text-xl "}`}
             data-cy="matricula-input"
             readOnly={index === 0}
           />
@@ -54,7 +54,7 @@ export default function PeopleSelect({ people, setPeople }) {
             placeholder="Nombre"
             value={person.name}
             onChange={(e) => handleNameChange(e.target.value, index)}
-            className={`mr-2 w-full rounded-md bg-white placeholder-black shadow-[0_5px_20px_-5px_rgba(0,0,0,0.3)] placeholder:text-xl ${index === 0 ? "text-gray-400" : "text-black"}`}
+            className={`text-black w-72 mr-2 ${index === 0 ? "bg-transparent" : " bg-white mr-2 rounded-md  placeholder-black shadow-[0_5px_20px_-5px_rgba(0,0,0,0.3)] placeholder:text-xl "}`}
             data-cy="nombre-input"
             readOnly={index === 0}
           />

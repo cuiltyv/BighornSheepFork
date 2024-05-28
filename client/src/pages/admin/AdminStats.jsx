@@ -265,7 +265,7 @@ const AdminStats = () => {
                   <XAxis
                     dataKey="name"
                     label={{
-                      value: "Room",
+                      value: "Cuarto",
                       position: "insideBottom",
                       offset: -5,
                     }}
@@ -302,14 +302,14 @@ const AdminStats = () => {
                   <XAxis
                     dataKey="hour"
                     label={{
-                      value: "Hour",
+                      value: "Hora",
                       position: "insideBottom",
                       offset: -5,
                     }}
                   />
                   <YAxis
                     label={{
-                      value: "Count",
+                      value: "Cantidad",
                       angle: -90,
                       position: "insideLeft",
                     }}
@@ -336,14 +336,14 @@ const AdminStats = () => {
                   <XAxis
                     dataKey="monthYear"
                     label={{
-                      value: "Month/Year",
+                      value: "Mes/Año",
                       position: "insideBottom",
                       offset: -5,
                     }}
                   />
                   <YAxis
                     label={{
-                      value: "Count",
+                      value: "Cantidad",
                       angle: -90,
                       position: "insideLeft",
                     }}
