@@ -1,10 +1,15 @@
 import requests
+from dotenv import load_dotenv
+import os
 
-base_url = 'http://localhost:3000'
+
+load_dotenv()
+base_url = os.getenv("BASE_URL")
+
 
 def post_api_reservation(data=None):
     method = "POST"
-    url = f"{base_url}/ai/reservation"
+    url = f"{base_url}/bighorn/ai/reservation"
     headers = {
         'Content-Type': 'application/json',  # Explicitly set the Content-Type to application/json
         'Accept': 'application/json',  # Ensures that the server knows the client expects a JSON response.

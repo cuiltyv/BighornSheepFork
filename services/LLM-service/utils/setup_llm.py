@@ -4,9 +4,19 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-def setup_llm(model_name="gpt-4-turbo", temperature=0.6):
+from langchain_anthropic import ChatAnthropic
+
+haiku = ChatAnthropic(model='claude-3-haiku-20240307')
+sonnet = ChatAnthropic(model='claude-3-sonnet-20240229')
+opus = ChatAnthropic(model='claude-3-opus-20240229')
+
+def setup_llm(model_name="gpt-4o", temperature=0.7):
     llm = ChatOpenAI(model_name=model_name, temperature=temperature)
     return llm
 
-# llm = setup_llm("gpt-4-turbo")
+# llm = opus
 llm=setup_llm()
+
+'''
+Mi matricula es A01026999, quiero reservar para mañana a las 3pm, en la sala 1, para un proyecto de clase, con 0 alumnos, y nada de hardware.
+'''

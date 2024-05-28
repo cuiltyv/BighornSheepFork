@@ -37,9 +37,6 @@ class ReservationRequest(BaseModel):
     Hardware: List[HardwareUnit] = Field(default=[], description="The list of hardware required for the reservation, if no hardware is specified, place an empty array")
 
 
-    
-
-
 
 ReservationRequest_parser = PydanticOutputParser(pydantic_object=ReservationRequest)
 # Crea un string que explica el formato que se debe seguir para la solicitud de reserva, basado en la calse reservationrequest
