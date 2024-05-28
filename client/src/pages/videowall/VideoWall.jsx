@@ -13,10 +13,12 @@ import axios from "../../api/axios";
 import Autoplay from "embla-carousel-autoplay";
 import { parse, format } from "date-fns"; // Import date-fns
 
-const RESERVACIONES_URL = "/reservaciones/upcoming";
+const RESERVACIONES_URL = "/reservaciones/full-upcoming";
+const EVENTOS_URL = "/api/events/most-recent";
 
 const VideoWall = () => {
   const images = [image1, image1, image1, image1, image1];
+  const [events, setEvents] = useState([]);
   const [reservations, setReservations] = useState([]);
   const [isDataLoading, setIsDataLoading] = useState(true);
   const [sortField, setSortField] = useState("ReservacionID");
@@ -51,11 +53,27 @@ const VideoWall = () => {
   }, []);
 
   useEffect(() => {
+    const fetchEventos = async () => {
+      try {
+        const response = await axios.get(EVENTOS_URL);
+        setEvents(response.data);
+        console.log("Events:", events);
+        setIsDataLoading(false);
+      } catch (error) {
+        console.error("Error fetching reservations:", error);
+        setIsDataLoading(false);
+      }
+    };
+
+    fetchEventos();
+  }, []);
+
+  useEffect(() => {
     const fetchReservations = async () => {
       try {
         const response = await axios.get(RESERVACIONES_URL);
         setReservations(response.data);
-        console.log("Reservations:", reservations[0]);
+        console.log("Reservations:", reservations);
         setIsDataLoading(false);
       } catch (error) {
         console.error("Error fetching reservations:", error);
@@ -65,6 +83,11 @@ const VideoWall = () => {
 
     fetchReservations();
   }, []);
+
+  //console log events every time it is updated
+  useEffect(() => {
+    console.log("Events:", events);
+  }, [events]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -82,14 +105,6 @@ const VideoWall = () => {
   const handleMouseLeave = () => {
     console.log("Mouse left, resetting autoplay");
     plugin.current.play();
-  };
-
-  const handleButtonClick = () => {
-    setShowQRCode(!showQRCode);
-  };
-
-  const handleClosePopup = () => {
-    setShowQRCode(false);
   };
 
   const formatTimeRange = (start, end) => {
@@ -119,7 +134,7 @@ const VideoWall = () => {
               onMouseLeave={handleMouseLeave}
             >
               <CarouselContent>
-                {images.map((image, index) => (
+                {events.map((event, index) => (
                   <CarouselItem
                     key={index}
                     className="md:basis-1/2 lg:basis-1/2"
@@ -128,7 +143,7 @@ const VideoWall = () => {
                       <Card>
                         <CardContent className="flex aspect-square items-center justify-center p-6">
                           <img
-                            src={image}
+                            src={event.ImageURL}
                             alt={`Carousel Image ${index + 1}`}
                             className="h-full w-full object-cover"
                           />
@@ -143,37 +158,63 @@ const VideoWall = () => {
             </Carousel>
           </div>
         </div>
-        <div className="flex  h-1/2 flex-col items-center justify-center">
-          <Carousel
-            opts={{ align: "start", loop: true }}
-            orientation="vertical"
-            className="w-full max-w-[750px]"
-          >
-            <CarouselContent className="-mt-1 h-[380px]">
-              {reservations.map((reservation, index) => (
-                <CarouselItem
-                  key={reservation.ReservacionID}
-                  className="md:basis-1/4 lg:basis-1/4"
-                >
-                  <div className="p-1">
-                    <Card>
-                      <CardContent className="flex flex-col items-start justify-center p-2">
-                        <p className="font-large text-sm">
-                          {reservation.Matricula}
-                        </p>
-                        <p className="font-large text-sm">
-                          {formatTimeRange(
-                            reservation.HoraInicio,
-                            reservation.HoraFin,
-                          )}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
+        <div className="flex h-1/2 flex-row items-center justify-center space-x-16">
+          <div className="mx-10 flex flex-col items-center">
+            <h2 className="mb-8 text-lg font-bold">¡Reserva Ahora!</h2>
+            <div className="mb-6 w-full max-w-[240px] rounded-lg bg-white p-4 shadow-md">
+              <img src={qrCodeImage} alt="QR Code" className="max-h-48" />
+            </div>
+            <div className="mb-3 w-full max-w-[240px] rounded-lg bg-white p-4 text-center shadow-md">
+              <p className="text-sm">Contacto:</p>
+              <p className="text-sm">Email: dreamlab@gmail.com</p>
+              <p className="text-sm">Número: (123) 456-7890</p>
+            </div>
+          </div>
+          <div className="mx-10 flex flex-col items-center">
+            <h2 className="mb-2 text-lg font-bold">Reservaciones Activas</h2>
+            <Carousel
+              opts={{ align: "start", loop: true }}
+              orientation="vertical"
+              className="w-full max-w-[380px]"
+            >
+              <CarouselContent className="-mt-1 h-[380px]">
+                {reservations.map((reservation, index) => (
+                  <CarouselItem
+                    key={index}
+                    className="md:basis-1/4 lg:basis-1/4"
+                  >
+                    <div className="p-1">
+                      <Card>
+                        <CardContent className="flex flex-row items-start justify-between p-2">
+                          <div className="flex flex-col justify-center">
+                            <p className="font-large text-sm">
+                              {reservation.Matricula}
+                            </p>
+                            <p className="font-large text-sm">
+                              {formatTimeRange(
+                                reservation.HoraInicio,
+                                reservation.HoraFin,
+                              )}
+                            </p>
+                            <p className="font-large text-sm">
+                              {reservation.Nombre[0]}
+                            </p>
+                            <p className="font-large text-sm">
+                              {reservation.Nombre[1]}
+                            </p>
+                          </div>
+                          <img
+                            src={`${reservation.Link}.png`}
+                            className="ml-4 max-h-28 w-48 object-cover"
+                          />
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </div>
         </div>
       </div>
       <div className="relative h-full w-3/4">
@@ -185,17 +226,7 @@ const VideoWall = () => {
           ></iframe>
         </div>
       </div>
-      <button onClick={handleButtonClick} className="qr-button">
-        Reserva
-      </button>
-      {showQRCode && (
-        <div className="qr-code-popup">
-          <button className="close-button" onClick={handleClosePopup}>
-            X
-          </button>
-          <img src={qrCodeImage} alt="QR Code" />
-        </div>
-      )}
+
       <style jsx>{`
         .qr-button {
           position: absolute;
