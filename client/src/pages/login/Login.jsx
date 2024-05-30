@@ -25,6 +25,7 @@ import axios from "../../api/axios";
 import Loading from "../../components/Loading";
 
 const LOGIN_URL = "usuarios/auth";
+const ACTIVITY_URL = "api/user/activities";
 
 const USER_REGEX = /^[AaLl][0-9]{8}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -189,6 +190,18 @@ const Login = () => {
       // console.log(JSON.stringify(response));
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
+
+      //activity log
+      //console.log("User: ", user);
+
+      const activityData = {
+        userID: user,
+        activityType: "Inicio de sesión",
+        details:
+          "Inicio de sesión exitoso a las " + new Date().toLocaleString(),
+      };
+
+      await axios.post(ACTIVITY_URL, activityData);
 
       setAuth({ user, pwd, roles, accessToken, userID: user });
       setUser("");
