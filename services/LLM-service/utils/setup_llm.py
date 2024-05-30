@@ -10,7 +10,7 @@ haiku = ChatAnthropic(model='claude-3-haiku-20240307')
 sonnet = ChatAnthropic(model='claude-3-sonnet-20240229')
 opus = ChatAnthropic(model='claude-3-opus-20240229')
 
-def setup_llm(model_name="gpt-4o", temperature=0.7):
+def setup_llm(model_name="gpt-4o", temperature=0.4):
     llm = ChatOpenAI(model_name=model_name, temperature=temperature)
     return llm
 

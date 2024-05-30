@@ -10,8 +10,8 @@ def validate_matricula(cls, v):
 
 class Alumno(BaseModel):
     """Information about a student involved in the reservation."""
-    Matricula: str = Field(default="A00000000", description="The student's unique identification number")
-    Rol: str = Field(default="Lider", description="Only the user making the reservation should have the role 'Lider', otherwise leave blank")
+    Matricula: str = Field(description="The student's unique identification number")
+    Rol: str = Field(default="Lider", description="In the situation that you are requesting a reservation, only the userID (matricula) making the reservation should have the role 'Lider', otherwise leave blank")
     
     # @validator('Matricula' , allow_reuse=True)
     # def validate_matricula(cls, v):
@@ -42,3 +42,5 @@ ReservationRequest_parser = PydanticOutputParser(pydantic_object=ReservationRequ
 # Crea un string que explica el formato que se debe seguir para la solicitud de reserva, basado en la calse reservationrequest
 ReservationRequest_format = ReservationRequest_parser.get_format_instructions()
 
+Alumno_parser = PydanticOutputParser(pydantic_object=Alumno) # used for tools that only need the matricula - reusing code
+Alumno_format = Alumno_parser.get_format_instructions()

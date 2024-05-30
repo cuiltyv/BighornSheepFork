@@ -65,4 +65,33 @@ module.exports = {
             res.status(500).send({ message: "Error with DB", error: err });
         }
     },
+
+    // Get upcoming reservations by Matricula
+    getUpcomingReservations: async (req, res) => {
+        const { Matricula } = req.params;
+    
+        // Validate required fields
+        if (!Matricula) {
+            return res.status(400).send({
+                message: "Missing required field: Matricula"
+            });
+        }
+    
+        try {
+            let pool = await sql.connect(config);
+            let result = await pool
+                .request()
+                .input("Matricula", sql.VarChar(10), Matricula)
+                .execute("sp_GetUserReservationsByMatricula");
+    
+            res.status(201).send(result.recordset);
+        } catch (err) {
+            console.error("Error occurred while fetching upcoming reservations");
+            console.error(err);
+            res.status(500).send({ message: "Error with DB", error: err });
+        }
+    },
+
+
+
 };

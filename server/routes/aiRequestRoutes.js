@@ -92,6 +92,57 @@ const router = express.Router();
  */
 router.post("/reservation", aiRequestController.createReservation);
 
+/**
+ * @swagger
+ * /ai/reservations/{Matricula}:
+ *   get:
+ *     summary: Obtener próximas reservaciones por matrícula
+ *     description: Recupera todas las reservaciones futuras para un alumno específico usando su matrícula.
+ *     parameters:
+ *       - in: path
+ *         name: Matricula
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Matricula del Alumno.
+ *     responses:
+ *       200:
+ *         description: Lista de reservaciones futuras.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   Matricula:
+ *                     type: string
+ *                     description: Matricula del Alumno.
+ *                   HoraInicio:
+ *                     type: string
+ *                     format: date-time
+ *                     description: Tiempo de inicio de la reservación.
+ *                   HoraFin:
+ *                     type: string
+ *                     format: date-time
+ *                     description: Tiempo de finalización de la reservación.
+ *                   NombreZona:
+ *                     type: string
+ *                     description: Nombre de la zona de instalación.
+ *                   NombreUsuario:
+ *                     type: string
+ *                     description: Nombre del usuario.
+ *                   LinkSala:
+ *                     type: string
+ *                     description: Enlace a la sala.
+ *       500:
+ *         description: Error del servidor o problema de conectividad con la base de datos.
+ *       400:
+ *         description: Faltan campos requeridos.
+ *     tags:
+ *       - Reservaciones
+ */
+router.get("/reservations/:Matricula", aiRequestController.getUpcomingReservations);
 
 
 module.exports = router;
