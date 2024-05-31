@@ -4,7 +4,7 @@ const router = express.Router();
 
 /*
     /reservaciones ES EL URL BASE
-    ejemplo: https://dreamapi.azurewebsites.net/reservaciones/upcoming
+    ejemplo: https://dreamapi2.azurewebsites.net/reservaciones/upcoming
 
     /reservaciones/ : GET -> devuelve todas las reservaciones
     /reservaciones/upcoming : GET -> devuelve todas las reservaciones futuras

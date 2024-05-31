@@ -43,8 +43,22 @@ const getAchievements = async (req, res) => {
   }
 };
 
+const getPersonalPointsDistribution = async (req, res) => {
+  try {
+    let pool = await sql.connect(config);
+    let result = await pool
+      .request()
+      .execute("sp_GetPersonalPointsDistribution");
+    res.json(result.recordset);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Database error", error: err });
+  }
+};
+
 module.exports = {
   getTotalHoursReserved,
   getFavoriteHardware,
   getAchievements,
+  getPersonalPointsDistribution,
 };

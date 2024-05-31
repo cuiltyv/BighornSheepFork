@@ -18,7 +18,10 @@ import {
   Alert,
   IconButton,
   Drawer,
+  CircularProgress,
+  Tooltip,
 } from "@mui/material";
+import { MenuOutlined, Favorite } from "@mui/icons-material";
 import {
   PieChart,
   Pie,
@@ -28,14 +31,13 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
+  Tooltip as RechartsTooltip,
   LineChart,
   Line,
   Legend,
   ResponsiveContainer,
 } from "recharts";
 import Sidebar from "./Sidebar";
-import { MenuOutlined } from "@mui/icons-material";
 import {
   idToSalasMap,
   roleToNameMap,
@@ -54,9 +56,22 @@ const COLORS = [
   "#FFFF00",
 ];
 
+const getTopItemStyle = (index) => {
+  if (index === 0) return { border: "2px solid gold", borderRadius: "5px" };
+  if (index === 1) return { border: "2px solid silver", borderRadius: "5px" };
+  if (index === 2) return { border: "2px solid #cd7f32", borderRadius: "5px" }; // Bronze color
+  return {};
+};
+
+const getHeartColor = (index) => {
+  if (index < 3) return "red";
+  return "inherit";
+};
+
 const AdminStats = () => {
   const [stats, setStats] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -66,6 +81,7 @@ const AdminStats = () => {
         setStats(response.data);
       } catch (error) {
         console.error("Error fetching statistics:", error);
+        setError("Failed to fetch statistics. Please try again later.");
       }
     };
 
@@ -76,8 +92,16 @@ const AdminStats = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
+  if (error) {
+    return (
+      <Snackbar open autoHideDuration={6000}>
+        <Alert severity="error">{error}</Alert>
+      </Snackbar>
+    );
+  }
+
   if (!stats) {
-    return <Typography>Loading...</Typography>;
+    return <CircularProgress />;
   }
 
   const popularRooms = stats.popularRooms.map((room) => ({
@@ -189,7 +213,7 @@ const AdminStats = () => {
                       />
                     ))}
                   </Pie>
-                  <Tooltip />
+                  <RechartsTooltip />
                 </PieChart>
               </ResponsiveContainer>
             </Paper>
@@ -221,7 +245,7 @@ const AdminStats = () => {
                       />
                     ))}
                   </Pie>
-                  <Tooltip />
+                  <RechartsTooltip />
                 </PieChart>
               </ResponsiveContainer>
             </Paper>
@@ -241,7 +265,7 @@ const AdminStats = () => {
                   <XAxis
                     dataKey="name"
                     label={{
-                      value: "Room",
+                      value: "Cuarto",
                       position: "insideBottom",
                       offset: -5,
                     }}
@@ -253,7 +277,7 @@ const AdminStats = () => {
                       position: "insideLeft",
                     }}
                   />
-                  <Tooltip />
+                  <RechartsTooltip />
                   <Bar dataKey="count" fill="#8884d8" />
                   <Legend />
                 </BarChart>
@@ -278,19 +302,19 @@ const AdminStats = () => {
                   <XAxis
                     dataKey="hour"
                     label={{
-                      value: "Hour",
+                      value: "Hora",
                       position: "insideBottom",
                       offset: -5,
                     }}
                   />
                   <YAxis
                     label={{
-                      value: "Count",
+                      value: "Cantidad",
                       angle: -90,
                       position: "insideLeft",
                     }}
                   />
-                  <Tooltip />
+                  <RechartsTooltip />
                   <Bar dataKey="count" fill="#82ca9d" />
                   <Legend />
                 </BarChart>
@@ -312,19 +336,19 @@ const AdminStats = () => {
                   <XAxis
                     dataKey="monthYear"
                     label={{
-                      value: "Month/Year",
+                      value: "Mes/Año",
                       position: "insideBottom",
                       offset: -5,
                     }}
                   />
                   <YAxis
                     label={{
-                      value: "Count",
+                      value: "Cantidad",
                       angle: -90,
                       position: "insideLeft",
                     }}
                   />
-                  <Tooltip />
+                  <RechartsTooltip />
                   <Line type="monotone" dataKey="count" stroke="#8884d8" />
                   <Legend />
                 </LineChart>
@@ -333,29 +357,117 @@ const AdminStats = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <Paper>
-              <Typography variant="h6" className="p-4">
-                Actividad de Usuarios
-              </Typography>
-              <TableContainer>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Matricula</TableCell>
-                      <TableCell>Reservaciones</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {stats.userEngagement.map((user) => (
-                      <TableRow key={user.Matricula}>
-                        <TableCell>{user.Matricula}</TableCell>
-                        <TableCell>{user.count}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Paper>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6}>
+                <Paper>
+                  <Typography variant="h6" className="p-4">
+                    Actividad de Usuarios
+                  </Typography>
+                  <TableContainer>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell style={{ width: "70%" }}>
+                            Matricula
+                          </TableCell>
+                          <TableCell style={{ width: "70%" }}>
+                            Reservaciones
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {stats.userEngagement.map((user, index) => (
+                          <TableRow
+                            key={user.Matricula}
+                            style={getTopItemStyle(index)}
+                          >
+                            <TableCell>
+                              <Box display="flex" alignItems="center">
+                                <Tooltip
+                                  title={
+                                    index === 0
+                                      ? "Más Activo"
+                                      : index === 1
+                                        ? "Segundo Más Activo"
+                                        : index === 2
+                                          ? "Tercer Más Activo"
+                                          : ""
+                                  }
+                                >
+                                  <IconButton>
+                                    <Favorite
+                                      style={{
+                                        color: getHeartColor(index),
+                                      }}
+                                    />
+                                  </IconButton>
+                                </Tooltip>
+                                {user.Matricula}
+                              </Box>
+                            </TableCell>
+                            <TableCell>{user.count}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Paper>
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <Paper>
+                  <Typography variant="h6" className="p-4">
+                    Recomendaciones de Hardware
+                  </Typography>
+                  <TableContainer>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell style={{ width: "80%" }}>
+                            Hardware
+                          </TableCell>
+                          <TableCell style={{ width: "80%" }}>Uso</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {stats.hardwareUsage.map((item, index) => (
+                          <TableRow
+                            key={item.HardwareID}
+                            style={getTopItemStyle(index)}
+                          >
+                            <TableCell>
+                              <Box display="flex" alignItems="center">
+                                <Tooltip
+                                  title={
+                                    index === 0
+                                      ? "Más Usado"
+                                      : index === 1
+                                        ? "Segundo Más Usado"
+                                        : index === 2
+                                          ? "Tercero Más Usado"
+                                          : ""
+                                  }
+                                >
+                                  <IconButton>
+                                    <Favorite
+                                      style={{
+                                        color: getHeartColor(index),
+                                      }}
+                                    />
+                                  </IconButton>
+                                </Tooltip>
+                                {item.Nombre}
+                              </Box>
+                            </TableCell>
+                            <TableCell>{item.totalUsage}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Paper>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Box>

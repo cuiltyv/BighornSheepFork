@@ -34,7 +34,10 @@ export default function Hero() {
           <Link to="salas" smooth={true} duration={500} className="w-full">
             <ButtonFilled text="Reserva un espacio" />
           </Link>
-          <ButtonEmpty text="Crea tu perfil" />
+
+          <a href="/BighornSheep/perfil" className="w-full">
+            <ButtonEmpty text="Revisa tus reservaciones" />
+          </a>
         </div>
       </div>
     </div>
