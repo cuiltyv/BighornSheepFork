@@ -15,16 +15,15 @@ export default function Calendar({ onDiaSeleccionadoChange }) {
   const todayMonth = currentDate.month();
 
   const handleDateClick = (date) => {
-    if(date >= currentDate){
+    if (date >= currentDate) {
       setSelectedDate(date);
       onDiaSeleccionadoChange(date);
     }
-    
   };
 
   return (
-    <div>
-      <h2 className="mb-2 text-xl font-bold">Fecha de reservación</h2>
+    <div className="flex flex-col items-center gap-2">
+      <h2 className="mb-2 w-full text-xl font-bold">Fecha de reservación</h2>
       <div className="calendar-container h-auto rounded-lg p-6 shadow-[0_5px_20px_-5px_rgba(0,0,0,0.3)]">
         <div className="flex justify-center">
           <div className="flex w-full justify-between">
@@ -88,7 +87,7 @@ export default function Calendar({ onDiaSeleccionadoChange }) {
                     )}
                     onClick={() => {
                       {
-                        if(currentMonth) handleDateClick(date);
+                        if (currentMonth) handleDateClick(date);
                       }
                     }}
                     data-cy="day-button"

@@ -38,7 +38,7 @@ const HoraInicio = ({ onHoraInicioSeleccionadaChange }) => {
   return (
     <div>
       <h2 className="mb-2 text-xl font-bold">Hora de inicio</h2>
-      <div className="flex items-center space-x-2 rounded-lg p-4 shadow-[0_5px_20px_-5px_rgba(0,0,0,0.3)]">
+      <div className="flex w-fit flex-row items-center space-x-2 rounded-lg p-4 shadow-[0_5px_20px_-5px_rgba(0,0,0,0.3)]">
         <select
           className="rounded-md bg-white p-2.5 text-lg text-gray-900"
           value={hour}

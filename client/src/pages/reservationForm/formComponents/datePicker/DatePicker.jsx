@@ -38,9 +38,9 @@ function DatePicker(props) {
 
   return (
     <div>
-      <div className="flex flex-row gap-20">
+      <div className="flex flex-col gap-14 sm:flex-row lg:gap-20">
         <Calendar onDiaSeleccionadoChange={handleDiaSeleccionadoChange} />
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-row justify-center gap-8 sm:flex-col sm:justify-start">
           <HoraInicio
             onHoraInicioSeleccionadaChange={onHoraInicioSeleccionadaChange}
           />
