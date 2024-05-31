@@ -26,9 +26,9 @@ function DeviceList({ id, aparatos, setAparatos }) {
   return (
     <div className="mt-10">
       <h2 className="mb-2 text-xl font-bold">Selección de aparatos</h2>
-      <div className="flex flex-row flex-wrap justify-between gap-6">
+      <div className="flex w-full flex-wrap justify-between gap-6">
         {aparatos.map((aparato, index) => (
-          <div key={index} className="w-52">
+          <div key={index} className="md:w-52">
             <Device
               nombre={aparato.nombre}
               cantidad={aparato.cantidad}

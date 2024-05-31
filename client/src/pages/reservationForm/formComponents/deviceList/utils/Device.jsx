@@ -13,7 +13,7 @@ export default function Device({ nombre, cantidad, setCantidad }) {
   };
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center justify-between sm:justify-start">
       <div className="w-28 text-sm font-semibold">{nombre}</div>
       <button
         onClick={decrementarCantidad}

@@ -156,15 +156,15 @@ function Form({ id, isOpen, setIsOpen }) {
         >
           <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
 
-          <div className="fixed inset-0 w-screen overflow-y-auto p-4">
+          <div className="fixed inset-0 w-screen overflow-y-auto md:p-4">
             <div className="flex min-h-full items-center justify-center">
               <DialogPanel className="max-w-full space-y-4 rounded-md bg-darkWhite lg:max-w-5xl">
                 <img
                   src={`${sala.Link}.png`}
-                  className="h-72 w-full object-cover"
+                  className="h-72 w-full rounded-t-md object-cover"
                   data-cy="imagen-sala"
                 />
-                <div className="px-28 py-14">
+                <div className="px-6 py-4 sm:px-8 lg:px-28 lg:py-14">
                   <h1
                     className="bh-text-blue mb-6 text-5xl font-bold"
                     data-cy="nombre-sala"

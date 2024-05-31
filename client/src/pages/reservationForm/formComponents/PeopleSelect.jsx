@@ -38,13 +38,16 @@ export default function PeopleSelect({ people, setPeople }) {
         Personas adicionales reservación
       </h2>
       {people.map((person, index) => (
-        <div key={index} className="mb-2 flex items-center">
+        <div
+          key={index}
+          className="mb-2 flex flex-col items-center sm:flex-row"
+        >
           <input
             type="text"
             placeholder="Matrícula"
             value={person.registration}
             onChange={(e) => handleRegistrationChange(e.target.value, index)}
-            className={`text-black w-72 mr-2 ${index === 0 ? "bg-transparent" : " bg-white rounded-md  placeholder-black shadow-[0_5px_20px_-5px_rgba(0,0,0,0.3)] placeholder:text-xl "}`}
+            className={`mr-2 w-full rounded-md placeholder-black shadow-[0_5px_20px_-5px_rgba(0,0,0,0.3)] placeholder:text-xl sm:w-72 ${index === 0 ? "bg-gray-200 text-gray-500" : "bg-white text-black"}`}
             data-cy="matricula-input"
             readOnly={index === 0}
           />
@@ -54,13 +57,13 @@ export default function PeopleSelect({ people, setPeople }) {
             placeholder="Nombre"
             value={person.name}
             onChange={(e) => handleNameChange(e.target.value, index)}
-            className={`text-black w-72 mr-2 ${index === 0 ? "bg-transparent" : " bg-white mr-2 rounded-md  placeholder-black shadow-[0_5px_20px_-5px_rgba(0,0,0,0.3)] placeholder:text-xl "}`}
+            className={`mr-2 w-full rounded-md placeholder-black shadow-[0_5px_20px_-5px_rgba(0,0,0,0.3)] placeholder:text-xl ${index === 0 ? "bg-gray-200 text-gray-500" : "bg-white text-black"}`}
             data-cy="nombre-input"
             readOnly={index === 0}
           />
 
           {index === people.length - 1 && (
-            <>
+            <div className="flex flex-row">
               <button
                 onClick={removePerson}
                 className="h-11 w-11 rounded-full  border-2 border-gray-500 px-3 py-2 text-gray-500 "
@@ -73,7 +76,7 @@ export default function PeopleSelect({ people, setPeople }) {
               >
                 <GrAdd />
               </button>
-            </>
+            </div>
           )}
         </div>
       ))}
