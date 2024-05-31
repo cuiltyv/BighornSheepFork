@@ -1,4 +1,4 @@
-import qrPhoneAlberto from "../../assets/qrPhoneAlberto.png";
+// import qrPhoneAlberto from "../../assets/qrPhoneAlberto.png";
 import qrPhoneTello from "../../assets/qrPhoneTello.png";
 
 export default function AiCTA() {
