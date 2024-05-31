@@ -165,7 +165,7 @@ function Form({ id, isOpen, setIsOpen }) {
 
         addUserActivity(activityData)
           .then(() => {
-            sendEmail(nuevaReserva);
+            sendEmail(emailObject);
             setIsOpen(false);
             window.alert("Reserva creada exitosamente");
           })
