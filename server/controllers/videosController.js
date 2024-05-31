@@ -1,7 +1,6 @@
 const videosRouter = require("express").Router();
 const Video = require("../models/video");
 
-// Ruta para obtener todos los videos
 videosRouter.get("/", async (request, response) => {
   try {
     const videoList = await Video.find({}).sort({ order: 1 });
