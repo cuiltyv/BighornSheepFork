@@ -13,28 +13,27 @@ import axios from "../../api/axios";
 import Autoplay from "embla-carousel-autoplay";
 import AutoScroll from "embla-carousel-auto-scroll";
 import { parse, format } from "date-fns"; // Import date-fns
+import mqtt from "mqtt";
 
 const RESERVACIONES_URL = "/reservaciones/full-upcoming";
 const EVENTOS_URL = "/api/events/most-recent";
+const RFID_API_URL =
+  "https://rfidvideowall.azurewebsites.net/login/idCredencial";
 
 const VideoWall = () => {
   const images = [image1, image1, image1, image1, image1];
   const [events, setEvents] = useState([]);
   const [reservations, setReservations] = useState([]);
   const [isDataLoading, setIsDataLoading] = useState(true);
-
+  const [filterMatricula, setFilterMatricula] = useState("");
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString(),
   );
   const [showQRCode, setShowQRCode] = useState(false); // Add state for QR code visibility
-  const plugin = React.useRef(
-    Autoplay({ delay: 4000, stopOnInteraction: false }),
-  );
+  const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: false }));
   const [videoSrc, setVideoSrc] = useState("");
 
-  const plugin2 = React.useRef(
-    Autoplay({ stopOnInteraction: false, delay: 2000 }),
-  );
+  const plugin2 = useRef(Autoplay({ stopOnInteraction: false, delay: 2000 }));
 
   useEffect(() => {
     const fetchVideo = async () => {
@@ -87,7 +86,58 @@ const VideoWall = () => {
     fetchReservations();
   }, []);
 
-  //console log events every time it is updated
+  const options = {
+    username: "admin",
+    password: "Admin123",
+  };
+  const brokerUrl =
+    "wss://7b398e4b18b84e3bb15420f4f5fb7d91.s1.eu.hivemq.cloud:8884/mqtt"; // Replace with your MQTT broker URL
+
+  const fetchMatriculaByRFID = async (rfid) => {
+    try {
+      const response = await axios.post(
+        RFID_API_URL,
+        { idCredencial: rfid },
+        {
+          headers: { "Content-Type": "application/json" },
+        },
+      );
+      return response.data.matricula; // Adjust based on the actual response structure
+    } catch (error) {
+      console.error("Error fetching matricula:", error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    const client = mqtt.connect(brokerUrl, options);
+
+    client.on("connect", () => {
+      console.log("Connected to MQTT broker");
+      client.subscribe("Matricula"); // Replace with your MQTT topic
+      console.log("Subscribed to Matricula");
+    });
+
+    client.on("message", async (topic, payload) => {
+      console.log("Received message:", payload.toString());
+      const receivedRFID = payload.toString();
+      const matricula = await fetchMatriculaByRFID(receivedRFID);
+      if (matricula) {
+        setFilterMatricula(matricula);
+        console.log("Filtering by Matricula:", matricula);
+        // Reset the filter after 30 seconds
+        setTimeout(() => {
+          setFilterMatricula("");
+        }, 30000);
+      }
+    });
+
+    // Clean up the MQTT client on unmount
+    return () => {
+      client.end();
+    };
+  }, []);
+
   useEffect(() => {
     console.log("Events:", events);
   }, [events]);
@@ -170,40 +220,62 @@ const VideoWall = () => {
               className="w-full max-w-[380px]"
             >
               <CarouselContent className="-mt-1 h-[380px]">
-                {reservations.map((reservation, index) => (
-                  <CarouselItem
-                    key={index}
-                    className="md:basis-1/4 lg:basis-1/4"
-                  >
-                    <div className="p-1">
-                      <Card>
-                        <CardContent className="flex flex-row items-start justify-between p-2">
-                          <div className="flex flex-col justify-center">
-                            <p className="font-large text-sm">
-                              {reservation.Matricula}
-                            </p>
-                            <p className="font-large text-sm">
-                              {formatTimeRange(
-                                reservation.HoraInicio,
-                                reservation.HoraFin,
-                              )}
-                            </p>
-                            <p className="font-large text-sm">
-                              {reservation.Nombre[0]}
-                            </p>
-                            <p className="font-large text-sm">
-                              {reservation.Nombre[1]}
-                            </p>
-                          </div>
-                          <img
-                            src={`${reservation.Link}.png`}
-                            className="ml-4 max-h-28 w-48 object-cover"
-                          />
-                        </CardContent>
-                      </Card>
-                    </div>
-                  </CarouselItem>
-                ))}
+                {reservations
+                  .filter(
+                    (reservation) =>
+                      filterMatricula === "" ||
+                      reservation.Matricula === filterMatricula,
+                  )
+                  .map((reservation, index) => (
+                    <CarouselItem
+                      key={index}
+                      className="md:basis-1/4 lg:basis-1/4"
+                    >
+                      <div className="p-1">
+                        <Card>
+                          <CardContent className="flex flex-row items-start justify-between p-2">
+                            <div className="flex flex-col justify-center">
+                              <p className="font-large text-sm">
+                                {reservation.Matricula}
+                              </p>
+                              <p className="font-large text-sm">
+                                {formatTimeRange(
+                                  reservation.HoraInicio,
+                                  reservation.HoraFin,
+                                )}
+                              </p>
+                              <p className="font-large text-sm">
+                                {reservation.Nombre[0]}
+                              </p>
+                              <p className="font-large text-sm">
+                                {reservation.Nombre[1]}
+                              </p>
+                            </div>
+                            <img
+                              src={`${reservation.Link}.png`}
+                              className="ml-4 max-h-28 w-48 object-cover"
+                            />
+                          </CardContent>
+                        </Card>
+                      </div>
+                    </CarouselItem>
+                  ))}
+                {reservations.filter(
+                  (reservation) =>
+                    filterMatricula === "" ||
+                    reservation.Matricula === filterMatricula,
+                ).length === 0 && (
+                  <div className="p-1">
+                    <Card>
+                      <CardContent className="p-2">
+                        <p className="font-large text-sm">
+                          No hay reservaciones para la matrícula{" "}
+                          {filterMatricula}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                )}
               </CarouselContent>
             </Carousel>
           </div>
