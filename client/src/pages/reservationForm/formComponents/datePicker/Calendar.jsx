@@ -12,10 +12,14 @@ export default function Calendar({ onDiaSeleccionadoChange }) {
   const currentDate = dayjs();
   const [today, setToday] = useState(currentDate);
   const [selectedDate, setSelectedDate] = useState(currentDate);
+  const todayMonth = currentDate.month();
 
   const handleDateClick = (date) => {
-    setSelectedDate(date);
-    onDiaSeleccionadoChange(date);
+    if(date >= currentDate){
+      setSelectedDate(date);
+      onDiaSeleccionadoChange(date);
+    }
+    
   };
 
   return (
@@ -24,10 +28,12 @@ export default function Calendar({ onDiaSeleccionadoChange }) {
       <div className="calendar-container h-auto rounded-lg p-6 shadow-[0_5px_20px_-5px_rgba(0,0,0,0.3)]">
         <div className="flex justify-center">
           <div className="flex w-full justify-between">
+            {/* Botón para regresar en uno el mes en caso de que el mes sea proximo al mes actual */}
             <GrFormPrevious
               className="h-10 w-10 cursor-pointer  rounded-full bg-white"
               onClick={() => {
-                setToday(today.month(today.month() - 1));
+                if (today.month() > todayMonth)
+                  setToday(today.month(today.month() - 1));
               }}
             />
             <div className="flex">
@@ -38,10 +44,12 @@ export default function Calendar({ onDiaSeleccionadoChange }) {
                 {today.year()}
               </p>
             </div>
+            {/* Botón para ir al siguiente mes con limite en dos meses en el futuro */}
             <GrFormNext
               className="h-10 w-10 cursor-pointer rounded-full bg-white "
               onClick={() => {
-                setToday(today.month(today.month() + 1));
+                if (today.month() < todayMonth + 2)
+                  setToday(today.month(today.month() + 1));
               }}
               data-cy="next-form-button"
             />
@@ -80,7 +88,7 @@ export default function Calendar({ onDiaSeleccionadoChange }) {
                     )}
                     onClick={() => {
                       {
-                        handleDateClick(date);
+                        if(currentMonth) handleDateClick(date);
                       }
                     }}
                     data-cy="day-button"
