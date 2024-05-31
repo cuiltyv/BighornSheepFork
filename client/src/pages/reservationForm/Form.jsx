@@ -10,6 +10,8 @@ import emailjs from "@emailjs/browser";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { getUser } from "@api_helper";
 import useAuth from "@UserAuth";
+import axios from "../../api/axios";
+import { idToSalasMap } from "@/components/interfaces/constants";
 import "./styles/Form.css";
 import "./styles/styles.css";
 
@@ -94,6 +96,16 @@ function Form({ id, isOpen, setIsOpen }) {
       );
   };
 
+  const addUserActivity = async (activityData) => {
+    try {
+      const response = await axios.post("/api/user/activities", activityData);
+      return response.data;
+    } catch (error) {
+      console.error("Error logging user activity:", error);
+      throw error;
+    }
+  };
+
   // POST Reserva
   const enviar = () => {
     const fechaInicio = dayjs(diaSeleccionado)
@@ -138,12 +150,32 @@ function Form({ id, isOpen, setIsOpen }) {
     };
 
     // POST request with Axios
-    createReservation(nuevaReserva).then((response) => {
-      console.log(response);
-      sendEmail(emailObject);
-      setIsOpen(false);
-      window.alert("Reserva creada exitosamente");
-    });
+    createReservation(nuevaReserva)
+      .then((response) => {
+        console.log(response);
+
+        const formattedHoraInicio = `${horaInicio}:${String(minutoInicio).padStart(2, "0")}`;
+        const formattedHoraFinal = `${horaFinal}:${String(minutoFinal).padStart(2, "0")}`;
+
+        const activityData = {
+          userID: people[0].registration,
+          activityType: "Reservación",
+          details: `Reservación hecha para la sala ${idToSalasMap[sala.SalaId]} el día ${dayjs(fechaInicio).format("DD/MM/YYYY")} de ${formattedHoraInicio} a ${formattedHoraFinal}`,
+        };
+
+        addUserActivity(activityData)
+          .then(() => {
+            sendEmail(nuevaReserva);
+            setIsOpen(false);
+            window.alert("Reserva creada exitosamente");
+          })
+          .catch((err) => {
+            console.error("Error logging user activity:", err);
+          });
+      })
+      .catch((err) => {
+        console.error("Error creating reservation:", err);
+      });
   };
 
   return (
