@@ -18,5 +18,5 @@ def setup_llm(model_name="gpt-4o", temperature=0.4):
 llm=setup_llm()
 
 '''
-Mi matricula es A01026999, quiero reservar para mañana a las 3pm, en la sala 1, para un proyecto de clase, con 0 alumnos, y nada de hardware.
+Mi matricula es A01026999, quiero reservar para mañana a las 3pm, por 60 minutos, en la sala 1, para un proyecto de clase, con 0 alumnos, y nada de hardware.
 '''

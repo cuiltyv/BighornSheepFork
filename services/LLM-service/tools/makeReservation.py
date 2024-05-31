@@ -19,6 +19,8 @@ def make_reservation_function(**kwargs) -> str:
             return f"Server error or connectivity problem with the database. Here you can find the server response, remember to answer in a extremly UX friendly format, as if to a millenial grandma: {response.content}"
         elif response.status_code == 400:
             return f"Missing required fields. Here you can find the server response, remember to answer in a extremly UX friendly format, as if to a millenial grandma: {response.content}"
+        elif response.status_code == 409:
+            return f"There is an overlap with another reservation. Here you can find the server response, remember to answer in a extremly UX friendly format, as if to a millenial grandma: {response.content}"
         else:
             return f"Failed to make reservation. Here you can find the server response, remember to answer in a extremly UX friendly format, as if to a millenial grandma: {response.status_code}"
     except Exception as e:

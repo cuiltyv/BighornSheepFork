@@ -1,5 +1,10 @@
 const sql = require("mssql");
 const config = require("../configs/config");
+const moment = require('moment-timezone');
+
+const formatDateTime = (dateString) => {
+    return moment(dateString).format('YYYY-MM-DD HH:mm:ss');
+};
 
 module.exports = {
     createReservation: async (req, res) => {
@@ -29,24 +34,45 @@ module.exports = {
             });
         }
     
+        const newHoraInicio = moment(HoraInicio).tz('America/Los_Angeles').format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+        const newHoraFin = moment(HoraFin).tz('America/Los_Angeles').format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+
+
         try {
             let pool = await sql.connect(config);
-    
-            // Check for overlapping reservations
-            const overlapResult = await pool
+
+        // Check for overlapping reservations
+        const overlapResult = await pool
+            .request()
+            .input("ZonaID", sql.Int, ZonaID)
+            .input("HoraInicio", sql.DateTimeOffset, newHoraInicio)
+            .input("HoraFin", sql.DateTimeOffset, newHoraFin)
+            .execute("sp_CheckOverlappingReservations");
+
+        const overlappingReservations = overlapResult.recordset;
+        if (overlappingReservations.length > 0) {
+            // Find nearest available alternatives
+            const alternativesResult = await pool
                 .request()
                 .input("ZonaID", sql.Int, ZonaID)
-                .input("HoraInicio", sql.DateTime, HoraInicio)
-                .input("HoraFin", sql.DateTime, HoraFin)
-                .execute("sp_CheckOverlappingReservations");
-    
-            const overlappingReservations = overlapResult.recordset;
-            if (overlappingReservations.length > 0) {
+                .input("HoraInicio", sql.DateTimeOffset, newHoraInicio)
+                .input("HoraFin", sql.DateTimeOffset, newHoraFin)
+                .execute("sp_FindNearestAlternatives");
+
+            const alternatives = alternativesResult.recordset;
+            if (alternatives.length > 0) {
                 return res.status(409).send({
-                    message: "Overlapping reservations found",
+                    message: "Overlapping reservations found. Here are some alternatives:",
+                    overlappingReservations,
+                    alternatives
+                });
+            } else {
+                return res.status(409).send({
+                    message: "Overlapping reservations found, and no suitable alternatives available within the same zone.",
                     overlappingReservations
                 });
             }
+        }
     
             const alumnoTable = new sql.Table("AlumnoType");
             alumnoTable.columns.add("Matricula", sql.VarChar(10));
@@ -66,8 +92,8 @@ module.exports = {
                 .request()
                 .input("Matricula", sql.VarChar(10), Matricula)
                 .input("ZonaID", sql.Int, ZonaID)
-                .input("HoraInicio", sql.DateTime, HoraInicio)
-                .input("HoraFin", sql.DateTime, HoraFin)
+                .input("HoraInicio", sql.DateTimeOffset, newHoraInicio)
+                .input("HoraFin", sql.DateTimeOffset, newHoraFin)
                 .input("Proposito", sql.NVarChar(255), Proposito)
                 .input("Estado", sql.NVarChar(50), Estado)
                 .input("Alumnos", alumnoTable)
