@@ -24,6 +24,8 @@ const router = express.Router();
  *         description: Lista de eventos obtenida exitosamente
  *       500:
  *         description: Error en la base de datos
+ *     tags:
+ *       - Eventos
  */
 router.get("/", eventsController.getAllEvents);
 
@@ -57,6 +59,8 @@ router.get("/", eventsController.getAllEvents);
  *         description: Evento creado exitosamente
  *       500:
  *         description: Error en la base de datos
+ *     tags:
+ *       - Eventos
  */
 router.post("/", eventsController.addEvent);
 
@@ -77,6 +81,8 @@ router.post("/", eventsController.addEvent);
  *         description: Evento eliminado exitosamente
  *       500:
  *         description: Error en la base de datos
+ *     tags:
+ *       - Eventos
  */
 router.delete("/:id", eventsController.deleteEvent);
 
@@ -107,6 +113,8 @@ router.delete("/:id", eventsController.deleteEvent);
  *         description: Orden de eventos actualizado exitosamente
  *       500:
  *         description: Error en la base de datos
+ *     tags:
+ *       - Eventos
  */
 router.put("/order", eventsController.updateEventOrder);
 
@@ -132,6 +140,8 @@ router.put("/order", eventsController.updateEventOrder);
  *         description: Visibilidad de evento actualizada exitosamente
  *       500:
  *         description: Error en la base de datos
+ *     tags:
+ *       - Eventos
  */
 router.put("/visibility", eventsController.updateEventVisibility);
 
@@ -173,6 +183,8 @@ router.put("/visibility", eventsController.updateEventVisibility);
  *         description: Evento actualizado exitosamente
  *       500:
  *         description: Error en la base de datos
+ *     tags:
+ *       - Eventos
  */
 router.put("/:id", eventsController.updateEvent);
 
@@ -187,6 +199,8 @@ router.put("/:id", eventsController.updateEvent);
  *         description: Lista de eventos recientes obtenida exitosamente
  *       500:
  *         description: Error en la base de datos
+ *     tags:
+ *       - Eventos
  */
 router.get("/most-recent", eventsController.getMostRecentEvents);
 

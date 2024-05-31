@@ -26,6 +26,8 @@ const router = express.Router();
  *         description: Total de horas reservadas obtenido exitosamente
  *       500:
  *         description: Error en la base de datos
+ *     tags:
+ *       - Logros
  */
 router.get(
   "/total-hours/:userID",
@@ -49,6 +51,8 @@ router.get(
  *         description: Hardware favorito obtenido exitosamente
  *       500:
  *         description: Error en la base de datos
+ *     tags:
+ *       - Logros
  */
 router.get(
   "/favorite-hardware/:userID",
@@ -72,6 +76,8 @@ router.get(
  *         description: Logros obtenidos exitosamente
  *       500:
  *         description: Error en la base de datos
+ *     tags:
+ *       - Logros
  */
 router.get("/achievements/:userID", achievementsController.getAchievements);
 
@@ -86,6 +92,8 @@ router.get("/achievements/:userID", achievementsController.getAchievements);
  *         description: Distribución de puntos obtenida exitosamente
  *       500:
  *         description: Error en la base de datos
+ *     tags:
+ *       - Logros
  */
 router.get(
   "/personal-points-distribution",
