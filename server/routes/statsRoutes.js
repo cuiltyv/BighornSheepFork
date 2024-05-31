@@ -14,6 +14,8 @@ const statsController = require("../controllers/statsController");
  *         description: Estadísticas obtenidas exitosamente
  *       500:
  *         description: Error en la base de datos
+ *     tags:
+ *       - Estadísticas
  */
 router.get("/", statsController.getAdminStats);
 
