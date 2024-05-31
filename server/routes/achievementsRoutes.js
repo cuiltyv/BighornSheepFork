@@ -11,7 +11,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /achievements/total-hours/{userID}:
+ * /api/achievements/total-hours/{userID}:
  *   get:
  *     summary: Obtener el total de horas reservadas por el usuario
  *     description: Devuelve el total de horas reservadas por un usuario específico
@@ -36,7 +36,7 @@ router.get(
 
 /**
  * @swagger
- * /achievements/favorite-hardware/{userID}:
+ * /api/achievements/favorite-hardware/{userID}:
  *   get:
  *     summary: Obtener el hardware más reservado por el usuario
  *     description: Devuelve el hardware más reservado por un usuario específico
@@ -61,7 +61,7 @@ router.get(
 
 /**
  * @swagger
- * /achievements/achievements/{userID}:
+ * /api/achievements/achievements/{userID}:
  *   get:
  *     summary: Obtener los logros del usuario
  *     description: Devuelve los logros de un usuario específico
@@ -83,7 +83,7 @@ router.get("/achievements/:userID", achievementsController.getAchievements);
 
 /**
  * @swagger
- * /achievements/personal-points-distribution:
+ * /api/achievements/personal-points-distribution:
  *   get:
  *     summary: Obtener la distribución de puntos personales
  *     description: Devuelve la distribución de puntos personales
