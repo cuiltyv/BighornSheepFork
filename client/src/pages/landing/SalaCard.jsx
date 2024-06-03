@@ -1,12 +1,25 @@
 import ButtonFilled from "../../components/ButtonFilled";
 import { useState } from "react";
 import ReactCardFlip from "react-card-flip";
+import useAuth from "../../hooks/useAuth";
 
 export default function SalaCard({ sala, setIsOpen, setId }) {
   const [isFlipped, setIsFlipped] = useState(false);
+  const { auth } = useAuth();
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
+  };
+
+  const handleClick = () => {
+    console.log(auth);
+    if (!auth?.userID) {
+      window.location.href = "/login";
+      return;
+    }
+
+    setIsOpen(true);
+    setId(sala.SalaId);
   };
 
   return (
@@ -30,15 +43,7 @@ export default function SalaCard({ sala, setIsOpen, setId }) {
             <h3 className="font-semibold">{sala.Nombre}</h3>
             <p className="text-xs font-medium">{sala.Lugar}</p>
           </div>
-          <ButtonFilled
-            text="Reservar"
-            onClick={() => {
-              setIsOpen(true);
-              setId(sala.SalaId);
-              console.log(sala);
-              console.log(sala.SalaId);
-            }}
-          />
+          <ButtonFilled text="Reservar" onClick={handleClick} />
         </div>
 
         <div className="flex min-h-96 max-w-64 flex-col gap-2 rounded bg-white p-3 shadow-lg">
