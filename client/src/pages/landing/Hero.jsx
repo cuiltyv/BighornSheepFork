@@ -35,7 +35,7 @@ export default function Hero() {
             <ButtonFilled text="Reserva un espacio" />
           </Link>
 
-          <a href="/BighornSheep/perfil" className="w-full">
+          <a href="/BighornSheep/reservaciones" className="w-full">
             <ButtonEmpty text="Revisa tus reservaciones" />
           </a>
         </div>
