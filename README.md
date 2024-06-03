@@ -17,6 +17,13 @@ Dentro del D.R.E.A.M. Lab, se tienen varias salas propuestas, por ejemplo:
 4. New Horizons
 5. Deep Net
 6. Graveyard
+
+### El DREAM Lab se encuentra desplegado en 
+## [Dream LAB](https://dreamlabs.cfd)
+## https://dreamlabs.cfd
+
+### Documentación de API
+## https://dreamapi2.azurewebsites.net
    
 ## Miembros del Equipo
 
