@@ -36,7 +36,7 @@ export default function Hero() {
           </Link>
 
           <a href="/BighornSheep/perfil" className="w-full">
-            <ButtonEmpty text="Crea tu perfil" />
+            <ButtonEmpty text="Revisa tus reservaciones" />
           </a>
         </div>
       </div>
