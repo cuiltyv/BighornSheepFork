@@ -46,6 +46,7 @@ import EditEventModal from "../../components/EditEventModal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./DatePicker.css";
+
 const SortableItem = ({
   id,
   event,
@@ -59,6 +60,7 @@ const SortableItem = ({
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    touchAction: "none", // Prevent default touch actions
   };
 
   return (
@@ -361,12 +363,12 @@ const EventManager = () => {
   };
 
   return (
-    <Box className="flex min-h-screen">
+    <Box className="flex min-h-screen flex-col">
       <Drawer anchor="left" open={sidebarOpen} onClose={toggleSidebar}>
         <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
       </Drawer>
       <Box
-        className="flex-grow rounded-lg bg-white p-4 shadow-md"
+        className="relative flex-grow rounded-lg bg-white p-4 shadow-md"
         component={Paper}
       >
         <IconButton

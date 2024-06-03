@@ -106,6 +106,16 @@ function Form({ id, isOpen, setIsOpen }) {
     }
   };
 
+  const addFriend = async (friendData) => {
+    try {
+      const response = await axios.post("/api/user/friends", friendData);
+      return response.data;
+    } catch (error) {
+      console.error("Error adding friend:", error);
+      throw error;
+    }
+  };
+
   // POST Reserva
   const enviar = () => {
     const fechaInicio = dayjs(diaSeleccionado)
@@ -166,6 +176,38 @@ function Form({ id, isOpen, setIsOpen }) {
       .catch((err) => {
         console.error("Error creating reservation:", err);
       });
+
+    if (people.length > 1) {
+      for (let i = 1; i < people.length; i++) {
+        //Hacer amigos a persona que hizo la reserva con todos los demás
+        const friendData = {
+          UserID: people[0].registration,
+          FriendID: people[i].registration,
+        };
+
+        addFriend(friendData)
+          .then(() => {
+            console.log("Friend added successfully");
+          })
+          .catch((err) => {
+            console.error("Error adding friend:", err);
+          });
+
+        //Hacer amigos a todas las personas que no hicieron la reserva con la persona que hizo la reserva
+        const friendData2 = {
+          UserID: people[i].registration,
+          FriendID: people[0].registration,
+        };
+
+        addFriend(friendData2)
+          .then(() => {
+            console.log("Friend added successfully");
+          })
+          .catch((err) => {
+            console.error("Error adding friend:", err);
+          });
+      }
+    }
   };
 
   return (
