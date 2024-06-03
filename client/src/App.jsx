@@ -19,7 +19,7 @@ import EventManager from "./pages/admin/EventManager";
 import VideoManager from "./pages/admin/VideoManager";
 import UserManagement from "./pages/admin/UserManagement";
 import AdminStats from "./pages/admin/AdminStats";
-import { useEffect } from "react";
+
 const ROLES = {
   User: 1,
   Admin: 2,
