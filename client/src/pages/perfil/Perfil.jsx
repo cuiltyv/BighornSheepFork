@@ -343,7 +343,6 @@ export default function UserProfile() {
             <Tab label="Configuración" />
             <Tab label="Actividad Reciente" />
             <Tab label="Amigos" />
-            <Tab label="Contraseña" />
           </Tabs>
 
           <TabPanel value={tab} index={0}>
@@ -669,35 +668,6 @@ export default function UserProfile() {
                   ))}
                 </Grid>
               </CardContent>
-            </Card>
-          </TabPanel>
-
-          <TabPanel value={tab} index={5}>
-            <Card>
-              <CardHeader title="Contraseña" />
-              <CardContent>
-                <Typography variant="body2">Contraseña Actual</Typography>
-                <TextField
-                  fullWidth
-                  id="current"
-                  type="password"
-                  variant="outlined"
-                  margin="normal"
-                />
-                <Typography variant="body2">Nueva Contraseña</Typography>
-                <TextField
-                  fullWidth
-                  id="new"
-                  type="password"
-                  variant="outlined"
-                  margin="normal"
-                />
-              </CardContent>
-              <CardActions>
-                <Button variant="contained" color="primary">
-                  Guardar Contraseña
-                </Button>
-              </CardActions>
             </Card>
           </TabPanel>
         </Paper>
