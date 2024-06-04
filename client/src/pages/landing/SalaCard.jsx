@@ -14,7 +14,7 @@ export default function SalaCard({ sala, setIsOpen, setId }) {
   const handleClick = () => {
     console.log(auth);
     if (!auth?.userID) {
-      window.location.href = "/login";
+      window.location.href = "/BighornSheep/login";
       return;
     }
 
