@@ -11,7 +11,7 @@ def validate_matricula(cls, v):
 class Alumno(BaseModel):
     """Information about a student involved in the reservation."""
     Matricula: str = Field(description="The student's unique identification number")
-    Rol: str = Field(default="Lider", description="In the situation that you are requesting a reservation, only the userID (matricula) making the reservation should have the role 'Lider', otherwise leave blank")
+    Rol: str = Field(default="Lider", description="In the situation that you are requesting a reservation, only the userID (conversationally: Matricula) making the reservation should have the role 'Lider', otherwise leave blank")
     
     # @validator('Matricula' , allow_reuse=True)
     # def validate_matricula(cls, v):
@@ -29,11 +29,11 @@ class ReservationRequest(BaseModel):
 
     Matricula: str = Field(..., description="The user's unique identification number making the reservation, referred to as 'Matricula' conversationally")
     ZonaID: int = Field(..., description="The unique identifier of the room to be reserved, referred to as 'ZonaID' conversationally") # Cambiar a SalaID When DB Update is done
-    HoraInicio: datetime = Field(..., description="The start time for the reservation in ISO 8601 format, referred to as 'Start Time' conversationally")
+    HoraInicio: datetime = Field(..., description="The start time for the reservation in ISO 8601 format, referred to as 'Start Time' conversationally, DEFAULT: DO NOT ASK FOR THE DATE IN ISO 8601 FORMAT, ONLY IN CONVERSATIONAL FORMAT.")
     HoraFin: datetime = Field(..., description="The ending time for the reservation in ISO 8601 format,  referred to as 'End Time' conversationally")
     Proposito: str = Field(default="Proyecto Personal", description="The purpose of the reservation")
     Estado: str = Field(default="Confirmado", description="The current status of the reservation, should be 'Confirmado' by default")
-    Alumnos: List[Alumno] = Field(default=[], description="The list of students involved in the reservation, including the user making the reservation")
+    Alumnos: List[Alumno] = Field(default=[], description="The list of students involved in the reservation, including the user making the reservation: DEFAULT: DO NOT ASK FOR ADDITIONAL USER ID, THE USER WILL PROVIDE THEM IF THEY WANT, DO NOT ASK FOR ADITTIONAL USER ID")
     Hardware: List[HardwareUnit] = Field(default=[], description="The list of hardware required for the reservation, if no hardware is specified, place an empty array")
 
 

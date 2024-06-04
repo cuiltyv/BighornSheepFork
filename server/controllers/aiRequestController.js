@@ -2,10 +2,6 @@ const sql = require("mssql");
 const config = require("../configs/config");
 const moment = require('moment-timezone');
 
-const formatDateTime = (dateString) => {
-    return moment(dateString).format('YYYY-MM-DD HH:mm:ss');
-};
-
 module.exports = {
     createReservation: async (req, res) => {
         const {
@@ -36,7 +32,6 @@ module.exports = {
     
         const newHoraInicio = moment(HoraInicio).tz('America/Los_Angeles').format('YYYY-MM-DDTHH:mm:ss.SSSZ');
         const newHoraFin = moment(HoraFin).tz('America/Los_Angeles').format('YYYY-MM-DDTHH:mm:ss.SSSZ');
-
 
         try {
             let pool = await sql.connect(config);
@@ -106,8 +101,6 @@ module.exports = {
             res.status(500).send({ message: "Error with DB", error: err });
         }
     },
-    
-
     // Get upcoming reservations by Matricula
     getUpcomingReservations: async (req, res) => {
         const { Matricula } = req.params;
@@ -133,4 +126,14 @@ module.exports = {
             res.status(500).send({ message: "Error with DB", error: err });
         }
     },
+
+    // find possible reservations around a future date
+    
+
+
+    // implement hardcoded information so that the LLM does not hallucinate errors
+    
+    
+    // update my future reservations
+    // delete my future reservations
 };

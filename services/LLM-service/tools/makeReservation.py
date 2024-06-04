@@ -11,16 +11,17 @@ def make_reservation_function(**kwargs) -> str:
         reservation_data = ReservationRequest(**kwargs)
         data = reservation_data.json() # convert to string
         data = json.loads(data)
+        data["Estado"] = "Confirmado"
         response = post_api_reservation(data=data)
         
         if response.status_code == 201:
-            return f"Reservation created successfully, no need to create another one with the same details. Here you can find the server response, remember to answer in a extremly UX friendly format, as if to a millenial grandma: {response.content}"
+            return f"FINAL ANSWER: Reservation created successfully, no need to create another one with the same details. Here you can find the server response, remember to answer in a extremly UX friendly format, as if to a millenial grandma: {response.content}"
         elif response.status_code == 500:
-            return f"Server error or connectivity problem with the database. Here you can find the server response, remember to answer in a extremly UX friendly format, as if to a millenial grandma: {response.content}"
+            return f"FINAL ANSWER: Server error or connectivity problem with the database. Here you can find the server response, remember to answer in a extremly UX friendly format, as if to a millenial grandma: {response.content}"
         elif response.status_code == 400:
-            return f"Missing required fields. Here you can find the server response, remember to answer in a extremly UX friendly format, as if to a millenial grandma: {response.content}"
+            return f"FINAL ANSWER: Missing required fields. Here you can find the server response, remember to answer in a extremly UX friendly format, as if to a millenial grandma: {response.content}"
         elif response.status_code == 409:
-            return f"There is an overlap with another reservation. Here you can find the server response, remember to answer in a extremly UX friendly format, as if to a millenial grandma: {response.content}"
+            return f"FINAL ANSWER: There is an overlap with another reservation. Here you can find the server response, remember to answer in a extremly UX friendly format, as if to a millenial grandma: {response.content}"
         else:
             return f"Failed to make reservation. Here you can find the server response, remember to answer in a extremly UX friendly format, as if to a millenial grandma: {response.status_code}"
     except Exception as e:
