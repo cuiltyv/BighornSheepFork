@@ -101,7 +101,11 @@ const AdminStats = () => {
   }
 
   if (!stats) {
-    return <CircularProgress />;
+    return (
+      <Box className="flex min-h-screen items-center justify-center">
+        <CircularProgress />
+      </Box>
+    );
   }
 
   const popularRooms = stats.popularRooms.map((room) => ({
@@ -144,14 +148,19 @@ const AdminStats = () => {
       <Drawer anchor="left" open={sidebarOpen} onClose={toggleSidebar}>
         <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
       </Drawer>
-      <Box className="flex-grow bg-gray-50 p-4" component={Paper}>
+      <Box
+        className="flex-grow bg-gray-50 p-6"
+        component={Paper}
+        mx={{ xs: 2, sm: 4, md: 6 }} // Adjust margins
+        my={4}
+      >
         <IconButton
           className="absolute left-4 top-4 z-50 bg-white p-2 text-gray-700 shadow-md sm:hidden"
           onClick={toggleSidebar}
         >
           <MenuOutlined className="h-6 w-6" />
         </IconButton>
-        <Typography variant="h4" gutterBottom className="text-center">
+        <Typography variant="h4" gutterBottom className="mb-4 text-center">
           Admin Dashboard - Estadísticas
         </Typography>
 
@@ -188,8 +197,8 @@ const AdminStats = () => {
 
         <Grid container spacing={3} className="mt-4">
           <Grid item xs={12} md={6}>
-            <Paper>
-              <Typography variant="h6" className="p-4">
+            <Paper className="p-4">
+              <Typography variant="h6" gutterBottom>
                 Desglose de Reservaciones por Estado
               </Typography>
               <ResponsiveContainer width="100%" height={400}>
@@ -220,8 +229,8 @@ const AdminStats = () => {
           </Grid>
 
           <Grid item xs={12} md={6}>
-            <Paper>
-              <Typography variant="h6" className="p-4">
+            <Paper className="p-4">
+              <Typography variant="h6" gutterBottom>
                 Reservaciones por Tipo de Usuario
               </Typography>
               <ResponsiveContainer width="100%" height={400}>
@@ -252,8 +261,8 @@ const AdminStats = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <Paper>
-              <Typography variant="h6" className="p-4">
+            <Paper className="p-4">
+              <Typography variant="h6" gutterBottom>
                 Cuartos Más Populares
               </Typography>
               <ResponsiveContainer width="100%" height={400}>
@@ -286,8 +295,8 @@ const AdminStats = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <Paper>
-              <Typography variant="h6" className="p-4">
+            <Paper className="p-4">
+              <Typography variant="h6" gutterBottom>
                 Reservaciones por Hora del Día
               </Typography>
               <ResponsiveContainer width="100%" height={400}>
@@ -323,8 +332,8 @@ const AdminStats = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <Paper>
-              <Typography variant="h6" className="p-4">
+            <Paper className="p-4">
+              <Typography variant="h6" gutterBottom>
                 Tendencia de Reservas Mensuales
               </Typography>
               <ResponsiveContainer width="100%" height={400}>
@@ -359,8 +368,8 @@ const AdminStats = () => {
           <Grid item xs={12}>
             <Grid container spacing={3}>
               <Grid item xs={12} md={6}>
-                <Paper>
-                  <Typography variant="h6" className="p-4">
+                <Paper className="p-4">
+                  <Typography variant="h6" gutterBottom>
                     Actividad de Usuarios
                   </Typography>
                   <TableContainer>
@@ -415,8 +424,8 @@ const AdminStats = () => {
               </Grid>
 
               <Grid item xs={12} md={6}>
-                <Paper>
-                  <Typography variant="h6" className="p-4">
+                <Paper className="p-4">
+                  <Typography variant="h6" gutterBottom>
                     Recomendaciones de Hardware
                   </Typography>
                   <TableContainer>

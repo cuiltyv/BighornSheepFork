@@ -60,6 +60,30 @@ const getUserByMatricula = async (req, res) => {
   }
 };
 
+//Ruta post
+const addPuntosPersonales = async (req, res) => {
+  const { Matricula, PuntosToAdd } = req.body;
+
+  if (!Matricula || !PuntosToAdd) {
+    return res
+      .status(400)
+      .json({ message: "Matricula y PuntosToAdd son requeridos" });
+  }
+
+  try {
+    let pool = await sql.connect(config);
+    await pool
+      .request()
+      .input("Matricula", sql.VarChar(10), Matricula)
+      .input("PuntosToAdd", sql.Int, PuntosToAdd)
+      .execute("sp_AddPuntosPersonales");
+    res.status(201).send("Puntos added successfully");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Error con DB", error: err });
+  }
+};
+
 // Crear un usuario con todos los datos
 // Ruta: /usuarios (POST)
 const createUser = async (req, res) => {
@@ -197,6 +221,7 @@ const updateUser = async (req, res) => {
     Semestre,
     PuntosPersonales,
     Role,
+    Telefono,
   } = req.body;
 
   try {
@@ -223,6 +248,9 @@ const updateUser = async (req, res) => {
     if (Role !== undefined) {
       request = request.input("Role", sql.Int, Role);
     }
+    if (Telefono !== undefined) {
+      request = request.input("Telefono", sql.VarChar(50), Telefono);
+    }
 
     await request.execute("sp_UpdateUsuario");
     res.status(201).send("User updated successfully");
@@ -241,4 +269,5 @@ module.exports = {
   getUserProfile,
   updateUser,
   updateUserRole,
+  addPuntosPersonales,
 };

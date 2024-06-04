@@ -41,14 +41,14 @@ app.use(express.json());
 
 // !Comentar antes de subir a GitHub
 // ?Descomentar para poder probar con localhost en react
-
+/*
 app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
   })
 );
-
+*/
 //middleware for cookies
 app.use(cookieParser());
 /*
