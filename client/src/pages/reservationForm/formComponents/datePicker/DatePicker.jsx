@@ -31,9 +31,13 @@ function DatePicker(props) {
       props.horaFinal.constructor.name,
     );
 */
-    if (props.horaFinal <= props.horaInicio)
+    if (props.horaFinal <= props.horaInicio) {
       setError("Escoge una hora válida.");
-    else setError("");
+      props.setFlag(true);
+    } else {
+      setError("");
+      props.setFlag(false);
+    }
   }, [props.horaInicio, props.horaFinal]);
 
   return (
@@ -43,9 +47,11 @@ function DatePicker(props) {
         <div className="flex flex-row justify-center gap-8 sm:flex-col sm:justify-start">
           <HoraInicio
             onHoraInicioSeleccionadaChange={onHoraInicioSeleccionadaChange}
+            setFlag={props.setFlag}
           />
           <HoraFinal
             onHoraFinalSeleccionadaChange={onHoraFinalSeleccionadaChange}
+            setFlag={props.setFlag}
           />
           {error && <p className="mt-2 w-full text-xs text-red-500">{error}</p>}
         </div>

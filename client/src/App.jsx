@@ -20,6 +20,9 @@ import VideoManager from "./pages/admin/VideoManager";
 import UserManagement from "./pages/admin/UserManagement";
 import AdminStats from "./pages/admin/AdminStats";
 
+import { FloatingWhatsApp } from "react-floating-whatsapp";
+import avatar from "./assets/avatar.jpg";
+
 const ROLES = {
   User: 1,
   Admin: 2,
@@ -76,6 +79,13 @@ function App() {
           </Route>
         </Route>
       </Routes>
+
+      <FloatingWhatsApp
+        phoneNumber="+528119001483"
+        accountName="Wall-E"
+        avatar={avatar}
+        chatMessage="¡Bienvenido al DREAM Lab! Te gustaría hacer una reservacion?"
+      />
     </div>
   );
 }
