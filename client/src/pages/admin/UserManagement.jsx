@@ -204,7 +204,12 @@ const UserManagement = () => {
       <Drawer anchor="left" open={sidebarOpen} onClose={toggleSidebar}>
         <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
       </Drawer>
-      <Box className="flex-grow bg-gray-50 p-4" component={Paper}>
+      <Box
+        className="flex-grow bg-gray-50 p-6"
+        component={Paper}
+        mx={{ xs: 2, sm: 4, md: 6 }} // Adjust margins
+        my={4}
+      >
         <IconButton
           className="absolute left-4 top-4 z-50 bg-white p-2 text-gray-700 shadow-md sm:hidden"
           onClick={toggleSidebar}
@@ -215,7 +220,7 @@ const UserManagement = () => {
           Manejo de Usuarios
         </Typography>
 
-        <Box className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
+        <Box className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
           <Paper className="p-4">
             <Typography variant="h6">Usuarios totales</Typography>
             <Typography variant="h4">{totalUsers}</Typography>
@@ -234,7 +239,7 @@ const UserManagement = () => {
           </Paper>
         </Box>
 
-        <Box className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+        <Box className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <TextField
             label="Buscar"
             variant="outlined"

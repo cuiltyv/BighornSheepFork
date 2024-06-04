@@ -197,6 +197,7 @@ const updateUser = async (req, res) => {
     Semestre,
     PuntosPersonales,
     Role,
+    Telefono,
   } = req.body;
 
   try {
@@ -222,6 +223,9 @@ const updateUser = async (req, res) => {
     }
     if (Role !== undefined) {
       request = request.input("Role", sql.Int, Role);
+    }
+    if (Telefono !== undefined) {
+      request = request.input("Telefono", sql.VarChar(50), Telefono);
     }
 
     await request.execute("sp_UpdateUsuario");
