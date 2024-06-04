@@ -25,6 +25,7 @@ function Form({ id, isOpen, setIsOpen }) {
   const [minutoFinal, setMinutoFinal] = useState(0);
 
   const [diaSeleccionado, setDiaSeleccionado] = useState(dayjs());
+  const [flag, setFlag] = useState(false);
 
   const [people, setPeople] = useState([{ name: "", registration: "" }]);
   const [razonSeleccionada, setRazonSeleccionada] = useState(
@@ -118,6 +119,11 @@ function Form({ id, isOpen, setIsOpen }) {
 
   // POST Reserva
   const enviar = () => {
+    if (flag) {
+      alert("Revisa que el horario seleccionado sea correcto.");
+      return;
+    }
+
     const fechaInicio = dayjs(diaSeleccionado)
       //CAMBIO TELLO: La hora de inicio ya es el numero antes del : , no se necesita hacer split, igual con la hora fin
       .hour(horaInicio)
@@ -257,6 +263,7 @@ function Form({ id, isOpen, setIsOpen }) {
                     setMinutoFinal={setMinutoFinal}
                     diaSeleccionado={diaSeleccionado}
                     setDiaSeleccionado={setDiaSeleccionado}
+                    setFlag={setFlag}
                   />
 
                   <PeopleSelect people={people} setPeople={setPeople} />
