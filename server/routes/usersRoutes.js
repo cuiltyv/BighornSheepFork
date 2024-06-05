@@ -24,6 +24,7 @@ router.get("/:matricula", usersController.getUserByMatricula);
 router.post("/", usersController.createUser);
 router.post("/registro", usersController.registerUser);
 router.put("/:matricula", usersController.updateUser);
+router.post("/puntos", usersController.addPuntosPersonales);
 
 //router.get("/", verifyJWT, usersController.getAllUsers); Para que se necesite token para acceder
 /*

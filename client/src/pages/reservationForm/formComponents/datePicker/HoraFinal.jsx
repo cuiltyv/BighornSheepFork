@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const HoraFinal = ({ onHoraFinalSeleccionadaChange }) => {
+const HoraFinal = ({ onHoraFinalSeleccionadaChange, setFlag }) => {
   const [hour, setHour] = useState("8");
   const [minute, setMinute] = useState("00");
   const [error, setError] = useState("");
@@ -21,7 +21,9 @@ const HoraFinal = ({ onHoraFinalSeleccionadaChange }) => {
 
     if (hourInt < 8 || hourInt > 21 || (hourInt === 21 && minuteInt !== 0)) {
       setError("Por favor selecciona una hora entre las 7 AM and 9 PM.");
+      setFlag(true);
     } else {
+      setFlag(false);
       setError("");
       updateTime(hour, minute);
     }
