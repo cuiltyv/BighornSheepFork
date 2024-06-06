@@ -126,10 +126,13 @@ const VideoWall = () => {
       if (matricula) {
         setFilterMatricula(matricula);
         console.log("Filtering by Matricula:", matricula);
+        setTimeout(() => {
+          setFilterMatricula("");
+        }, 15000);
       } else {
         setTimeout(() => {
           setFilterMatricula("");
-        }, 30000);
+        }, 15000);
       }
     });
 
