@@ -177,12 +177,12 @@ const VideoWall = () => {
   };
 
   return (
-    <div className="w-3840px relative flex h-screen bg-darkWhite">
+    <div className="w-3840px relative flex h-screen bg-[#D1D1D1]">
       <div className="border-blue-500 flex h-full w-1/4 flex-col border">
         <div className="h-1/2 flex-col">
           <div className="flex items-center justify-between  px-4 py-2">
-            <span className="text-2xl font-bold text-violet">DREAM LAB</span>
-            <span className="text-2xl font-bold text-violet">
+            <span className="text-3xl font-bold text-violet">DREAM LAB</span>
+            <span className="text-3xl font-bold text-violet">
               {currentTime}
             </span>
           </div>
@@ -219,7 +219,9 @@ const VideoWall = () => {
         </div>
         <div className="flex h-1/2 flex-row items-center justify-center space-x-16">
           <div className="mx-10 flex flex-col items-center">
-            <h2 className="mb-8 text-2xl font-bold">¡Reserva Ahora!</h2>
+            <h2 className="mb-8 text-2xl font-bold text-violet">
+              ¡Reserva Ahora!
+            </h2>
             <div className="mb-6 w-full max-w-[240px] rounded-lg bg-white p-4 shadow-md">
               <img src={qrCodeImage} alt="QR Code" className="max-h-48" />
             </div>
@@ -230,7 +232,9 @@ const VideoWall = () => {
             </div>
           </div>
           <div className="mx-10 mb-10 flex flex-col items-center">
-            <h2 className="mb-2 text-2xl font-bold">Reservaciones Activas</h2>
+            <h2 className="mb-2 text-2xl font-bold text-violet">
+              Reservaciones Activas
+            </h2>
             <Carousel
               opts={{ align: "start", loop: true }}
               plugins={[plugin2.current]}
