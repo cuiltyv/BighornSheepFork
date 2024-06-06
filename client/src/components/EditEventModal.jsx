@@ -47,10 +47,10 @@ const EditEventModal = ({ open, onClose, event, onSave }) => {
     <Modal open={open} onClose={onClose}>
       <Box className="absolute left-1/2 top-1/2 w-11/12 max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white p-6 shadow-lg">
         <Typography variant="h6" gutterBottom>
-          Edit Event
+          Editar Evento
         </Typography>
         <Typography variant="body2" gutterBottom>
-          Event Name
+          Nombre de Evento
         </Typography>
         <TextField
           fullWidth
@@ -61,7 +61,7 @@ const EditEventModal = ({ open, onClose, event, onSave }) => {
           variant="outlined"
         />
         <Typography variant="body2" gutterBottom>
-          Description
+          Descripcción
         </Typography>
         <TextField
           fullWidth
@@ -72,7 +72,7 @@ const EditEventModal = ({ open, onClose, event, onSave }) => {
           variant="outlined"
         />
         <Typography variant="body2" gutterBottom>
-          Start Date
+          Fecha de Inicio
         </Typography>
         <DatePicker
           selected={updatedEvent.FechaInicio}
@@ -96,7 +96,7 @@ const EditEventModal = ({ open, onClose, event, onSave }) => {
           }
         />
         <Typography variant="body2" gutterBottom>
-          End Date
+          Fecha Fin
         </Typography>
         <DatePicker
           selected={updatedEvent.FechaFin}
@@ -120,7 +120,7 @@ const EditEventModal = ({ open, onClose, event, onSave }) => {
           }
         />
         <Typography variant="body2" gutterBottom>
-          Image URL
+          Imagen URL
         </Typography>
         <TextField
           fullWidth
@@ -137,10 +137,10 @@ const EditEventModal = ({ open, onClose, event, onSave }) => {
             color="secondary"
             className="mr-2"
           >
-            Cancel
+            Cancelar
           </Button>
           <Button onClick={handleSave} variant="contained" color="primary">
-            Save
+            Guardar
           </Button>
         </Box>
       </Box>
