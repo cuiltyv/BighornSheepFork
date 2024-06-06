@@ -10,7 +10,7 @@ export default function Hero() {
         <img
           src={image}
           alt=""
-          className="mx-auto my-auto h-auto max-h-full w-auto md:max-w-none"
+          className="mx-auto my-auto h-auto max-h-full w-auto"
         />
       </div>
       <div className="flex w-full flex-col gap-6 px-4 py-4 md:w-5/12 md:px-16 md:py-0">
