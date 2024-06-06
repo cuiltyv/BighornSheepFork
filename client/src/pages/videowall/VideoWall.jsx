@@ -177,7 +177,7 @@ const VideoWall = () => {
   };
 
   return (
-    <div className="w-3840px relative flex h-screen bg-darkWhite">
+    <div className="w-3840px relative flex h-screen bg-[#D1D1D1]">
       <div className="border-blue-500 flex h-full w-1/4 flex-col border">
         <div className="h-1/2 flex-col">
           <div className="flex items-center justify-between  px-4 py-2">
