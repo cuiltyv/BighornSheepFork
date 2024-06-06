@@ -304,9 +304,9 @@ const UserManagement = () => {
                 <TableCell>Apellidos</TableCell>
                 <TableCell>Carrera</TableCell>
                 <TableCell>Semestre</TableCell>
-                <TableCell>Role</TableCell>
+                <TableCell>Rol</TableCell>
                 <TableCell>Puntos Personales</TableCell>
-                <TableCell>Actions</TableCell>
+                <TableCell>Acciones</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -343,7 +343,7 @@ const UserManagement = () => {
           <Box className="absolute inset-0 flex items-center justify-center p-4">
             <Paper className="w-full max-w-lg p-4">
               <Typography variant="h6" gutterBottom>
-                {editUser ? "Edit User" : "Agregar Usuario"}
+                {editUser ? "Editar Usuario" : "Agregar Usuario"}
               </Typography>
               <Box className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <Box>
@@ -463,7 +463,7 @@ const UserManagement = () => {
                 </Box>
                 <Box>
                   <Typography variant="body2" gutterBottom>
-                    Role
+                    Rol
                   </Typography>
                   <Select
                     fullWidth
