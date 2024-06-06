@@ -61,6 +61,19 @@ function Form({ id, isOpen, setIsOpen }) {
     });
   }, [id]);
 
+  const manejoDePuntos = async (matricula, puntos) => {
+    try {
+      const response = await axios.put(`/usuarios/puntos`, {
+        Matricula: matricula,
+        PuntosToAdd: puntos,
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error updating user points:", error);
+      throw error;
+    }
+  };
+
   // Send email
   const sendEmail = (nuevaReserva) => {
     console.log(nuevaReserva);
