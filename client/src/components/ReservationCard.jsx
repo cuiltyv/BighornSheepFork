@@ -55,7 +55,8 @@ function ReservationCard({ reservacion, sala }) {
     try {
       console.log("Marcando reservacion como eliminada: ", reservacionID);
       await axios.put(DELETE_RESERVACION_URL(reservacionID));
-      manejoDePuntos(reservacion.Matricula, -25);
+      await manejoDePuntos(reservacion.Matricula, -25);
+      console.log(reservacion.Matricula);
       window.location.reload();
     } catch (error) {
       console.error("Error marcando reservacion como eliminada: ", error);
