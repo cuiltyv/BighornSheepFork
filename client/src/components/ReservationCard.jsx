@@ -19,8 +19,8 @@ function ReservationCard({ reservacion, sala }) {
   const DELETE_RESERVACION_URL = (reservacionID) =>
     `/reservaciones/set-deleted/${reservacionID}`;
   const fecha = new Date(HoraInicio).toLocaleDateString();
-  const horaI = new Date(HoraInicio).toLocaleTimeString();
-const horaF = new Date(HoraFin).toLocaleTimeString();
+  const horaI = new Date(HoraInicio).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+const horaF = new Date(HoraFin).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
 
 
   const [equipo, setEquipo] = useState([]);
@@ -102,7 +102,7 @@ const horaF = new Date(HoraFin).toLocaleTimeString();
                 ) : (
                   equipo.slice(0, 3).map((item, index) => (
                     <li key={index}>
-                      {index === 2 && equipo.length > 3 ? <p className="cursor-pointer font-bold text-lg bg-blue text-center rounded-md text-white" onClick={handleFlip}>. . .</p> : item.Nombre + (item.Cantidad > 1? "  x" + item.Cantidad : "") }
+                      {index === 2 && equipo.length > 3 ? <p className="cursor-pointer font-bold text-md bg-blue text-center rounded-md text-white" onClick={handleFlip}>Ver más</p> : item.Nombre + (item.Cantidad > 1? "  x" + item.Cantidad : "") }
                     </li>
                   ))
                 )}

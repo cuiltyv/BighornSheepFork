@@ -1,9 +1,9 @@
 import Hero from "./Hero";
 import Caracteristicas from "./Caracteristicas";
 import Salas from "./Salas";
-import Contacto from "../../components/Contacto";
 import { Element } from "react-scroll";
-import AiCTA from "./AiCTA";
+import PreFooter from "./PreFooter";
+import Footer from "./Footer";
 
 export default function Home() {
   return (
@@ -13,8 +13,8 @@ export default function Home() {
       <Element name="salas" className="element">
         <Salas />
       </Element>
-      <AiCTA />
-      <Contacto />
+      <PreFooter />
+      <Footer />
     </div>
   );
 }
