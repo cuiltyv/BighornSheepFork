@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/carousel";
 import image1 from "../../assets/fotonoticiareto.png";
 import qrCodeImage from "../../assets/qrDreamlab.png"; // Import your QR code image here
+import blueCloud from "../../assets/blueCloud.png";
 import axios from "../../api/axios";
 import Autoplay from "embla-carousel-autoplay";
 import AutoScroll from "embla-carousel-auto-scroll";
@@ -33,7 +34,7 @@ const VideoWall = () => {
   const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: false }));
   const [videoSrc, setVideoSrc] = useState("");
 
-  const plugin2 = useRef(Autoplay({ stopOnInteraction: false, delay: 2000 }));
+  const plugin2 = useRef(AutoScroll({ stopOnInteraction: false, speed: 0.75 }));
 
   useEffect(() => {
     const fetchVideo = async () => {
@@ -125,7 +126,7 @@ const VideoWall = () => {
       if (matricula) {
         setFilterMatricula(matricula);
         console.log("Filtering by Matricula:", matricula);
-        // Reset the filter after 30 seconds
+      } else {
         setTimeout(() => {
           setFilterMatricula("");
         }, 30000);
@@ -137,6 +138,20 @@ const VideoWall = () => {
       client.end();
     };
   }, []);
+
+  useEffect(() => {
+    if (filterMatricula) {
+      const hasMatchingReservations = reservations.some(
+        (reservation) => reservation.Matricula === filterMatricula,
+      );
+
+      if (!hasMatchingReservations) {
+        setTimeout(() => {
+          setFilterMatricula("");
+        }, 5000);
+      }
+    }
+  }, [reservations, filterMatricula]);
 
   useEffect(() => {
     console.log("Events:", events);
@@ -201,25 +216,25 @@ const VideoWall = () => {
         </div>
         <div className="flex h-1/2 flex-row items-center justify-center space-x-16">
           <div className="mx-10 flex flex-col items-center">
-            <h2 className="mb-8 text-lg font-bold">¡Reserva Ahora!</h2>
+            <h2 className="mb-8 text-2xl font-bold">¡Reserva Ahora!</h2>
             <div className="mb-6 w-full max-w-[240px] rounded-lg bg-white p-4 shadow-md">
               <img src={qrCodeImage} alt="QR Code" className="max-h-48" />
             </div>
             <div className="mb-3 w-full max-w-[240px] rounded-lg bg-white p-4 text-center shadow-md">
-              <p className="text-sm">Contacto:</p>
-              <p className="text-sm">Email: dreamlab@gmail.com</p>
-              <p className="text-sm">Número: (123) 456-7890</p>
+              <p className="text-md">Contacto:</p>
+              <p className="text-md">Email: dreamlab@gmail.com</p>
+              <p className="text-md">Número: (123) 456-7890</p>
             </div>
           </div>
-          <div className="mx-10 flex flex-col items-center">
-            <h2 className="mb-2 text-lg font-bold">Reservaciones Activas</h2>
+          <div className="mx-10 mb-10 flex flex-col items-center">
+            <h2 className="mb-2 text-2xl font-bold">Reservaciones Activas</h2>
             <Carousel
               opts={{ align: "start", loop: true }}
               plugins={[plugin2.current]}
               orientation="vertical"
-              className="w-full max-w-[380px]"
+              className="w-full max-w-[500px]"
             >
-              <CarouselContent className="-mt-1 h-[380px]">
+              <CarouselContent className="-mt-1 h-[460px]">
                 {reservations
                   .filter(
                     (reservation) =>
@@ -229,25 +244,25 @@ const VideoWall = () => {
                   .map((reservation, index) => (
                     <CarouselItem
                       key={index}
-                      className="md:basis-1/4 lg:basis-1/4"
+                      className="md:basis-1/4 lg:basis-1/4 "
                     >
                       <div className="p-1">
-                        <Card>
+                        <Card className="">
                           <CardContent className="flex flex-row items-start justify-between p-2">
                             <div className="flex flex-col justify-center">
-                              <p className="font-large text-sm">
+                              <p className="font-large text-xl">
                                 {reservation.Matricula}
                               </p>
-                              <p className="font-large text-sm">
+                              <p className="font-large text-xl">
                                 {formatTimeRange(
                                   reservation.HoraInicio,
                                   reservation.HoraFin,
                                 )}
                               </p>
-                              <p className="font-large text-sm">
+                              <p className="font-large text-xl">
                                 {reservation.Nombre[0]}
                               </p>
-                              <p className="font-large text-sm">
+                              <p className="font-large text-xl">
                                 {reservation.Nombre[1]}
                               </p>
                             </div>

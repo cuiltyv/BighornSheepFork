@@ -61,6 +61,19 @@ function Form({ id, isOpen, setIsOpen }) {
     });
   }, [id]);
 
+  const manejoDePuntos = async (matricula, puntos) => {
+    try {
+      const response = await axios.put(`/usuarios/puntos`, {
+        Matricula: matricula,
+        PuntosToAdd: puntos,
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error updating user points:", error);
+      throw error;
+    }
+  };
+
   // Send email
   const sendEmail = (nuevaReserva) => {
     console.log(nuevaReserva);
@@ -182,6 +195,9 @@ function Form({ id, isOpen, setIsOpen }) {
         addUserActivity(activityData)
           .then(() => {
             sendEmail(emailObject);
+            manejoDePuntos(people[0].registration, 10);
+            console.log("matricula", people[0].registration);
+            console.log("se agregaron 10 puntos");
             setIsOpen(false);
             window.alert("Reserva creada exitosamente");
           })
