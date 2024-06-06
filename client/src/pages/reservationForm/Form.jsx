@@ -195,6 +195,7 @@ function Form({ id, isOpen, setIsOpen }) {
         addUserActivity(activityData)
           .then(() => {
             sendEmail(emailObject);
+            manejoDePuntos(people[0].registration, 10);
             setIsOpen(false);
             window.alert("Reserva creada exitosamente");
           })
