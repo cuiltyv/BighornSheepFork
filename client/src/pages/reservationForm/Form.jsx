@@ -196,6 +196,8 @@ function Form({ id, isOpen, setIsOpen }) {
           .then(() => {
             sendEmail(emailObject);
             manejoDePuntos(people[0].registration, 10);
+            console.log("matricula", people[0].registration);
+            console.log("se agregaron 10 puntos");
             setIsOpen(false);
             window.alert("Reserva creada exitosamente");
           })
