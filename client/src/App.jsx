@@ -9,9 +9,10 @@ import VideoWall from "./pages/videowall/VideoWall";
 import Unauthorized from "./pages/extra/Unauthorized";
 import RequireAuth from "./components/RequireAuth";
 import PersistLogin from "./components/PersistLogin";
+import Faq from "./pages/faq/Faq";
 import { Routes, Route } from "react-router-dom";
 import useAuth from "@UserAuth";
-
+import "@mantine/core/styles.css";
 import WithLayout from "./components/WithLayout";
 import WithLayoutLogout from "./components/WithLayoutLogout";
 import Reservaciones from "./pages/reservaciones/Reservaciones";
@@ -19,6 +20,7 @@ import EventManager from "./pages/admin/EventManager";
 import VideoManager from "./pages/admin/VideoManager";
 import UserManagement from "./pages/admin/UserManagement";
 import AdminStats from "./pages/admin/AdminStats";
+import { MantineProvider } from "@mantine/core";
 
 const ROLES = {
   User: 1,
@@ -36,6 +38,7 @@ function App() {
         <Route path="/" element={<WithLayout />}>
           <Route path="/BighornSheep/landing" element={<Landing />} />
           <Route path="/BighornSheep/login" element={<Login />} />
+
           <Route path="/" element={<Landing />} />
         </Route>
         <Route path="/" element={<WithLayoutLogout />}>
@@ -49,6 +52,7 @@ function App() {
                 element={<Reservaciones />}
               />
               <Route path="/BighornSheep" element={<Home />} />
+
               <Route path="/BighornSheep/perfil" element={<Perfil />} />
             </Route>
             {/* Ruta solo para admin */}
@@ -68,11 +72,20 @@ function App() {
               />
               <Route path="/BighornSheep/adminstats" element={<AdminStats />} />
             </Route>
+
             <Route
               path="/BighornSheep/unauthorized"
               element={<Unauthorized />}
             />
             <Route path="*" element={userID ? <Missing /> : <Login />} />
+            <Route
+              path="/BighornSheep/faq"
+              element={
+                <MantineProvider>
+                  <Faq />
+                </MantineProvider>
+              }
+            />
           </Route>
         </Route>
       </Routes>

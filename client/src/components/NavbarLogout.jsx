@@ -7,6 +7,8 @@ import useAuth from "../hooks/useAuth";
 const NavbarLogout = () => {
   const [nav, setNav] = useState(false);
   const { auth } = useAuth();
+  const userID = auth?.userID;
+
   const navigate = useNavigate();
   const logout = useLogout();
 
@@ -57,15 +59,26 @@ const NavbarLogout = () => {
               </li>
             )}
             <li className="mx-6 p-5">
-              <Link to="/BighornSheep/contacto">Contacto</Link>
+              <Link to="/BighornSheep/">Contacto</Link>
+            </li>
+            <li className="mx-6 p-5">
+              <Link to="/BighornSheep/faq">FAQ</Link>
             </li>
           </ul>
 
-          <button className="ml-6 flex items-center" onClick={signOut}>
-            <div className="rounded-full bg-blue px-4 py-2 text-white">
-              Logout
-            </div>
-          </button>
+          {userID ? (
+            <button className="ml-6 flex items-center" onClick={signOut}>
+              <div className="rounded-full bg-blue px-4 py-2 text-white">
+                Logout
+              </div>
+            </button>
+          ) : (
+            <Link to="/BighornSheep/login" className="ml-6 flex items-center">
+              <div className="rounded-full bg-blue px-4 py-2 text-white">
+                Iniciar Sesión
+              </div>
+            </Link>
+          )}
         </div>
 
         <div
@@ -101,16 +114,20 @@ const NavbarLogout = () => {
                   Inicio
                 </Link>
               </li>
-              <li className="my-4 border-b p-2">
-                <Link to="/BighornSheep/reservaciones" onClick={handleNav}>
-                  Reservaciones
-                </Link>
-              </li>
-              <li className="my-4 border-b p-2">
-                <Link to="/BighornSheep/perfil" onClick={handleNav}>
-                  Perfil
-                </Link>
-              </li>
+              {(auth?.roles === 1 || auth?.roles === 2) && (
+                <>
+                  <li className="my-4 border-b p-2">
+                    <Link to="/BighornSheep/reservaciones" onClick={handleNav}>
+                      Reservaciones
+                    </Link>
+                  </li>
+                  <li className="my-4 border-b p-2">
+                    <Link to="/BighornSheep/perfil" onClick={handleNav}>
+                      Perfil
+                    </Link>
+                  </li>
+                </>
+              )}
               {auth?.roles == 2 && (
                 <li className="my-4 border-b p-2">
                   <Link to="/BighornSheep/admin" onClick={handleNav}>
@@ -119,19 +136,33 @@ const NavbarLogout = () => {
                 </li>
               )}
               <li className="my-4 border-b p-2">
-                <Link to="/BighornSheep/contacto" onClick={handleNav}>
+                <Link to="/BighornSheep/" onClick={handleNav}>
                   Contacto
                 </Link>
               </li>
-              <li
-                className="my-4 rounded bg-blue p-2 text-white"
-                onClick={() => {
-                  handleNav();
-                  signOut();
-                }}
-              >
-                Logout
+              <li className="my-4 border-b p-2">
+                <Link to="/BighornSheep/faq" onClick={handleNav}>
+                  FAQ
+                </Link>
               </li>
+
+              {userID ? (
+                <li
+                  className="my-4 rounded bg-blue p-2 text-white"
+                  onClick={() => {
+                    handleNav();
+                    signOut();
+                  }}
+                >
+                  Logout
+                </li>
+              ) : (
+                <Link to="/BighornSheep/login" className="">
+                  <div className="my-4 rounded bg-blue p-2 text-white">
+                    Iniciar Sesión
+                  </div>
+                </Link>
+              )}
             </ul>
           </div>
         </div>
@@ -171,7 +202,7 @@ const NavbarLogout = () => {
               </li>
             )}
             <li className="my-4 border-b p-2">
-              <Link to="/BighornSheep/contacto" onClick={handleNav}>
+              <Link to="/BighornSheep/" onClick={handleNav}>
                 Contacto
               </Link>
             </li>
