@@ -57,7 +57,10 @@ const NavbarLogout = () => {
               </li>
             )}
             <li className="mx-6 p-5">
-              <Link to="/BighornSheep/contacto">Contacto</Link>
+              <Link to="/BighornSheep/">Contacto</Link>
+            </li>
+            <li className="mx-6 p-5">
+              <Link to="/BighornSheep/faq">FAQ</Link>
             </li>
           </ul>
 
@@ -119,8 +122,13 @@ const NavbarLogout = () => {
                 </li>
               )}
               <li className="my-4 border-b p-2">
-                <Link to="/BighornSheep/contacto" onClick={handleNav}>
+                <Link to="/BighornSheep/" onClick={handleNav}>
                   Contacto
+                </Link>
+              </li>
+              <li className="my-4 border-b p-2">
+                <Link to="/BighornSheep/faq" onClick={handleNav}>
+                  FAQ
                 </Link>
               </li>
               <li
