@@ -25,6 +25,7 @@ function Form({ id, isOpen, setIsOpen }) {
   const [minutoFinal, setMinutoFinal] = useState(0);
 
   const [diaSeleccionado, setDiaSeleccionado] = useState(dayjs());
+  const [flag, setFlag] = useState(false);
 
   const [people, setPeople] = useState([{ name: "", registration: "" }]);
   const [razonSeleccionada, setRazonSeleccionada] = useState(
@@ -59,6 +60,19 @@ function Form({ id, isOpen, setIsOpen }) {
       setSala(sala[0]);
     });
   }, [id]);
+
+  const manejoDePuntos = async (matricula, puntos) => {
+    try {
+      const response = await axios.put(`/usuarios/puntos`, {
+        Matricula: matricula,
+        PuntosToAdd: puntos,
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error updating user points:", error);
+      throw error;
+    }
+  };
 
   // Send email
   const sendEmail = (nuevaReserva) => {
@@ -106,8 +120,23 @@ function Form({ id, isOpen, setIsOpen }) {
     }
   };
 
+  const addFriend = async (friendData) => {
+    try {
+      const response = await axios.post("/api/user/friends", friendData);
+      return response.data;
+    } catch (error) {
+      console.error("Error adding friend:", error);
+      throw error;
+    }
+  };
+
   // POST Reserva
   const enviar = () => {
+    if (flag) {
+      alert("Revisa que el horario seleccionado sea correcto.");
+      return;
+    }
+
     const fechaInicio = dayjs(diaSeleccionado)
       //CAMBIO TELLO: La hora de inicio ya es el numero antes del : , no se necesita hacer split, igual con la hora fin
       .hour(horaInicio)
@@ -166,6 +195,9 @@ function Form({ id, isOpen, setIsOpen }) {
         addUserActivity(activityData)
           .then(() => {
             sendEmail(emailObject);
+            manejoDePuntos(people[0].registration, 10);
+            console.log("matricula", people[0].registration);
+            console.log("se agregaron 10 puntos");
             setIsOpen(false);
             window.alert("Reserva creada exitosamente");
           })
@@ -176,6 +208,38 @@ function Form({ id, isOpen, setIsOpen }) {
       .catch((err) => {
         console.error("Error creating reservation:", err);
       });
+
+    if (people.length > 1) {
+      for (let i = 1; i < people.length; i++) {
+        //Hacer amigos a persona que hizo la reserva con todos los demás
+        const friendData = {
+          UserID: people[0].registration,
+          FriendID: people[i].registration,
+        };
+
+        addFriend(friendData)
+          .then(() => {
+            console.log("Friend added successfully");
+          })
+          .catch((err) => {
+            console.error("Error adding friend:", err);
+          });
+
+        //Hacer amigos a todas las personas que no hicieron la reserva con la persona que hizo la reserva
+        const friendData2 = {
+          UserID: people[i].registration,
+          FriendID: people[0].registration,
+        };
+
+        addFriend(friendData2)
+          .then(() => {
+            console.log("Friend added successfully");
+          })
+          .catch((err) => {
+            console.error("Error adding friend:", err);
+          });
+      }
+    }
   };
 
   return (
@@ -215,6 +279,7 @@ function Form({ id, isOpen, setIsOpen }) {
                     setMinutoFinal={setMinutoFinal}
                     diaSeleccionado={diaSeleccionado}
                     setDiaSeleccionado={setDiaSeleccionado}
+                    setFlag={setFlag}
                   />
 
                   <PeopleSelect people={people} setPeople={setPeople} />

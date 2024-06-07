@@ -46,6 +46,7 @@ import EditEventModal from "../../components/EditEventModal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./DatePicker.css";
+
 const SortableItem = ({
   id,
   event,
@@ -59,6 +60,7 @@ const SortableItem = ({
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    touchAction: "none", // Prevent default touch actions
   };
 
   return (
@@ -361,13 +363,15 @@ const EventManager = () => {
   };
 
   return (
-    <Box className="flex min-h-screen">
+    <Box className="flex min-h-screen flex-col">
       <Drawer anchor="left" open={sidebarOpen} onClose={toggleSidebar}>
         <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
       </Drawer>
       <Box
-        className="flex-grow rounded-lg bg-white p-4 shadow-md"
+        className="relative flex-grow rounded-lg bg-white p-6 shadow-md"
         component={Paper}
+        mx={{ xs: 2, sm: 4, md: 6 }} // Adjust margins
+        my={4}
       >
         <IconButton
           className="absolute left-4 top-4 z-50 bg-white p-2 text-gray-700 shadow-md sm:hidden"
@@ -380,7 +384,7 @@ const EventManager = () => {
         </Typography>
 
         {/* Agregar Evento */}
-        <Box className="mb-4">
+        <Box className="mb-6 rounded-lg bg-gray-50 p-4 shadow-sm">
           <Typography variant="h6" gutterBottom>
             Agregar Evento
           </Typography>
@@ -516,7 +520,7 @@ const EventManager = () => {
         </Box>
 
         {/* Lista de Eventos */}
-        <Box className="mb-4">
+        <Box className="mb-6 rounded-lg bg-gray-50 p-4 shadow-sm">
           <Typography variant="h6" gutterBottom>
             Eventos
           </Typography>

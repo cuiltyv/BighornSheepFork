@@ -28,16 +28,8 @@ import {
   LinearProgress,
   Tooltip,
   IconButton,
-  InputBase,
 } from "@mui/material";
-import {
-  CalendarToday,
-  Edit,
-  Star,
-  Person,
-  Favorite,
-  Edit as EditIcon,
-} from "@mui/icons-material";
+import { Edit as EditIcon, Star, Favorite } from "@mui/icons-material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "../../api/axios";
 import TabPanel from "../../components/TabPanel";
@@ -109,6 +101,7 @@ export default function UserProfile() {
   const [newBio, setNewBio] = useState("");
   const [personalPointsData, setPersonalPointsData] = useState([]);
   const [userPoints, setUserPoints] = useState(0);
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const lightTheme = createTheme({
     palette: {
@@ -129,6 +122,7 @@ export default function UserProfile() {
       setUser(result.data);
       setLoading(false);
       setNewBio(result.data.biografia);
+      setPhoneNumber(result.data.Telefono || "");
     };
 
     const fetchActivities = async () => {
@@ -214,10 +208,21 @@ export default function UserProfile() {
     }));
   };
 
+  const handlePhoneNumberChange = (event) => {
+    const { value } = event.target;
+    setPhoneNumber(value);
+  };
+
   const handleUpdateClick = () => {
     if (user) {
       try {
-        axios.put(`/usuarios/${user.Matricula}`, user);
+        const formattedPhoneNumber = phoneNumber.replace(
+          /(\d{2})(\d{4})(\d{4})/,
+          "$1-$2-$3",
+        );
+        const updatedUser = { ...user, Telefono: formattedPhoneNumber };
+        axios.put(`/usuarios/${user.Matricula}`, updatedUser);
+        setUser(updatedUser);
         setOpenModal(true);
       } catch (error) {
         console.error(error);
@@ -343,7 +348,6 @@ export default function UserProfile() {
             <Tab label="Configuración" />
             <Tab label="Actividad Reciente" />
             <Tab label="Amigos" />
-            <Tab label="Contraseña" />
           </Tabs>
 
           <TabPanel value={tab} index={0}>
@@ -386,6 +390,19 @@ export default function UserProfile() {
                   variant="outlined"
                   margin="normal"
                 />
+                <Typography variant="body2">Teléfono</Typography>
+                <Box display="flex" alignItems="center" mt={2}>
+                  <Typography variant="body2" mr={1}>
+                    +52
+                  </Typography>
+                  <TextField
+                    value={phoneNumber}
+                    onChange={handlePhoneNumberChange}
+                    placeholder="1234567890"
+                    variant="outlined"
+                    margin="normal"
+                  />
+                </Box>
               </CardContent>
               <CardActions>
                 <Button
@@ -659,7 +676,6 @@ export default function UserProfile() {
                         alignItems="center"
                         marginBottom="8px"
                       >
-                        <Person />
                         <ListItemText
                           primary={`${friend.Nombre} ${friend.Apellidos}`}
                           style={{ marginLeft: "8px" }}
@@ -669,35 +685,6 @@ export default function UserProfile() {
                   ))}
                 </Grid>
               </CardContent>
-            </Card>
-          </TabPanel>
-
-          <TabPanel value={tab} index={5}>
-            <Card>
-              <CardHeader title="Contraseña" />
-              <CardContent>
-                <Typography variant="body2">Contraseña Actual</Typography>
-                <TextField
-                  fullWidth
-                  id="current"
-                  type="password"
-                  variant="outlined"
-                  margin="normal"
-                />
-                <Typography variant="body2">Nueva Contraseña</Typography>
-                <TextField
-                  fullWidth
-                  id="new"
-                  type="password"
-                  variant="outlined"
-                  margin="normal"
-                />
-              </CardContent>
-              <CardActions>
-                <Button variant="contained" color="primary">
-                  Guardar Contraseña
-                </Button>
-              </CardActions>
             </Card>
           </TabPanel>
         </Paper>

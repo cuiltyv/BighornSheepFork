@@ -1,24 +1,29 @@
 import Hero from "./Hero";
 import Caracteristicas from "./Caracteristicas";
 import Salas from "./Salas";
-import Form from "./../reservationForm/Form";
-import { useState } from "react";
-import Contacto from "../../components/Contacto";
+import PreFooter from "./PreFooter";
+import Footer from "./Footer";
 import { Element } from "react-scroll";
+import { FloatingWhatsApp } from "react-floating-whatsapp";
+import avatar from "./../../assets/avatar.jpg";
+
 
 export default function Home() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [id, setId] = useState("");
-
   return (
     <div>
       <Hero />
       <Caracteristicas />
       <Element name="salas" className="element">
-        <Salas setIsOpen={setIsOpen} setId={setId} />
+        <Salas />
       </Element>
-      {isOpen && <Form id={id} isOpen={isOpen} setIsOpen={setIsOpen} />}
-      <Contacto />
+      <PreFooter />
+      <Footer />
+      <FloatingWhatsApp
+        phoneNumber="+528119001483"
+        accountName="Wall-E"
+        avatar={avatar}
+        chatMessage="¡Bienvenido al DREAM Lab! Te gustaría hacer una reservacion?"
+      />
     </div>
   );
 }

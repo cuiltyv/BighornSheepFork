@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const HoraInicio = ({ onHoraInicioSeleccionadaChange }) => {
+const HoraInicio = ({ onHoraInicioSeleccionadaChange, setFlag }) => {
   const [hour, setHour] = useState("7"); // Establecer por defecto a las 7 AM
   const [minute, setMinute] = useState("00");
   const [error, setError] = useState("");
@@ -25,7 +25,9 @@ const HoraInicio = ({ onHoraInicioSeleccionadaChange }) => {
       (hourInt === 20 && minuteInt !== "00")
     ) {
       setError("Por favor selecciona una hora entre las 7 AM and 9 PM.");
+      setFlag(true);
     } else {
+      setFlag(false);
       setError("");
       updateTime(hour, minute);
     }

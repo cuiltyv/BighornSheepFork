@@ -18,6 +18,7 @@ const { verify } = require("jsonwebtoken");
 
 // server/routes/usersRoutes.js
 router.put("/updaterole", usersController.updateUserRole);
+router.put("/puntos", usersController.addPuntosPersonales);
 router.get("/perfil/:matricula", usersController.getUserProfile);
 router.get("/", usersController.getAllUsers);
 router.get("/:matricula", usersController.getUserByMatricula);

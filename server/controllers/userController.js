@@ -2,17 +2,18 @@ const sql = require("mssql");
 const config = require("../configs/config");
 
 const addFriend = async (req, res) => {
-  const { userID, friendID } = req.body;
+  const { UserID, FriendID } = req.body;
   try {
     let pool = await sql.connect(config);
     await pool
       .request()
-      .input("UserID", sql.VarChar, userID)
-      .input("FriendID", sql.VarChar, friendID)
+      .input("UserID", sql.VarChar, UserID)
+      .input("FriendID", sql.VarChar, FriendID)
       .execute("sp_AddFriend");
     res.status(200).send({ message: "Friend added successfully" });
   } catch (err) {
     console.error(err);
+    z;
     res.status(500).send({ message: "Error adding friend", error: err });
   }
 };
