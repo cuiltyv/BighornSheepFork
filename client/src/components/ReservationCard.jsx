@@ -96,6 +96,7 @@ function ReservationCard({ reservacion, sala }) {
                   <AlertDialogCancel>Salir</AlertDialogCancel>
                   <AlertDialogAction
                     onClick={() => handleDelete(reservacion.ReservacionID)}
+                    data-cy="delete-button"
                   >
                     Cancelar Reservación
                   </AlertDialogAction>
@@ -150,7 +151,7 @@ function ReservationCard({ reservacion, sala }) {
       </div>
       <div
         onClick={handleFlip}
-        className="m-5 inline-block h-[92%] w-[300px] cursor-pointer snap-center overflow-hidden rounded-lg bg-white shadow-lg md:w-[350px]"
+        className="m-5 min-h-[565px] inline-block h-[92%] w-[300px] cursor-pointer snap-center overflow-hidden rounded-lg bg-white shadow-lg md:w-[350px]"
       >
         <div className="p-5">
           {equipo.map((item, index) => (

@@ -24,57 +24,41 @@ const Contacto = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-violet px-4 py-10 md:px-32">
-      <div className="w-full max-w-lg rounded-lg bg-white p-8 shadow-md">
-        <h2 className="mb-6 text-2xl font-bold text-gray-800">Contactanos</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="lg:w-fit w-full px-6 py-4 bg-violet">
+        <h2 className="mb-6 text-4xl font-bold text-white text-center">Contactanos</h2>
+        <form onSubmit={handleSubmit} className="">
           <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Nombre
-            </label>
             <input
               type="text"
               name="name"
               id="name"
               value={formData.name}
+              placeholder="Nombre"
               onChange={handleChange}
-              className="mt-1 w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-gold focus:ring-gold"
+              className="rounded-md w-full lg:w-[25vw] border  border-gray-300 p-2 shadow-sm focus:border-gold focus:ring-gold"
               required
             />
           </div>
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Correo
-            </label>
             <input
               type="email"
               name="email"
               id="email"
+              placeholder="Email"
               value={formData.email}
               onChange={handleChange}
-              className="mt-1 w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-gold focus:ring-gold"
+              className="w-full lg:w-[25vw] rounded-md mb-[6px] border border-gray-300 p-2 shadow-sm focus:border-gold focus:ring-gold"
               required
             />
           </div>
           <div>
-            <label
-              htmlFor="message"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Mensaje
-            </label>
             <textarea
               name="message"
               id="message"
+              placeholder="Mensaje"
               value={formData.message}
               onChange={handleChange}
-              className="mt-1 w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-gold focus:ring-gold"
+              className="w-full lg:w-[25vw] rounded-md border border-gray-300 p-2 shadow-sm focus:border-gold focus:ring-gold"
               rows="4"
               required
             ></textarea>
@@ -82,14 +66,13 @@ const Contacto = () => {
           <div className="flex justify-end">
             <button
               type="submit"
-              className="rounded-md bg-gold px-4 py-2 font-medium text-white shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"
+              className="rounded-md bg-gold px-4 py-2 font-medium w-full text-white shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"
             >
               Enviar
             </button>
           </div>
         </form>
       </div>
-    </div>
   );
 };
 

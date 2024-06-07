@@ -1,8 +1,9 @@
 import Hero from "./Hero";
 import Caracteristicas from "./Caracteristicas";
 import Salas from "./Salas";
-import Contacto from "../../components/Contacto";
 import { Element } from "react-scroll";
+import PreFooter from "./PreFooter";
+import Footer from "./Footer";
 
 export default function Landing() {
   return (
@@ -12,7 +13,8 @@ export default function Landing() {
       <Element name="salas" className="element">
         <Salas />
       </Element>
-      <Contacto />
+      <PreFooter />
+      <Footer />
     </div>
   );
 }

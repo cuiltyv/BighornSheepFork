@@ -47,9 +47,9 @@ const ReservationShow = ({ user, estado }) => {
     fetchSalas();
   }, []);
 
-  const solicitados = reservedRooms.filter(
-    (reservation) => reservation.Estado === estado,
-  );
+  const solicitados = reservedRooms
+  .filter(reservation => reservation.Estado === estado)
+  .sort((a, b) => new Date(a.HoraInicio) - new Date(b.HoraInicio)); // Ordenar por HoraInicio;
 
   return (
     <div className="mx-2 mt-4 p-4">
@@ -59,7 +59,7 @@ const ReservationShow = ({ user, estado }) => {
       {isDataLoading ? (
         <div>Loading...</div>
       ) : solicitados.length !== 0 ? (
-        <div className="scroll-container h-fit overflow-y-auto">
+        <div className="scroll-container h-fit overflow-y-hidden">
           {solicitados.map((reservation, index) => (
             <ReservationCard
               key={index}
