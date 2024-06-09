@@ -11,17 +11,20 @@ account_sid = os.environ['TWILIO_ACCOUNT_SID']
 auth_token = os.environ['TWILIO_AUTH_TOKEN']
 client = Client(account_sid, auth_token)
 
-message = client.messages \
-                .create(
-                     body="Join Earth's mightiest heroes. Like Kevin Bacon.",
-                     from_='+14155238886',
-                     to='+525520913464'
-                 )
+participant = client.conversations \
+    .v1 \
+    .conversations('CHf4c91ac873b042ffa79cf150507053f6') \
+    .participants \
+    .create(
+         messaging_binding_address='whatsapp:+525520913464',
+         messaging_binding_proxy_address='whatsapp:+5218153502632'
+     )
 
-print(message.sid)
+print(participant.sid)
 
 
-
+# conversation sid CHf4c91ac873b042ffa79cf150507053f6
+# participant sid MB6bac8c7e5abd4ea6a1a6dae879001bde
 
 # from langchain.agents import AgentExecutor
 # from agents.test_agent import reservation_agent_executor
