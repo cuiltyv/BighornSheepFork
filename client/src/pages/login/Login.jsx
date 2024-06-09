@@ -236,10 +236,15 @@ const Login = () => {
               </div>
             </div>
           )}
+          {/*  
+
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="login">Login</TabsTrigger>
             <TabsTrigger value="registro">Registro</TabsTrigger>
           </TabsList>
+
+          */}
+
           <TabsContent value="login">
             <Card>
               <CardHeader>

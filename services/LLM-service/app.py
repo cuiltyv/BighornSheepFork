@@ -4,6 +4,7 @@ from langchain_community.chat_message_histories import StreamlitChatMessageHisto
 # AI
 from agents.reservation_agent import reservation_agent_executor as agent
 from langchain.memory import ConversationBufferMemory
+from text_to_speech.elevenlabs import text_to_speech
 
 st.set_page_config(page_title='🦜🔗 Crea una Reservación')
 st.title('🦜🔗 Reserva con Dream LAB!')
@@ -43,5 +44,8 @@ if prompt := st.chat_input():
             msgs.add_ai_message(ai_message)
             st.session_state.current_response = ai_message
             st.write(ai_message)
+            
+            audio_file = text_to_speech(ai_message)
+            st.audio(audio_file, format='audio/mp3', start_time=0)
         else:
             st.error("The response received from the agent is not in the expected format.")
