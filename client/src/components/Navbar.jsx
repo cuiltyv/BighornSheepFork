@@ -30,7 +30,6 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   });
 
-
   return (
     <div className="z-10 lg:flex lg:justify-end">
       <div className="mx-auto flex h-[100px] max-w-[1400px] items-center justify-between bg-darkWhite text-black lg:mb-6 lg:mr-20">
@@ -39,9 +38,12 @@ const Navbar = () => {
             <li className="mx-6 p-5">
               <Link to="/BighornSheep/Landing">Inicio</Link>
             </li>
-            
+
             <li className="mx-6 p-5">
               <Link to="/BighornSheep/Landing">Contacto</Link>
+            </li>
+            <li className="mx-6 p-5">
+              <Link to="/BighornSheep/faqs">FAQ</Link>
             </li>
             <li className="my-3 rounded-full bg-blue px-4 py-2 text-white">
               <Link to="/BighornSheep/login">Iniciar Sesión</Link>
@@ -82,15 +84,22 @@ const Navbar = () => {
                   Inicio
                 </Link>
               </li>
-              
+
               <li className="my-4 border-b p-2">
                 <Link to="/BighornSheep/Landing" onClick={handleNav}>
                   Contacto
                 </Link>
               </li>
-              <li className="my-2 bg-blue p-2 text-white rounded">
-              <Link to="/BighornSheep/login" onClick={handleNav}>Iniciar Sesión</Link>
-            </li>
+              <li className="my-4 border-b p-2">
+                <Link to="/BighornSheep/faqs" onClick={handleNav}>
+                  FAQ
+                </Link>
+              </li>
+              <li className="my-2 rounded bg-blue p-2 text-white">
+                <Link to="/BighornSheep/login" onClick={handleNav}>
+                  Iniciar Sesión
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
@@ -117,7 +126,7 @@ const Navbar = () => {
                 Contacto
               </Link>
             </li>
-            <li className="my-2 bg-blue p-2 text-white rounded-2xl">
+            <li className="my-2 rounded-2xl bg-blue p-2 text-white">
               <Link to="/BighornSheep/login">Iniciar Sesión</Link>
             </li>
           </ul>
