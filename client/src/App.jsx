@@ -10,6 +10,7 @@ import Unauthorized from "./pages/extra/Unauthorized";
 import RequireAuth from "./components/RequireAuth";
 import PersistLogin from "./components/PersistLogin";
 import Faq from "./pages/faq/Faq";
+import Faqq from "./pages/faq/Faqq";
 import { Routes, Route } from "react-router-dom";
 import useAuth from "@UserAuth";
 import "@mantine/core/styles.css";
@@ -38,6 +39,14 @@ function App() {
         <Route path="/" element={<WithLayout />}>
           <Route path="/BighornSheep/landing" element={<Landing />} />
           <Route path="/BighornSheep/login" element={<Login />} />
+          <Route
+            path="/BighornSheep/faqs"
+            element={
+              <MantineProvider>
+                <Faqq />
+              </MantineProvider>
+            }
+          />
 
           <Route path="/" element={<Landing />} />
         </Route>
