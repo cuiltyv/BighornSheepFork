@@ -43,7 +43,7 @@ const Navbar = () => {
               <Link to="/BighornSheep/Landing">Contacto</Link>
             </li>
             <li className="mx-6 p-5">
-              <Link to="/BighornSheep/faq">FAQ</Link>
+              <Link to="/BighornSheep/faqs">FAQ</Link>
             </li>
             <li className="my-3 rounded-full bg-blue px-4 py-2 text-white">
               <Link to="/BighornSheep/login">Iniciar Sesión</Link>
@@ -91,7 +91,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="my-4 border-b p-2">
-                <Link to="/BighornSheep/faq" onClick={handleNav}>
+                <Link to="/BighornSheep/faqs" onClick={handleNav}>
                   FAQ
                 </Link>
               </li>
