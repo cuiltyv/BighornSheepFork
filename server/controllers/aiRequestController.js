@@ -129,8 +129,6 @@ module.exports = {
 
     // find possible reservations around a future date
 
-
-
     // implement hardcoded information so that the LLM does not hallucinate errors 
     // I am talking about like "confimado" and the matricula
     
