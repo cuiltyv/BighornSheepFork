@@ -297,17 +297,17 @@ function Form({ id, isOpen, setIsOpen }) {
 
                   <Comments comment={comment} setComment={setComment} />
 
-                  <div className="mt-10 flex w-full justify-center gap-10">
+                  <div className="mt-10 flex flex-col-reverse sm:flex-row w-full justify-center gap-10">
                     <button
                       onClick={() => setIsOpen(false)}
-                      className="align-center flex justify-center self-center rounded-lg border border-blue px-4 py-2 font-bold text-blue"
+                      className="align-center flex justify-center w-full leading-loose h-14 sm:w-fit sm:h-fit self-center rounded-lg border border-blue px-4 py-2 font-bold text-blue"
                       data-cy="enviar-button"
                     >
                       Cancelar
                     </button>
                     <button
                       onClick={enviar}
-                      className="bh-bg-blue align-center flex justify-center self-center rounded-lg px-4 py-2 font-bold text-white"
+                      className="bh-bg-blue align-center flex w-full leading-loose h-14 sm:w-fit sm:h-fit justify-center self-center rounded-lg px-4 py-2 font-bold text-white"
                       data-cy="enviar-button"
                     >
                       Registrar reserva
