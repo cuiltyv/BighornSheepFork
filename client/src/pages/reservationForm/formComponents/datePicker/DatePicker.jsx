@@ -44,7 +44,7 @@ function DatePicker(props) {
     <div>
       <div className="flex flex-col gap-14 sm:flex-row lg:gap-20">
         <Calendar onDiaSeleccionadoChange={handleDiaSeleccionadoChange} />
-        <div className="flex flex-row justify-center gap-8 sm:flex-col sm:justify-start">
+        <div className="flex flex-col justify-center gap-8 sm:justify-start">
           <HoraInicio
             onHoraInicioSeleccionadaChange={onHoraInicioSeleccionadaChange}
             setFlag={props.setFlag}
