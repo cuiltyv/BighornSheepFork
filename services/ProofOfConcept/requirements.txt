@@ -1,7 +1,0 @@
-twilio
-vosk
-flask
-flask-sock
-simple-websocket
-pyngrok
-python-dotenv
