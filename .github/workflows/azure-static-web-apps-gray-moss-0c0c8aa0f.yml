@@ -15,10 +15,11 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
         with:
-          submodules: true
-          lfs: false
+          submodules: false
+          fetch-depth: 0
 
       - name: Remove submodule directory
         run: rm -rf services
