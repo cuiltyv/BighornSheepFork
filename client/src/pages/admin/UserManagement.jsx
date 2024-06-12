@@ -102,7 +102,7 @@ const UserManagement = () => {
             user.Matricula === updatedUser.Matricula ? updatedUser : user,
           ),
         );
-        setSnackbarMessage("User updated successfully");
+        setSnackbarMessage("Usuario actualizado correctamente");
         setSnackbarSeverity("success");
         setSnackbarOpen(true);
         setEditUser(null);
@@ -110,7 +110,7 @@ const UserManagement = () => {
       })
       .catch((error) => {
         console.error("Error updating user:", error);
-        setSnackbarMessage("Error updating user");
+        setSnackbarMessage("Error actualizando usuario");
         setSnackbarSeverity("error");
         setSnackbarOpen(true);
       });
@@ -121,13 +121,13 @@ const UserManagement = () => {
       .delete(`/usuarios/${matricula}`)
       .then(() => {
         setUsers(users.filter((user) => user.Matricula !== matricula));
-        setSnackbarMessage("User deleted successfully");
+        setSnackbarMessage("Usuario eliminado correctamente");
         setSnackbarSeverity("success");
         setSnackbarOpen(true);
       })
       .catch((error) => {
         console.error("Error deleting user:", error);
-        setSnackbarMessage("Error deleting user");
+        setSnackbarMessage("Error eliminando usuario");
         setSnackbarSeverity("error");
         setSnackbarOpen(true);
       });
@@ -325,12 +325,6 @@ const UserManagement = () => {
                       onClick={() => handleModalOpen(user)}
                     >
                       <Edit />
-                    </IconButton>
-                    <IconButton
-                      color="secondary"
-                      onClick={() => handleDeleteUser(user.Matricula)}
-                    >
-                      <Delete />
                     </IconButton>
                   </TableCell>
                 </TableRow>
