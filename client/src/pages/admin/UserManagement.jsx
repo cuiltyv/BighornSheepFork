@@ -102,7 +102,7 @@ const UserManagement = () => {
             user.Matricula === updatedUser.Matricula ? updatedUser : user,
           ),
         );
-        setSnackbarMessage("User updated successfully");
+        setSnackbarMessage("Usuario actualizado correctamente");
         setSnackbarSeverity("success");
         setSnackbarOpen(true);
         setEditUser(null);
@@ -110,7 +110,7 @@ const UserManagement = () => {
       })
       .catch((error) => {
         console.error("Error updating user:", error);
-        setSnackbarMessage("Error updating user");
+        setSnackbarMessage("Error actualizando usuario");
         setSnackbarSeverity("error");
         setSnackbarOpen(true);
       });
@@ -121,13 +121,13 @@ const UserManagement = () => {
       .delete(`/usuarios/${matricula}`)
       .then(() => {
         setUsers(users.filter((user) => user.Matricula !== matricula));
-        setSnackbarMessage("User deleted successfully");
+        setSnackbarMessage("Usuario eliminado correctamente");
         setSnackbarSeverity("success");
         setSnackbarOpen(true);
       })
       .catch((error) => {
         console.error("Error deleting user:", error);
-        setSnackbarMessage("Error deleting user");
+        setSnackbarMessage("Error eliminando usuario");
         setSnackbarSeverity("error");
         setSnackbarOpen(true);
       });
@@ -304,9 +304,9 @@ const UserManagement = () => {
                 <TableCell>Apellidos</TableCell>
                 <TableCell>Carrera</TableCell>
                 <TableCell>Semestre</TableCell>
-                <TableCell>Role</TableCell>
+                <TableCell>Rol</TableCell>
                 <TableCell>Puntos Personales</TableCell>
-                <TableCell>Actions</TableCell>
+                <TableCell>Acciones</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -326,12 +326,6 @@ const UserManagement = () => {
                     >
                       <Edit />
                     </IconButton>
-                    <IconButton
-                      color="secondary"
-                      onClick={() => handleDeleteUser(user.Matricula)}
-                    >
-                      <Delete />
-                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))}
@@ -343,7 +337,7 @@ const UserManagement = () => {
           <Box className="absolute inset-0 flex items-center justify-center p-4">
             <Paper className="w-full max-w-lg p-4">
               <Typography variant="h6" gutterBottom>
-                {editUser ? "Edit User" : "Agregar Usuario"}
+                {editUser ? "Editar Usuario" : "Agregar Usuario"}
               </Typography>
               <Box className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <Box>
@@ -463,7 +457,7 @@ const UserManagement = () => {
                 </Box>
                 <Box>
                   <Typography variant="body2" gutterBottom>
-                    Role
+                    Rol
                   </Typography>
                   <Select
                     fullWidth

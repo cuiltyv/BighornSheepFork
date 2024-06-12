@@ -24,7 +24,7 @@ export default function Calendar({ onDiaSeleccionadoChange }) {
   return (
     <div className="flex flex-col items-center gap-2">
       <h2 className="mb-2 w-full text-xl font-bold">Fecha de reservación</h2>
-      <div className="calendar-container h-auto rounded-lg p-6 shadow-[0_5px_20px_-5px_rgba(0,0,0,0.3)]">
+      <div className="calendar-container w-screen sm:w-auto h-auto rounded-lg p-6 sm:shadow-[0_5px_20px_-5px_rgba(0,0,0,0.3)]">
         <div className="flex justify-center">
           <div className="flex w-full justify-between">
             {/* Botón para regresar en uno el mes en caso de que el mes sea proximo al mes actual */}
@@ -83,7 +83,7 @@ export default function Calendar({ onDiaSeleccionadoChange }) {
                         ? "date-selected text-white "
                         : "",
 
-                      " date-box mx-0.5 grid h-10 w-12 cursor-pointer select-none place-content-center  rounded-md font-bold transition-all hover:text-white",
+                      " date-box mx-0.5 grid h-10 w-11 sm:h-10 sm:w-12 cursor-pointer select-none place-content-center  rounded-md font-bold transition-all hover:text-white",
                     )}
                     onClick={() => {
                       {
