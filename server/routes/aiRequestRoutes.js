@@ -144,5 +144,42 @@ router.post("/reservation", aiRequestController.createReservation);
  */
 router.get("/reservations/:Matricula", aiRequestController.getUpcomingReservations);
 
+/**
+ * @swagger
+ * /ai/checkNumber:
+ *   get:
+ *     summary: Verificar si un número de teléfono existe en la base de datos
+ *     description: Verifica si un número de teléfono específico está registrado en la base de datos.
+ *     parameters:
+ *       - in: query
+ *         name: Telefono
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Número de teléfono a verificar.
+ *     responses:
+ *       200:
+ *         description: Resultado de la verificación del número de teléfono.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   Telefono:
+ *                     type: string
+ *                     description: Número de teléfono del usuario.
+ *                   NombreUsuario:
+ *                     type: string
+ *                     description: Nombre del usuario.
+ *       500:
+ *         description: Error del servidor o problema de conectividad con la base de datos.
+ *       400:
+ *         description: Faltan campos requeridos.
+ *     tags:
+ *       - Usuarios
+ */
+router.get("/checkNumber", aiRequestController.checkNumberInDB);
 
-module.exports = router;
+module.exports = router
