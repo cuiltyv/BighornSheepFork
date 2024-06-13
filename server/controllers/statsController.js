@@ -3,9 +3,14 @@ const sql = require("mssql");
 const config = require("../configs/config");
 
 const getAdminStats = async (req, res) => {
+  const { startDate, endDate } = req.query;
   try {
     let pool = await sql.connect(config);
-    let result = await pool.request().execute("sp_GetAdminStats");
+    let result = await pool
+      .request()
+      .input("StartDate", sql.Date, startDate)
+      .input("EndDate", sql.Date, endDate)
+      .execute("sp_GetAdminStats");
     res.json({
       totalReservations: result.recordsets[0][0].totalReservations,
       statusBreakdown: result.recordsets[1],
