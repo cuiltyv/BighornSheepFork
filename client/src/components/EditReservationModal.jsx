@@ -25,7 +25,6 @@ const EditReservationModal = ({
     return null;
   }
 
-  //console.log(formData);
   function toLocalDateTimeString(isoString) {
     const date = new Date(isoString);
     const offset = date.getTimezoneOffset();
@@ -59,7 +58,7 @@ const EditReservationModal = ({
                 name="HoraInicio"
                 value={horaInicioLocal}
                 onChange={handleChange}
-                className="mt-1 w-full rounded border border-gray-300 p-2 shadow-sm"
+                className="mt-1 w-full rounded border border-gray-300 bg-white p-2 text-black shadow-sm"
               />
             </div>
             <div>
@@ -71,7 +70,7 @@ const EditReservationModal = ({
                 name="HoraFin"
                 value={horaFinLocal}
                 onChange={handleChange}
-                className="mt-1 w-full rounded border border-gray-300 p-2 shadow-sm"
+                className="mt-1 w-full rounded border border-gray-300 bg-white p-2 text-black shadow-sm"
               />
             </div>
             <div>
@@ -83,7 +82,7 @@ const EditReservationModal = ({
                 name="Proposito"
                 value={formData.Proposito}
                 onChange={handleChange}
-                className="mt-1 w-full rounded border border-gray-300 p-2 shadow-sm"
+                className="mt-1 w-full rounded border border-gray-300 bg-white p-2 text-black shadow-sm"
               />
             </div>
             <div>
@@ -94,7 +93,7 @@ const EditReservationModal = ({
                 name="ZonaID"
                 value={formData.ZonaID}
                 onChange={handleChange}
-                className="mt-1 w-full rounded border border-gray-300 p-2 shadow-sm"
+                className="mt-1 w-full rounded border border-gray-300 bg-white p-2 text-black shadow-sm"
               >
                 {Object.entries(idToSalasMap).map(([id, sala]) => (
                   <option key={id} value={id}>
@@ -111,7 +110,7 @@ const EditReservationModal = ({
                 name="Estado"
                 value={formData.Estado}
                 onChange={handleChange}
-                className="mt-1 w-full rounded border border-gray-300 p-2 shadow-sm"
+                className="mt-1 w-full rounded border border-gray-300 bg-white p-2 text-black shadow-sm"
               >
                 <option value="Pendiente">Pendiente</option>
                 <option value="Confirmado">Confirmado</option>
