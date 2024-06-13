@@ -182,4 +182,41 @@ router.get("/reservations/:Matricula", aiRequestController.getUpcomingReservatio
  */
 router.get("/checkNumber", aiRequestController.checkNumberInDB);
 
+/**
+ * @swagger
+ * /ai/matricula:
+ *   get:
+ *     summary: Buscar matrícula por número de teléfono
+ *     description: Busca la matrícula asociada a un número de teléfono específico en la base de datos.
+ *     parameters:
+ *       - in: query
+ *         name: Telefono
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Número de teléfono para buscar la matrícula.
+ *     responses:
+ *       200:
+ *         description: Resultado de la búsqueda de la matrícula.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 existe:
+ *                   type: boolean
+ *                   description: Indica si el número de teléfono existe en la base de datos.
+ *                 matricula:
+ *                   type: string
+ *                   description: Matrícula asociada al número de teléfono.
+ *       400:
+ *         description: Faltan campos requeridos.
+ *       500:
+ *         description: Error del servidor o problema de conectividad con la base de datos.
+ *     tags:
+ *       - Matrículas
+ */
+router.get("/matricula", aiRequestController.findMatriculaWithNumber);
+
+
 module.exports = router

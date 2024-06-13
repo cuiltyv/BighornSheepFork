@@ -145,9 +145,18 @@ module.exports = {
                 .execute("sp_BuscarTelefonoEnUsuario");
     
             // Get the output value
-            const existe = result.output.Existe;
+            let result2 = await pool
+                .request()
+                .input("Telefono", sql.VarChar(20), Telefono)
+                .output("Matricula", sql.VarChar(10))
+                .output("Existe", sql.Bit)
+                .execute("sp_BuscarMatriculaPorTelefono");
     
-            res.status(200).send({ existe });
+            // Get the output value
+            const existe = result.output.Existe;
+            const matricula = result2.output.Matricula;
+    
+            res.status(200).send({ existe , matricula});
         } catch (err) {
             console.error("Error occurred while revising the phone number in the DB");
             console.error(err);
